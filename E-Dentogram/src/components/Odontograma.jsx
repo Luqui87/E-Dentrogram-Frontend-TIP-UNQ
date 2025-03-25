@@ -50,7 +50,7 @@ function Odontograma(){
             
             </div>
 
-            <div id="niñez">
+            <div className="niñez">
                 <div className="seccion">
                     <div className="dientes">
                         <span>5</span>
