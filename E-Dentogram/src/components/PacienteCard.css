@@ -1,0 +1,37 @@
+.pacienteCard{
+    background-color: #FFFFFF;
+    width: 70%;
+    height: 30%;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 0 10px black;
+    border-radius: 8px;
+}
+
+.pacienteCard>div{
+    height: 100%;
+    flex: 1 1 0%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1vh;
+    justify-content: center;
+}
+
+.pacienteCard>div:nth-child(2){
+    border-left: 2px solid rgba(0, 0, 0, 0.432);
+    border-right: 2px solid rgba(0, 0, 0, 0.432);;
+}
+
+.pacienteCard .line{
+    display: flex;
+    gap: 0.5vw;
+}
+
+.nombre {
+    font-size: 3em;
+}
+
+.label{
+    color: rgba(102, 101, 101, 0.815);
+}
