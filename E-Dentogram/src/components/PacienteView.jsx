@@ -1,4 +1,5 @@
 import PacienteCard from './PacienteCard'
+import Odontograma from './Odontograma'
 import './PacienteView.css'
 
 function PacienteView(){
@@ -6,6 +7,7 @@ function PacienteView(){
     return(
         <main>
             <PacienteCard/>
+            <Odontograma/>
         </main>
     )
 }

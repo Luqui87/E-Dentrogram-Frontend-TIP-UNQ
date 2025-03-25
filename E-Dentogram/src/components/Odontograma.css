@@ -1,0 +1,66 @@
+.odontograma{
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    width: 100%;
+    height: 80%;
+    align-items: center;
+    gap: 10%;
+    background-color: pink;
+}
+
+.odontograma>div{
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 0%;
+}
+
+.adulto{
+    width: 100%;
+}
+
+.niñez{
+    width: 60%;
+}
+
+.seccion{
+    display: flex;
+    flex: 1 1 0%;
+}
+
+.seccion:first-child{
+    border-bottom: 5px solid #95b6bd;
+}
+
+.seccion>div:first-child{
+    border-right: 5px solid  #95b6bd;
+    padding-right: 15px ;
+    justify-content: end;
+}
+
+.seccion>div:last-child{
+    padding-left: 15px;
+}
+
+.dientes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1 1 auto;
+    gap: 10px;
+}
+
+.dientes>span{
+    font-size: 2em;
+}
+
+.dientes>.fila{
+    flex: 1 1 0%;
+    height: 100%;
+}
+
+.fila{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
