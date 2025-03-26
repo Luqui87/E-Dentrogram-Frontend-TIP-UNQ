@@ -1,0 +1,62 @@
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import "./PersonTable.css";
+
+const persons = [
+  {
+    id: 1,
+    name: "Lucas Alvarez",
+    history: "312312",
+    dni: "42.594.982",
+    phone: "+1153276406",
+  },
+  {
+    id: 2,
+    name: "María Perez",
+    history: "123456",
+    dni: "40.123.456",
+    phone: "+54112345678",
+  },
+  {
+    id: 3,
+    name: "Juan García",
+    history: "654321",
+    dni: "38.654.321",
+    phone: "+54119876543",
+  },
+];
+
+const PersonTable = () => {
+  const navigate = useNavigate();
+
+  const handleRowClick = (id) => {
+    navigate(`/person/${id}`);
+  };
+
+  return (
+    <div className="table-container">
+      <table className="person-table">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>N° Historia Clínica</th>
+            <th>DNI</th>
+            <th>Teléfono</th>
+          </tr>
+        </thead>
+        <tbody>
+          {persons.map((person) => (
+            <tr key={person.id} onClick={() => handleRowClick(person.id)}>
+              <td>{person.name}</td>
+              <td>{person.history}</td>
+              <td>{person.dni}</td>
+              <td>{person.phone}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+};
+
+export default PersonTable;

@@ -1,16 +1,28 @@
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import "./App.css";
+import Navbar from "./components/Navbar";
+import PacienteView from "./components/PacienteView";
+import Home from "./pages/Home/Home";
 
-import './App.css'
-import Navbar from './components/Navbar'
-import PacienteView from './components/PacienteView'
-
-function App() {
-
+const App = () => {
   return (
-    <>
-    <Navbar/>
-    <PacienteView/>
-    </>
-  )
-}
+    <Router>
+      <Routes>
+        <Route path="/home" element={<Home />} />
+      </Routes>
+    </Router>
+  );
+};
 
-export default App
+export default App;
+
+// function App() {
+
+//   return (
+//     <>
+//     <Navbar/>
+//     <PacienteView/>
+//     </>
+//   )
+// }
