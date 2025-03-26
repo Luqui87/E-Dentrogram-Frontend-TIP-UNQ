@@ -3,20 +3,20 @@ import './Odontograma.css'
 
 function Odontograma(){
 
-    function dientes(n){
+    function dientes(n, seccion){
         return [...Array(n)].map((e, i) => 
             <div className='fila' key={i}>
                 <span>{i + 1}</span>
-                <Diente/>
+                <Diente seccion={seccion} num={i + 1}/>
             </div>
         )
     }
 
-    function dientesReverse(n){ 
+    function dientesReverse(n, seccion){ 
         return [...Array(n)].map((e, i) => 
         <div className='fila' key={i}>
             <span>{n - i }</span>
-            <Diente/>
+            <Diente seccion={seccion} num={n - i }/>
         </div>
     )
     }
@@ -29,10 +29,10 @@ function Odontograma(){
                 <div className="seccion">
                     <div className="dientes">
                         <span>1</span>
-                        {dientesReverse(8)}
+                        {dientesReverse(8,1)}
                     </div>
                     <div className="dientes">
-                        {dientes(8)}
+                        {dientes(8,2)}
                         <span>2</span>
                     </div>
                 </div>
@@ -40,10 +40,10 @@ function Odontograma(){
                 <div className="seccion">
                     <div className="dientes">
                         <span>4</span>
-                        {dientesReverse(8)}
+                        {dientesReverse(8,4)}
                     </div>
                     <div className="dientes">
-                        {dientes(8)}
+                        {dientes(8,3)}
                         <span>3</span>
                     </div>
                 </div>

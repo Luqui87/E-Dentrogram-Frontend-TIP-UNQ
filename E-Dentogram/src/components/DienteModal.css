@@ -1,0 +1,60 @@
+.modalDiente{
+    width: 20vw;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.modalDiente>.cuerpo{
+    display: flex;
+    height: 25vh;
+    align-items: center;
+    gap: 14px;
+}
+
+.modalDiente>.cuerpo>.diente{
+    flex: 1 1 0%;
+    height: 50%;
+
+}
+
+.modalDiente>.cuerpo>.prestaciones{
+    flex: 3 1 0%;
+    display: flex;
+    gap: 3vh;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.btn-group button {
+border: 1px solid black; /* Green border */
+color: white; /* White text */
+padding: 10px 24px; /* Some padding */
+cursor: pointer; /* Pointer/hand icon */
+float: left; /* Float the buttons side by side */
+width: 50%;
+}
+
+/* Clear floats (clearfix hack) */
+.btn-group:after {
+content: "";
+clear: both;
+display: table;
+}
+
+.btn-group button:hover{
+    filter: brightness(85%);
+}
+
+.btn-group button:not(:last-child) {
+border-right: none; /* Prevent double borders */
+}
+
+.btn-group>.carie{
+background-color: #255272;
+}
+
+.btn-group>.restauraciones{
+    background-color: #7e261c;
+}

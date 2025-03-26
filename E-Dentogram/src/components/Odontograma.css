@@ -7,6 +7,7 @@
     align-items: center;
     gap: 10%;
     background-color: pink;
+    color: #95b6bd;
 }
 
 .odontograma>div{
@@ -26,6 +27,7 @@
 .seccion{
     display: flex;
     flex: 1 1 0%;
+    box-sizing: border-box;
 }
 
 .seccion:first-child{
@@ -51,7 +53,7 @@
 }
 
 .dientes>span{
-    font-size: 2em;
+    font-size: 3em;
 }
 
 .dientes>.fila{
@@ -59,8 +61,13 @@
     height: 100%;
 }
 
+
 .fila{
     display: flex;
     align-items: center;
     flex-direction: column;
+}
+
+.fila>span{
+    font-size: 1.5em;
 }
