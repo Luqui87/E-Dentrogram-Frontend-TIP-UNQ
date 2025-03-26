@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./PersonTable.css";
 
-const persons = [
+const initialPersons = [
   {
     id: 1,
     name: "Lucas Alvarez",
@@ -27,10 +27,16 @@ const persons = [
 ];
 
 const PersonTable = () => {
+  const [persons, setPersons] = useState(initialPersons);
   const navigate = useNavigate();
 
   const handleRowClick = (id) => {
     navigate(`/person/${id}`);
+  };
+
+  const handleDelete = (id, event) => {
+    event.stopPropagation(); // Evita que se active el handleRowClick
+    setPersons(persons.filter((person) => person.id !== id));
   };
 
   return (
@@ -42,6 +48,7 @@ const PersonTable = () => {
             <th>N° Historia Clínica</th>
             <th>DNI</th>
             <th>Teléfono</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -51,6 +58,14 @@ const PersonTable = () => {
               <td>{person.history}</td>
               <td>{person.dni}</td>
               <td>{person.phone}</td>
+              <td>
+                <button
+                  className="delete-button"
+                  onClick={(event) => handleDelete(person.id, event)}
+                >
+                  Borrar
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>

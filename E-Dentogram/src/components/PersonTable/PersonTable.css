@@ -1,6 +1,6 @@
 .table-container {
-  max-width: 800px;
-  margin: auto;
+  width: 90%;
+  margin: 10px auto 0 auto; /* Reduce el margen superior */
   overflow-x: auto;
   border-radius: 10px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
@@ -9,6 +9,7 @@
 .person-table {
   width: 100%;
   border-collapse: collapse;
+  font-size: 18px;
 }
 
 .person-table thead {
@@ -18,7 +19,7 @@
 
 .person-table th,
 .person-table td {
-  padding: 12px;
+  padding: 15px;
   text-align: left;
   border-bottom: 1px solid #ddd;
 }
@@ -26,6 +27,10 @@
 .person-table tr:hover {
   background-color: #f1f1f1;
   cursor: pointer;
+}
+
+.person-table thead tr:hover {
+  background-color: transparent;
 }
 
 .person-table tbody {
@@ -39,4 +44,17 @@
   display: table;
   width: 100%;
   table-layout: fixed;
+}
+
+.delete-button {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.delete-button:hover {
+  background-color: darkred;
 }
