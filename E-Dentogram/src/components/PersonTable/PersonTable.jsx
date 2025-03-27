@@ -12,26 +12,30 @@ const initialPersons = [
   },
   {
     id: 2,
-    name: "María Perez",
+    name: "Maria Perez",
     history: "123456",
     dni: "40.123.456",
     phone: "+54112345678",
   },
   {
     id: 3,
-    name: "Juan García",
+    name: "Juan Garcia",
     history: "654321",
     dni: "38.654.321",
     phone: "+54119876543",
   },
 ];
 
-const PersonTable = () => {
+const PersonTable = ({ searchTerm }) => {
   const [persons, setPersons] = useState(initialPersons);
   const navigate = useNavigate();
 
+  const filteredPersons = persons.filter((person) =>
+    person.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   const handleRowClick = (id) => {
-    navigate(`/person/${id}`);
+    navigate(`/person/${id}`); // Cambiar
   };
 
   const handleDelete = (id, event) => {
@@ -52,7 +56,7 @@ const PersonTable = () => {
           </tr>
         </thead>
         <tbody>
-          {persons.map((person) => (
+          {filteredPersons.map((person) => (
             <tr key={person.id} onClick={() => handleRowClick(person.id)}>
               <td>{person.name}</td>
               <td>{person.history}</td>

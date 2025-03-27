@@ -1,20 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import PersonTable from "../../components/PersonTable/PersonTable.jsx";
 import "./Home.css";
 
 const Home = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+
   const handleAddClick = () => {
-    // Lógica para agregar un nuevo paciente
+    // Agregar logica
     console.log("Botón Agregar clickeado");
   };
 
   return (
     <div className="home-container">
       <h1>Lista de Pacientes</h1>
-      <button onClick={handleAddClick} className="add-button">
-        Agregar
-      </button>
-      <PersonTable />
+      <div className="top-bar">
+        <button onClick={handleAddClick} className="add-button">
+          Agregar
+        </button>
+        <input
+          type="text"
+          placeholder="Buscar por nombre..."
+          className="search-input"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
+      <PersonTable searchTerm={searchTerm} />
     </div>
   );
 };

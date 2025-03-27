@@ -1,6 +1,6 @@
 .table-container {
   width: 90%;
-  margin: 10px auto 0 auto; /* Reduce el margen superior */
+  margin: 10px auto 0 auto;
   overflow-x: auto;
   border-radius: 10px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
