@@ -5,32 +5,39 @@ import DienteModal from './DienteModal';
 function Diente(props){
 
     const [showModal, toggleModal] = useState(false);
+    const [estados, setEstados] = useState({
+        vestibular:"",
+        distal:"",
+        centro:"",
+        mesial:"",
+        palatino:""
+    })
 
     return(
     <>    
         <div className="diente normal" onClick={() => toggleModal(!showModal)}>
             <div id="vestibular">
-              <div >
+              <div className={estados.vestibular}>
 
               </div>
           </div>
           <div id="distal">
-              <div >
+              <div className={estados.distal}>
                   
               </div>    
             </div>
           <div id="centro"> 
-              <div>
+              <div className={estados.centro}>
                   
               </div>
           </div>
           <div id="mesial">
-              <div >
+              <div className={estados.mesial} >
                   
               </div>
           </div>
           <div id="palatino">
-              <div  >
+              <div  className={estados.palatino}>
                   
               </div>   
           </div> 
@@ -40,7 +47,10 @@ function Diente(props){
         <DienteModal showModal= {showModal} 
         onClose={() => toggleModal(false)} 
         num={props.num} 
-        seccion={props.seccion}/>
+        seccion={props.seccion}
+        diente={estados}
+        submitDiente={setEstados}
+        />
     </>
     )
 }

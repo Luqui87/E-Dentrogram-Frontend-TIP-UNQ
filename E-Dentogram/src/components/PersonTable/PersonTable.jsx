@@ -35,7 +35,7 @@ const PersonTable = ({ searchTerm }) => {
   );
 
   const handleRowClick = (id) => {
-    navigate(`/person/${id}`); // Cambiar
+    navigate(`/paciente/${id}`); // Cambiar
   };
 
   const handleDelete = (id, event) => {

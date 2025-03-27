@@ -1,5 +1,5 @@
-import PacienteCard from './PacienteCard'
-import Odontograma from './Odontograma'
+import PacienteCard from '../../components/PacienteCard/PacienteCard'
+import Odontograma from '../../components/Odontograma/Odontograma'
 import './PacienteView.css'
 
 function PacienteView(){
