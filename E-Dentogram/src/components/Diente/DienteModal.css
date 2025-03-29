@@ -1,0 +1,83 @@
+.modalDiente{
+    width: 25vw;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.modalDiente>.cuerpo{
+    display: flex;
+    height: 25vh;
+    align-items: center;
+    gap: 14px;
+}
+
+.modalDiente>.cuerpo>.diente{
+    flex: 1 1 0%;
+    height: 50%;
+
+}
+
+.modalDiente>.cuerpo>.prestaciones{
+    flex: 3 1 0%;
+    display: flex;
+    flex-direction: column;
+    gap: 3vh;
+    align-items: center;
+    justify-content: center;
+}
+
+.modalDiente>.cuerpo>.prestaciones>*{
+    flex: 1 1 0px;
+}
+
+.btn-group button {
+    border: 1px solid black; /* Green border */
+    color: white; /* White text */
+    padding: 10px 24px; /* Some padding */
+    cursor: pointer; /* Pointer/hand icon */
+    float: left; /* Float the buttons side by side */
+    flex: 1 1 0px;
+}
+
+/* Clear floats (clearfix hack) */
+.btn-group:after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.btn-group button:hover{
+    filter: brightness(85%);
+}
+
+.btn-group button:not(:last-child) {
+    border-right: none; /* Prevent double borders */
+}
+
+.button {
+    background-color: #04AA6D; /* Green */
+    border: none;
+    color: white;
+    padding: 10px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    box-sizing: border-box;
+    align-self: flex-end;
+}
+  
+
+.carie{
+    background-color: #255272 !important;
+}
+
+.restauracion{
+    background-color: #7e261c !important;
+}
+
+.diente>div>.selected{
+    background-color: rgb(233, 233, 233);
+}

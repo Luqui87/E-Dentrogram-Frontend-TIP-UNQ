@@ -1,4 +1,4 @@
-import Diente from './Diente'
+import Diente from '../Diente/Diente'
 import './Odontograma.css'
 
 function Odontograma(){
