@@ -8,25 +8,15 @@ import Home from "./pages/Home/Home";
 const App = () => {
   return (
     <>
-    <Navbar/>
-    <Router>
-      <Routes>
-        <Route path="/home" element={<Home />}/>
-        <Route path="/paciente/:id" element = {<PacienteView/>}/>
-      </Routes>
-    </Router>
+      <Navbar />
+      <Router>
+        <Routes>
+          <Route path="/home" element={<Home />} />
+          <Route path="/paciente/:id" element={<PacienteView />} />
+        </Routes>
+      </Router>
     </>
   );
 };
 
 export default App;
-
-// function App() {
-
-//   return (
-//     <>
-//     <Navbar/>
-//     <PacienteView/>
-//     </>
-//   )
-// }
