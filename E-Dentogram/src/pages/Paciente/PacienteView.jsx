@@ -3,6 +3,7 @@ import Odontograma from '../../components/Odontograma/Odontograma'
 import './PacienteView.css'
 import {useParams} from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import API from '../../service/API';
 
 function PacienteView(){
     const [patient, setPatient] = useState("")
@@ -10,25 +11,9 @@ function PacienteView(){
     const { id } = useParams()
 
     useEffect(()=>{
-        const fetchData = async () => {
-            try {
-                const response = await fetch(`http://localhost:8080/patient/${id}`,{
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    mode: "cors"
-                });
-                const result = await response.json();
-                setPatient(result)
-                SetLoading(false)
-
-            } catch (error){
-                console.log(error);
-            }
-        };
-
-        fetchData();
+        API.getPatient(id)
+        .then((res) => setPatient(res.data))
+        .finally(() => SetLoading(false))
     }, [])
     
     return(

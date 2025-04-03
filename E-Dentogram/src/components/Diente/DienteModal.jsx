@@ -2,6 +2,7 @@ import './DienteModal.css'
 import Modal from '../Modal'
 import {useParams} from 'react-router-dom';
 import { useEffect, useState} from 'react'
+import API from '../../service/API';
 
 function DienteModal(props){
 
@@ -105,35 +106,21 @@ function DienteModal(props){
             
 
             console.log(putTooth)
-    
-            const putData = async () => {
-                try {
-                    const response = await fetch(`http://localhost:8080/update/tooth/${id}`,{
-                        method: "PUT",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        mode: "cors",
-                        body: JSON.stringify(putTooth)
-                    });
-                    
-                    props.submitDiente({
-                        up: vestibular,
-                        left: distal,
-                        center: centro,
-                        right: mesial,
-                        down: palatino
-                    });
-    
-                    setShowConfirm(true);
-                    
-                } catch (error){
-                    console.log(error);
-                }
 
-            };
-              
-            putData()
+            API.updateTeeth(id, putTooth)
+            .then(() =>{
+
+                props.submitDiente({
+                    up: vestibular,
+                    left: distal,
+                    center: centro,
+                    right: mesial,
+                    down: palatino
+                });
+
+                setShowConfirm(true);
+            })
+                
         } else{
             console.log("No realizo cambios")
         }
