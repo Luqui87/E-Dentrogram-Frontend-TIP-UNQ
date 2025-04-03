@@ -4,7 +4,7 @@ import "./PersonTable.css";
 
 const initialPersons = [
   {
-    id: 1,
+    id: 215,
     name: "Lucas Alvarez",
     history: "312312",
     dni: "42.594.982",
