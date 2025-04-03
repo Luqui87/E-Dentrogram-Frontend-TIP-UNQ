@@ -1,14 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PersonTable from "../../components/PersonTable/PersonTable.jsx";
 import "./Home.css";
+import API from "../../service/API.jsx";
 
 const Home = () => {
   const [searchTerm, setSearchTerm] = useState("");
+
+  const [patients, setPatients] = useState([]);
+
+  const [loading, setLoading] = useState(false);
 
   const handleAddClick = () => {
     // Agregar logica
     console.log("Botón Agregar clickeado");
   };
+
+  useEffect(() => {
+    setLoading(true);
+
+    API.getAllSimplePatients()
+      .then((res) => setPatients(res.data))
+      .finally(() => setLoading(false));
+  }, []);
+
+  console.log(patients);
 
   return (
     <div className="home-container">
@@ -25,7 +40,11 @@ const Home = () => {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
-      <PersonTable searchTerm={searchTerm} />
+      <PersonTable
+        patients={patients}
+        searchTerm={searchTerm}
+        setPatients={setPatients}
+      />
     </div>
   );
 };
