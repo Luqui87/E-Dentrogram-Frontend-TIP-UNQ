@@ -19,6 +19,8 @@ const request = (type, path, body) => {
 
 const API = {
   getAllSimplePatients: () => request("get", "/allSimplePatients"),
+  getPatient: (id) => request("get", `/patient/${id}`),
+  updateTeeth: (id,body) => request("put", `/update/tooth/${id}`, body),
 };
 
 export default API;

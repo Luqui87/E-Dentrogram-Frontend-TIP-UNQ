@@ -37,6 +37,7 @@
     border-right: 5px solid  #95b6bd;
     padding-right: 15px ;
     justify-content: end;
+    flex-direction: row-reverse;
 }
 
 .seccion>div:last-child{

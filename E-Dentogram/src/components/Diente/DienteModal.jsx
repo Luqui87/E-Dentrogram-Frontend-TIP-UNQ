@@ -1,28 +1,46 @@
 import './DienteModal.css'
 import Modal from '../Modal'
-import { useState } from 'react'
+import {useParams} from 'react-router-dom';
+import { useEffect, useState} from 'react'
+import API from '../../service/API';
 
 function DienteModal(props){
 
-    const [vestibular, setVestibular] = useState(props.diente.vestibular);
-    const [distal, setDistal] = useState(props.diente.distal);
-    const [centro, setCentro] = useState(props.diente.centro);
-    const [mesial, setMesial] = useState(props.diente.mesial);
-    const [palatino, setPalatino] = useState(props.diente.palatino);
+    const [vestibular, setVestibular] = useState("");
+    const [distal, setDistal] = useState("");
+    const [centro, setCentro] = useState("");
+    const [mesial, setMesial] = useState("");
+    const [palatino, setPalatino] = useState("");
     const [selected, setSelected] = useState("");
+    const [showConfirm, setShowConfirm] = useState(false)
+
+    const { id } = useParams()
+
+    const number = props.seccion < 5 ? (props.seccion - 1 ) * 8  + props.num: 32 + (props. seccion - 5 ) * 5 + props.num 
+
+
+    useEffect(()=>{
+        setVestibular(props.diente.up);
+        setDistal(props.diente.left);
+        setCentro(props.diente.center);
+        setMesial(props.diente.right);
+        setPalatino(props.diente.down);
+    },[props.diente.up, props.diente.left, props.diente.center, props.diente.right,props.diente.down])
+
 
     const clearSelected = () => {
-        setVestibular(vestibular.replaceAll("selected", ""));
-        setDistal(distal.replaceAll("selected", ""));
-        setCentro(centro.replaceAll("selected", ""));
-        setMesial(mesial.replaceAll("selected", ""));
-        setPalatino(palatino.replaceAll("selected", ""));
+        setVestibular(vestibular.replaceAll(" selected", ""));
+        setDistal(distal.replaceAll(" selected", ""));
+        setCentro(centro.replaceAll(" selected", ""));
+        setMesial(mesial.replaceAll(" selected", ""));
+        setPalatino(palatino.replaceAll(" selected", ""));
 
     }
 
     const handleSelect = ( parte ) => {     
         
         clearSelected()
+
 
         switch (parte){
             case "vestibular":
@@ -47,6 +65,7 @@ function DienteModal(props){
                 break;
         }
 
+        
 
     }
     
@@ -71,22 +90,48 @@ function DienteModal(props){
     }
 
     const handleConfirm = () => {
+        
         clearSelected()
-        props.submitDiente({
-            vestibular: vestibular,
-            distal: distal,
-            centro: centro,
-            mesial: mesial,
-            palatino: palatino
-        })
-        props.onClose()
+
+        if ([vestibular, mesial, palatino, distal, centro].some(e=> !e.includes("HEALTHY"))){
+
+            const putTooth = [{
+                number: number,
+                up: vestibular.replaceAll(" selected", ""),
+                right: mesial.replaceAll(" selected", ""),
+                down: palatino.replaceAll(" selected", ""),
+                left: distal.replaceAll(" selected", ""),
+                center: centro.replaceAll(" selected", "")
+            }]
+            
+
+            console.log(putTooth)
+
+            API.updateTeeth(id, putTooth)
+            .then(() =>{
+
+                props.submitDiente({
+                    up: vestibular,
+                    left: distal,
+                    center: centro,
+                    right: mesial,
+                    down: palatino
+                });
+
+                setShowConfirm(true);
+            })
+                
+        } else{
+            console.log("No realizo cambios")
+        }
+        
     }
 
     return(
         <Modal isOpen={props.showModal} onClose={props.onClose}>
             <div className="modalDiente">
                 <h1>Diente {props.seccion} {props.num}</h1>
-
+                { showConfirm ? <h2>Cambios confirmados</h2> : null}
                 <div className="cuerpo">
                     <div className="diente">
                         <div id="vestibular"  >
@@ -119,8 +164,8 @@ function DienteModal(props){
 
                     <div className="prestaciones">
                         <div className="btn-group" style={{display:'flex', width:'100%'}}>
-                            <button className='carie' onClick={() => handleChange("carie")}>Carie</button>
-                            <button className='restauracion' onClick={() => handleChange("restauracion")}>Restauracion</button>
+                            <button className='CARIES' onClick={() => handleChange("CARIES")}>Carie</button>
+                            <button className='RESTORATION' onClick={() => handleChange("RESTORATION")}>Restauracion</button>
                         </div>
                         <button className='button' onClick={()=> handleConfirm()}>Confirmar</button>
                     </div>    

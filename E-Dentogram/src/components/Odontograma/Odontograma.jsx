@@ -1,25 +1,23 @@
+import { useEffect } from 'react'
 import Diente from '../Diente/Diente'
 import './Odontograma.css'
 
-function Odontograma(){
+function Odontograma( {teeth} ){
 
     function dientes(n, seccion){
+
+        const initial = seccion < 5 ? (seccion - 1 ) * 8 : 32 + (seccion - 5 ) * 5  ;
+
         return [...Array(n)].map((e, i) => 
             <div className='fila' key={i}>
                 <span>{i + 1}</span>
-                <Diente seccion={seccion} num={i + 1}/>
+                <Diente seccion={seccion} num={i + 1}
+                state={ teeth.find((tooth) => tooth.number ==  initial +  (i + 1 )  )}/>
             </div>
         )
     }
 
-    function dientesReverse(n, seccion){ 
-        return [...Array(n)].map((e, i) => 
-        <div className='fila' key={i}>
-            <span>{n - i }</span>
-            <Diente seccion={seccion} num={n - i }/>
-        </div>
-    )
-    }
+
 
     return(
         <div className="odontograma">
@@ -28,8 +26,8 @@ function Odontograma(){
                 
                 <div className="seccion">
                     <div className="dientes">
+                        {dientes(8,1)}
                         <span>1</span>
-                        {dientesReverse(8,1)}
                     </div>
                     <div className="dientes">
                         {dientes(8,2)}
@@ -39,8 +37,8 @@ function Odontograma(){
             
                 <div className="seccion">
                     <div className="dientes">
+                        {dientes(8,4)}
                         <span>4</span>
-                        {dientesReverse(8,4)}
                     </div>
                     <div className="dientes">
                         {dientes(8,3)}
@@ -53,21 +51,21 @@ function Odontograma(){
             <div className="niñez">
                 <div className="seccion">
                     <div className="dientes">
+                        {dientes(5,5)}
                         <span>5</span>
-                        {dientesReverse(5)}
                     </div>
                     <div className="dientes">
-                        {dientes(5)}
+                        {dientes(5,6)}
                         <span>6</span>
                     </div>
                 </div>
                 <div className="seccion">
                     <div className="dientes">
+                        {dientes(5,8)}
                         <span>8</span>
-                        {dientesReverse(5)}
                     </div>
                     <div className="dientes">
-                        {dientes(5)}
+                        {dientes(5,7)}
                         <span>7</span>
                     </div>
                 </div>

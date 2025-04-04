@@ -1,38 +1,39 @@
 import './PacienteCard.css'
 
-function PacienteCard(){
+function PacienteCard({patient}){
+
     return(
         <div className="pacienteCard">
             <div>
-                <span className='nombre'>Lucas Alvarez</span>
+                <span className='nombre'>{patient.name}</span>
                 <div className='line'>
                     <span className="label"> N° Historia Clinica:</span>
-                    <span className="field"> 341234</span>
+                    <span className="field">{patient.medicalRecord}</span>
                 </div>
                 
             </div>
             <div>
                 <div className='line'>
                     <span className="label"> D.N.I.:</span>
-                    <span className="field"> 42.594.982</span>
+                    <span className="field"> {patient.dni}</span>
                 </div>
                 <div className='line'>
                     <span className="label">Dirección:</span>
-                    <span className="field">Bragado 1947</span>
+                    <span className="field">{patient.address}7</span>
                 </div>
                 <div className='line'>
                     <span className="label">Fecha de Nacimiento:</span>
-                    <span className="field"> 12/10/2000</span>
+                    <span className="field">{patient.birthdate}</span>
                 </div>
             </div>
             <div>
                 <div className='line'>
                     <span className="label"> Telefono:</span>
-                    <span className="field"> 1153215031</span>
+                    <span className="field"> {patient.telephone}</span>
                 </div>
                 <div className='line'>
                     <span className="label">Correo:</span>
-                    <span className="field">alvarezlucas@gmail.com</span>
+                    <span className="field">{patient.email}</span>
                 </div>
             </div>
         </div>
