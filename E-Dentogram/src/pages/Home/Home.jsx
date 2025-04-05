@@ -16,16 +16,31 @@ const Home = () => {
   };
 
   useEffect(() => {
+    // useEffect(async () => {
+    // try {
+    //   setLoading(true);
+  
+    //   const [_patients, _otraCosa] = await API.getAllSimplePatients();
+    //   setPatients(_patients);
+    // }
+    // finally {
+    //   setLoading(false)
+    // }
     setLoading(true);
 
     API.getAllSimplePatients()
-      .then((res) => setPatients(res.data))
+      .then(([_patients, _otraCosa]) => setPatients(_patients))
+      // TODO: implementar .catch() + Toast + función general para tratar errores
+      // 4xx => mensaje de error
+      // 5xx => "Ocurrió un error, consulte al administrador del sistema"
+      // cualquier otra cosa => error.message
       .finally(() => setLoading(false));
   }, []);
 
   console.log(patients);
 
   return (
+    // TODO: falta el loading
     <div className="home-container">
       <h1>Lista de Pacientes</h1>
       <div className="top-bar">

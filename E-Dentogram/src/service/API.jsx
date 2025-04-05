@@ -13,6 +13,8 @@ const request = (type, path, body) => {
       headers: {}, //authorization: getToken()
     })
     .then((response) => {
+      // qué pasa si !response.ok
+      // TODO: devolver response.data
       return response;
     });
 };
