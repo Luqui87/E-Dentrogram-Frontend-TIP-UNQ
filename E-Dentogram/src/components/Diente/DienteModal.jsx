@@ -37,57 +37,17 @@ function DienteModal(props){
 
     }
 
-    const handleSelect = ( parte ) => {     
+    const handleSelect = ( parte, stateHandler ) => {     
         
-        clearSelected()
+        clearSelected();
 
-
-        switch (parte){
-            case "vestibular":
-                setVestibular(vestibular + ' selected' );
-                setSelected('vestibular');
-                break;
-            case "distal" :
-                setDistal(distal + ' selected' );
-                setSelected('distal');
-                break;
-            case "centro": 
-                setCentro(centro + ' selected' );
-                setSelected('centro');
-                break;
-            case "mesial" :
-                setMesial(mesial + ' selected' );
-                setSelected('mesial');
-                break;
-            case "palatino" :
-                setPalatino(palatino  + ' selected' );
-                setSelected('palatino');
-                break;
-        }
-
+        stateHandler(parte + ' selected' );
         
+        setSelected(()=> stateHandler)
+
 
     }
     
-    const handleChange = (change) => {
-        switch (selected){
-            case "vestibular":
-                setVestibular(change );
-                break;
-            case "distal" :
-                setDistal(change);
-                break;
-            case "centro": 
-                setCentro(change);
-                break;
-            case "mesial" :
-                setMesial(change);
-                break;
-            case "palatino" :
-                setPalatino(change);
-                break;
-        }
-    }
 
     const handleConfirm = () => {
         
@@ -104,8 +64,6 @@ function DienteModal(props){
                 center: centro.replaceAll(" selected", "")
             }]
             
-
-            console.log(putTooth)
 
             API.updateTeeth(id, putTooth)
             .then(() =>{
@@ -135,27 +93,27 @@ function DienteModal(props){
                 <div className="cuerpo">
                     <div className="diente">
                         <div id="vestibular"  >
-                            <div className={vestibular} onClick={() => handleSelect( "vestibular")}>
+                            <div className={vestibular} onClick={() => handleSelect( vestibular, setVestibular)}>
 
                             </div>
                         </div>
                         <div id="distal">
-                            <div className={distal} onClick={() => handleSelect( "distal")}>
+                            <div className={distal} onClick={() => handleSelect( distal, setDistal)}>
                                 
                             </div>    
                             </div>
                         <div id="centro"> 
-                            <div className={centro} onClick={() => handleSelect( "centro")}>
+                            <div className={centro} onClick={() => handleSelect( centro, setCentro)}>
                                 
                             </div>
                         </div>
                         <div id="mesial">
-                            <div className={mesial} onClick={() => handleSelect( "mesial")}>
+                            <div className={mesial} onClick={() => handleSelect( mesial, setMesial)}>
                                 
                             </div>
                         </div>
                         <div id="palatino">
-                            <div className={palatino} onClick={() => handleSelect( "palatino")} >
+                            <div className={palatino} onClick={() => handleSelect( palatino,  setPalatino)} >
                                 
                             </div>   
                         </div> 
@@ -164,8 +122,8 @@ function DienteModal(props){
 
                     <div className="prestaciones">
                         <div className="btn-group" style={{display:'flex', width:'100%'}}>
-                            <button className='CARIES' onClick={() => handleChange("CARIES")}>Carie</button>
-                            <button className='RESTORATION' onClick={() => handleChange("RESTORATION")}>Restauracion</button>
+                            <button className='CARIES' onClick={() => selected("CARIES")}>Carie</button>
+                            <button className='RESTORATION' onClick={() => selected("RESTORATION")}>Restauracion</button>
                         </div>
                         <button className='button' onClick={()=> handleConfirm()}>Confirmar</button>
                     </div>    

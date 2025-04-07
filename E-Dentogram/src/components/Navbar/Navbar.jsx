@@ -1,12 +1,12 @@
 import './Navbar.css'
+import logo from '../../assets/Logo.png'
 
 function Navbar() {
 
   return (
     <header>
-        <a>Logo</a>
-        <a>Link 1</a>
-        <a href=""> Link</a>
+        <img src={logo} alt="Logo de aplicación" />
+
     </header>
   )
 }
