@@ -10,9 +10,12 @@ header{
 
 header a{
     flex: 1 1 0%;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    text-decoration: solid;
 }
 
 header img{
     height: 100%;
-    width: 3%;
+
 }
