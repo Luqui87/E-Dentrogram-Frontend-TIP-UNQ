@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import PersonTable from "../../components/PersonTable/PersonTable.jsx";
 import "./Home.css";
 import API from "../../service/API.jsx";
-import "../../components/loader.css"
+import "../../components/loader.css";
 
 const Home = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -11,33 +11,22 @@ const Home = () => {
 
   const [loading, setLoading] = useState(true);
 
-  const handleAddClick = () => {
-    // Agregar logica
-    console.log("Botón Agregar clickeado");
-  };
-
   useEffect(() => {
-
     API.getAllSimplePatients()
       .then((res) => setPatients(res.data))
       .finally(() => setLoading(false));
-
   }, []);
 
   console.log(patients);
 
-  return (
-    loading ? 
+  return loading ? (
     <div className="home-container">
-        <span class="loader"></span>
-    </div>     
-    :
+      <span class="loader"></span>
+    </div>
+  ) : (
     <div className="home-container">
       <h1>Lista de Pacientes</h1>
       <div className="top-bar">
-        <button onClick={handleAddClick} className="add-button">
-          Agregar
-        </button>
         <input
           type="text"
           placeholder="Buscar por nombre..."

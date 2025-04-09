@@ -13,13 +13,6 @@ const PersonTable = ({ patients, searchTerm, setPatients }) => {
     navigate(`/paciente/${id}`); // cambiar id por medicalRecord
   };
 
-  const handleDelete = (id, event) => {
-    event.stopPropagation(); // Evita que se active el handleRowClick
-    setPatients((prevPatients) =>
-      prevPatients.filter((person) => person.medicalRecord !== id)
-    );
-  };
-
   return (
     <div className="table-container">
       <table className="person-table">
@@ -29,7 +22,6 @@ const PersonTable = ({ patients, searchTerm, setPatients }) => {
             <th>N° Historia Clínica</th>
             <th>DNI</th>
             <th>Teléfono</th>
-            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -42,14 +34,6 @@ const PersonTable = ({ patients, searchTerm, setPatients }) => {
               <td>{person.medicalRecord}</td>
               <td>{person.dni}</td>
               <td>{person.telephone}</td>
-              <td>
-                <button
-                  className="delete-button"
-                  onClick={(event) => handleDelete(person.medicalRecord, event)} // cambiar por un endpoint de sacarlo del medico
-                >
-                  Borrar
-                </button>
-              </td>
             </tr>
           ))}
         </tbody>
