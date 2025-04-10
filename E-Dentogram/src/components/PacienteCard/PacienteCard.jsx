@@ -19,7 +19,7 @@ function PacienteCard({patient}){
                 </div>
                 <div className='line'>
                     <span className="label">Dirección:</span>
-                    <span className="field">{patient.address}7</span>
+                    <span className="field">{patient.address}</span>
                 </div>
                 <div className='line'>
                     <span className="label">Fecha de Nacimiento:</span>
