@@ -17,7 +17,11 @@ function PacienteView(){
     }, [])
     
     return(
-        isLoading ? <></> :
+        isLoading ? 
+        <main style={{alignItems:"center", justifyContent:"center"}}>
+            <span  class="loader"></span>
+        </main> 
+        :
         <main>
             <PacienteCard patient={patient}/>
             <Odontograma teeth={patient.teeth}/> 
