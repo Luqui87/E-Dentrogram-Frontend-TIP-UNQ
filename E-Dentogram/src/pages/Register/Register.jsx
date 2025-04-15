@@ -88,6 +88,10 @@ function Register(){
             <div className="register-box">
                 <div><h2>Registrarse</h2></div>
                 <div>
+                    <span>Nombre y apellido</span>
+                    <input required="" type="text" className="input"/>
+                </div>
+                <div>
                     <span>Username</span>
                     <input required="" type="text" className="input"/>
                 </div>
@@ -127,7 +131,7 @@ function Register(){
                     {!samePassword ? <span style={{color:"red", fontSize:"13px",}}>*Contraseñas no coinciden</span> : <></> }
                 </div>
                 <div className='register-button'>
-                    <button class="button-66" role="button"> Confirmar Registro</button>
+                    <button class="button-66" role="button"> Register</button>
                     
                 </div>
             </div>
