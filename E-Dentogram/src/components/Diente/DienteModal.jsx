@@ -1,8 +1,9 @@
-import './DienteModal.css'
-import Modal from '../Modal'
+import './DienteModal.css';
+import Modal from '../Modal';
 import {useParams} from 'react-router-dom';
 import { useEffect, useState} from 'react'
 import API from '../../service/API';
+import { ToastContainer, toast, Bounce } from 'react-toastify';
 
 function DienteModal(props){
 
@@ -12,7 +13,6 @@ function DienteModal(props){
     const [mesial, setMesial] = useState("");
     const [palatino, setPalatino] = useState("");
     const [selected, setSelected] = useState("");
-    const [showConfirm, setShowConfirm] = useState(false)
 
     const { id } = useParams()
 
@@ -75,12 +75,16 @@ function DienteModal(props){
                     right: mesial,
                     down: palatino
                 });
-
-                setShowConfirm(true);
+                props.onClose()
+                toast.success("Cambios confirmados") 
+            })
+            .catch(error => {
+                toast.error("Cambios no confirmados")
+                console.log(error)
             })
                 
         } else{
-            console.log("No realizo cambios")
+
         }
         
     }
@@ -89,7 +93,6 @@ function DienteModal(props){
         <Modal isOpen={props.showModal} onClose={props.onClose}>
             <div className="modalDiente">
                 <h1>Diente {props.seccion} {props.num}</h1>
-                { showConfirm ? <h2>Cambios confirmados</h2> : null}
                 <div className="cuerpo">
                     <div className="diente">
                         <div id="vestibular"  >
@@ -132,6 +135,9 @@ function DienteModal(props){
                 </div>
                 
             </div>
+            
+           
+
         </Modal>
     )
 }

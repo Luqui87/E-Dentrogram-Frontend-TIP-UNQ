@@ -4,6 +4,7 @@ import './PacienteView.css'
 import {useParams} from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import API from '../../service/API';
+import { toast } from 'react-toastify';
 
 function PacienteView(){
     const [patient, setPatient] = useState("")
@@ -12,8 +13,15 @@ function PacienteView(){
 
     useEffect(()=>{
         API.getPatient(id)
-        .then((res) => setPatient(res.data))
-        .finally(() => SetLoading(false))
+        .then((res) => {
+            setPatient(res.data);
+            SetLoading(false);
+        })
+        .catch(error=>{
+            toast.error("No se pudo cargar el paciente")
+            console.log(error)
+        })
+        .finally()
     }, [])
     
     return(

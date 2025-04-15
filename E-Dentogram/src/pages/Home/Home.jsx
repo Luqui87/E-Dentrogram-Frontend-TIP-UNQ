@@ -3,6 +3,7 @@ import PersonTable from "../../components/PersonTable/PersonTable.jsx";
 import "./Home.css";
 import API from "../../service/API.jsx";
 import "../../components/loader.css"
+import { toast } from "react-toastify";
 
 const Home = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -30,30 +31,32 @@ const Home = () => {
     setLoading(true);
 
     API.getAllSimplePatients()
-      .then(([_patients, _otraCosa]) => setPatients(_patients))
+      .then((res) => {
+        setPatients(res.data);
+        setLoading(false)
+      })
+      .catch(error => {
+        toast.error("No se han podido cargar los pacientes")
+      })
       // TODO: implementar .catch() + Toast + función general para tratar errores
       // 4xx => mensaje de error
       // 5xx => "Ocurrió un error, consulte al administrador del sistema"
       // cualquier otra cosa => error.message
-      .finally(() => setLoading(false));
+      .finally();
 
   }, []);
 
-  console.log(patients);
 
   return (
     loading ? 
     <div className="home-container">
-        <span class="loader"></span>
+        <span class="loader" style={{"margin": "auto"}}></span>
     </div>     
     :
 
     <div className="home-container">
-      <h1>Lista de Pacientes</h1>
       <div className="top-bar">
-        <button onClick={handleAddClick} className="add-button">
-          Agregar
-        </button>
+        <h1>Listado de Pacientes</h1>
         <input
           type="text"
           placeholder="Buscar por nombre..."
@@ -61,6 +64,10 @@ const Home = () => {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
+        <button onClick={handleAddClick} className="add-button">
+          Agregar Paciente +
+        </button>
+        
       </div>
       <PersonTable
         patients={patients}

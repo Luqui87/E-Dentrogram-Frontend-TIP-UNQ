@@ -4,16 +4,33 @@ import "./App.css";
 import Navbar from "./components/Navbar/Navbar";
 import PacienteView from "./pages/Paciente/PacienteView";
 import Home from "./pages/Home/Home";
+import { ToastContainer, toast, Bounce } from 'react-toastify';
+import Register from "./pages/Register/Register";
 
 const App = () => {
   return (
     <>
-      <Navbar />
+      
       <Router>
+      <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/paciente/:id" element={<PacienteView />} />
+          <Route path="/register" element= {<Register />} />
         </Routes>
+        <ToastContainer
+                position="bottom-center"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick={false}
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+                transition={Bounce}
+            />
       </Router>
     </>
   );
