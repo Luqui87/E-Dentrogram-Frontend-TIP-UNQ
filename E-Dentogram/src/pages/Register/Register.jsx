@@ -21,10 +21,10 @@ function Register(){
 
     const strength = Object.values(validate).reduce((a, item) => a + item, 0);
     const feedback = {
-        1: "Password is to weak!",
-        2: "It's still weak! ",
-        3: "You almost there!",
-        4: "Great!! now your password is strong"
+        1: "Contraseña es vulnerable!",
+        2: "Contraseña es debil! ",
+        3: "Contraseña decente!",
+        4: "Genial! tu contraseña es fuerte"
     }[strength];
 
     const handleChangePassword = (e) => {
