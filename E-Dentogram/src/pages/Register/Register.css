@@ -1,6 +1,5 @@
 .register-box{
-    width: 550px;
-    height: 70%;
+    width: 450px;
     padding: 30px;
     background-color: #FFFFFF;
     display: flex;
@@ -12,7 +11,7 @@
     gap: 10px;
 }
 
-.register-box h2{
+.register-box .header{
     font-size: 2em;
 }
 

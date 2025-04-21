@@ -30,9 +30,9 @@ const Home = () => {
     // }
     setLoading(true);
 
-    API.getAllSimplePatients()
+    API.getDentist(localStorage.getItem('username'))
       .then((res) => {
-        setPatients(res.data);
+        setPatients(res.data.patients);
         setLoading(false)
       })
       .catch(error => {

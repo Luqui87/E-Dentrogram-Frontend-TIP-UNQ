@@ -1,10 +1,16 @@
 import { useState } from 'react';
 import './Register.css'
+import API from '../../service/API';
+import { toast } from 'react-toastify';
+import { useNavigate } from "react-router-dom";
 
 function Register(){
 
+    const navigate = useNavigate()
 
-    const [password, setPassword] = useState("");
+
+    const [newUsername, setUsername] = useState("")
+    const [newPassword, setPassword] = useState("");
     const [validate, setValidate] = useState({
         hasLow: false,
         hasCap: false,
@@ -24,7 +30,7 @@ function Register(){
         1: "Contraseña es vulnerable!",
         2: "Contraseña es debil! ",
         3: "Contraseña decente!",
-        4: "Genial! tu contraseña es fuerte"
+        4: "Genial! tu contraseña es segura"
     }[strength];
 
     const handleChangePassword = (e) => {
@@ -33,25 +39,25 @@ function Register(){
     };
 
     const validatePassword = (password) => {
-        if (password.match(/\d+/g)) {
+        if (newPassword.match(/\d+/g)) {
         setValidate((o) => ({ ...o, hasNumber: true }));
         } else {
         setValidate((o) => ({ ...o, hasNumber: false }));
         }
 
-        if (password.match(/[A-Z]+/g)) {
+        if (newPassword.match(/[A-Z]+/g)) {
         setValidate((o) => ({ ...o, hasCap: true }));
         } else {
         setValidate((o) => ({ ...o, hasCap: false }));
         }
 
-        if (password.match(/[a-z]+/g)) {
+        if (newPassword.match(/[a-z]+/g)) {
         setValidate((o) => ({ ...o, hasLow: true }));
         } else {
         setValidate((o) => ({ ...o, hasLow: false }));
         }
 
-        if (password.length > 7) {
+        if (newPassword.length > 7) {
         setValidate((o) => ({ ...o, has8digit: true }));
         } else {
         setValidate((o) => ({ ...o, has8digit: false }));
@@ -60,7 +66,7 @@ function Register(){
 
     const checkPassword = (e) => {
         setConfirmPassword(e.target.value);
-        setSamePassword(e.target.value == password)
+        setSamePassword(e.target.value == newPassword)
     }
 
 
@@ -83,17 +89,40 @@ function Register(){
         )
     }
 
+    const handleRegister = () => {
+        if (newPassword !== "" && newPassword == confirmPasword){
+            API.register({
+                username: newUsername,
+                password: newPassword
+            })
+            .then((res) => {
+                toast.success("Dentista registrado exitosamente");
+
+                const token = res.data.accessToken;
+                localStorage.setItem('token', token);
+                localStorage.setItem('username', newUsername)
+                
+                navigate("/")
+
+
+            })
+            .catch((res) => {
+                toast.error(res.data)
+            })
+        }
+    }
+
     return (
         <main style={{justifyContent: "center"}}>
             <div className="register-box">
-                <div><h2>Registrarse</h2></div>
+                <div><span className='header'>Registrarse</span></div>
                 <div>
                     <span>Nombre y apellido</span>
                     <input required="" type="text" className="input"/>
                 </div>
                 <div>
                     <span>Username</span>
-                    <input required="" type="text" className="input"/>
+                    <input required="" type="text" className="input" value={newUsername} onChange={(e) => setUsername(e.target.value)}/>
                 </div>
                 <div> 
                     <span>Contraseña</span>
@@ -101,20 +130,20 @@ function Register(){
                     <input
                         type ={seePassword1? "text": "password"}
                         className="input-password"
-                        value={password}
+                        value={newPassword}
                         onChange={(e) => handleChangePassword(e)}
                     />
                     <br />
                     {strength > 0 ? (
                         <progress
-                        hidden={password.length === 0}
+                        hidden={newPassword.length === 0}
                         className={`password strength-${strength}`}
                         value={strength}
                         max="4"
                         />
                     ) : null}
                     <br />
-                    <div className={`feedback strength-${strength}`} hidden={password.length === 0}>
+                    <div className={`feedback strength-${strength}`} hidden={newPassword.length === 0}>
                         {feedback}
                     </div>
                 </div>
@@ -131,7 +160,7 @@ function Register(){
                     {!samePassword ? <span style={{color:"red", fontSize:"13px",}}>*Contraseñas no coinciden</span> : <></> }
                 </div>
                 <div className='register-button'>
-                    <button class="button-66" role="button"> Register</button>
+                    <button className="button-66" role="button" onClick={() => handleRegister()}> Register</button>
                     
                 </div>
             </div>
