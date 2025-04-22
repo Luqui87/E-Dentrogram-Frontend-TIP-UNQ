@@ -41,6 +41,8 @@ const API = {
   updateTeeth: (id, body) => request("put", `/update/tooth/${id}`, body),
   register: (body) => request("post", "/register", body),
   login: (body) => request("post", "/login", body),
+  removePatient: (dentistId, patientMedicalRecord) =>
+    request("put", `/dentist/Remove/${dentistId}/${patientMedicalRecord}`),
 };
 
 export default API;
