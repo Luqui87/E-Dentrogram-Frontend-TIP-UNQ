@@ -11,7 +11,7 @@ function Navbar() {
     <>
       {token && (
         <header>
-          <div onClick={() => navigate("/")}>
+          <div onClick={() => navigate("/Home")}>
             <img src={logo} alt="Logo de aplicación" />
             <a>E-Dentogram</a>
           </div>

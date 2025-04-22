@@ -1,10 +1,9 @@
 import axios from "axios";
 
 const getToken = () => {
-
   const token = localStorage.getItem("token");
   return token ? `Bearer ${token}` : "";
-}
+};
 
 axios.defaults.baseURL = "http://localhost:8080";
 axios.defaults.timeout = 10000;
@@ -18,9 +17,9 @@ const request = (type, path, body) => {
       data: body,
       headers: {
         "Content-Type": "application/json", // "Authorization": getToken(), // si usás token más adelante
-        "Authorization": getToken()
+        Authorization: getToken(),
       },
-      withCredentials: true, 
+      withCredentials: true,
     })
     .then((response) => {
       // qué pasa si !response.ok
@@ -28,9 +27,9 @@ const request = (type, path, body) => {
       return response;
     })
     .catch((reason) => {
-      if(reason.response.status == 403){
-        window.history.replaceState(null, null, '/login')
-        location.reload()
+      if (reason.response.status == 403) {
+        window.history.replaceState(null, null, "/");
+        location.reload();
       }
     });
 };
@@ -39,9 +38,9 @@ const API = {
   getAllSimplePatients: () => request("get", "/allSimplePatients"),
   getDentist: (username) => request("get", `/dentist/user`),
   getPatient: (id) => request("get", `/patient/${id}`),
-  updateTeeth: (id,body) => request("put", `/update/tooth/${id}`, body),
+  updateTeeth: (id, body) => request("put", `/update/tooth/${id}`, body),
   register: (body) => request("post", "/register", body),
-  login: (body) => request("post", "/login", body)
+  login: (body) => request("post", "/login", body),
 };
 
 export default API;
