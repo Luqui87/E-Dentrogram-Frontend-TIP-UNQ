@@ -39,14 +39,33 @@ const Home = () => {
         setLoading(false);
       })
       .catch((error) => {
-        toast.error("No se han podido cargar los pacientes");
+        handleApiError(error);
+        // TODO: implementar .catch() + Toast + función general para tratar errores
+        // 4xx => mensaje de error
+        // 5xx => "Ocurrió un error, consulte al administrador del sistema"
+        // cualquier otra cosa => error.message
       })
-      // TODO: implementar .catch() + Toast + función general para tratar errores
-      // 4xx => mensaje de error
-      // 5xx => "Ocurrió un error, consulte al administrador del sistema"
-      // cualquier otra cosa => error.message
       .finally();
   }, []);
+
+  const handleApiError = (error) => {
+    if (error.response) {
+      const status = error.response.status;
+
+      switch (true) {
+        case status >= 400 && status < 500:
+          toast.error(error.response.data || "Error del cliente.");
+          break;
+        case status >= 500:
+          toast.error("Error del servidor. Consulte al administrador.");
+          break;
+        default:
+          toast.error("Error inesperado.");
+      }
+    } else {
+      toast.error("No se pudo conectar con el servidor.");
+    }
+  };
 
   return loading ? (
     <div className="home-container">
