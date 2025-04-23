@@ -52,7 +52,7 @@ const PersonTable = ({ patients, searchTerm, setPatients, dentistId }) => {
               <td>
                 <button
                   className="delete-button"
-                  onClick={(event) => handleDelete(person.medicalRecord, event)} // cambiar por un endpoint de sacarlo del medico
+                  onClick={(event) => handleDelete(person.medicalRecord, event)}
                 >
                   Borrar
                 </button>

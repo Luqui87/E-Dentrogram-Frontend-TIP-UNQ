@@ -4,6 +4,7 @@ import "./Home.css";
 import API from "../../service/API.jsx";
 import "../../components/loader.css";
 import { toast } from "react-toastify";
+import PatientModal from "../../components/PatientModal/PatientModal.jsx";
 
 const Home = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -14,9 +15,14 @@ const Home = () => {
 
   const [dentistId, setDentistId] = useState("");
 
+  const [showModal, setShowModal] = useState(false);
+
   const handleAddClick = () => {
-    // Agregar logica
-    console.log("Botón Agregar clickeado");
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
   };
 
   useEffect(() => {
@@ -86,6 +92,11 @@ const Home = () => {
           Agregar Paciente +
         </button>
       </div>
+
+      {showModal && (
+        <PatientModal onClose={handleCloseModal} dentistId={dentistId} />
+      )}
+
       <PersonTable
         patients={patients}
         searchTerm={searchTerm}

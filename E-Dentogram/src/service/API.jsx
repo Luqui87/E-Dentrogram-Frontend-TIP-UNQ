@@ -43,6 +43,8 @@ const API = {
   login: (body) => request("post", "/login", body),
   removePatient: (dentistId, patientMedicalRecord) =>
     request("put", `/dentist/Remove/${dentistId}/${patientMedicalRecord}`),
+  addPatient: (dentistId, body) =>
+    request("put", `/dentist/add/${dentistId}`, body),
 };
 
 export default API;
