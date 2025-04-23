@@ -14,6 +14,8 @@ function DienteModal(props){
     const [palatino, setPalatino] = useState("");
     const [selected, setSelected] = useState("");
 
+    const [upperState, setUpperState] = useState("")
+
     const { id } = useParams()
 
     const number = props.seccion < 5 ? (props.seccion - 1 ) * 8  + props.num: 32 + (props. seccion - 5 ) * 5 + props.num 
@@ -25,6 +27,7 @@ function DienteModal(props){
         setCentro(props.diente.center);
         setMesial(props.diente.right);
         setPalatino(props.diente.down);
+        setUpperState(props.diente.upperState)
     },[props.diente.up, props.diente.left, props.diente.center, props.diente.right,props.diente.down])
 
 
@@ -37,17 +40,36 @@ function DienteModal(props){
 
     }
 
+    const canBeSelected = (parte) => {
+        return parte.includes("HEALTHY") || parte.includes("CARIES") || parte.includes("RESTORATION")
+    }
+
     const handleSelect = ( parte, stateHandler ) => {     
         
         clearSelected();
 
-        stateHandler(parte + ' selected' );
+        if (canBeSelected(parte)){
+            stateHandler(parte + ' selected' );
         
-        setSelected(()=> stateHandler)
+            setSelected(()=> stateHandler)
 
+        }
 
     }
     
+
+    const handleUpperState = (newState) => {
+
+        clearSelected();
+        
+        setUpperState(newState);
+        setVestibular(newState);
+        setDistal(newState);
+        setCentro(newState);
+        setMesial(newState);
+        setPalatino(newState);
+
+    }
 
     const handleConfirm = () => {
         
@@ -74,7 +96,7 @@ function DienteModal(props){
                     center: centro,
                     right: mesial,
                     down: palatino
-                });
+                }, upperState);
                 props.onClose()
                 toast.success("Cambios confirmados") 
             })
@@ -120,6 +142,8 @@ function DienteModal(props){
                                 
                             </div>   
                         </div> 
+
+                        <div className={upperState}></div>
                     
                     </div>
 
@@ -127,7 +151,9 @@ function DienteModal(props){
                         <div className="btn-group" style={{display:'flex', width:'100%'}}>
                             <button className='CARIES' onClick={() => selected("CARIES")}>Carie</button>
                             <button className='RESTORATION' onClick={() => selected("RESTORATION")}>Restauracion</button>
+                            
                         </div>
+                        <button className='EXCTRACTION' onClick={() => handleUpperState("EXTRACTION")}>Extracción</button>
                         <button className='button' onClick={()=> handleConfirm()}>Confirmar</button>
                     </div>    
 

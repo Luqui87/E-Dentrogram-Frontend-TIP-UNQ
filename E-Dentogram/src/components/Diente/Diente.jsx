@@ -12,15 +12,28 @@ function Diente(props){
         right:"HEALTHY",
         down:"HEALTHY"
     })
+    const [upperState, setUpperState] = useState("")
+    
 
-    useEffect(() => {
+    const handleConfirm = (estados,upper) =>{
+        setEstados(estados)
+        setUpperState(upper)
+    }
+
+    /* useEffect(() => {
         if (props.state){
             setEstados(props.state)
+            
+            const values = Object.values(props.state);
+            const firstValue = values[0];
+            if (values.every(value => value === firstValue)){
+                setUpperSte(firstValue)
+            }
         }
-    },[])
+    },[]) */
 
     return(
-    <>    
+    <>  
         <div className="diente normal" onClick={() => {toggleModal(!showModal), console.log(estados)}}>
             <div id="vestibular">
               <div className={estados.up}>
@@ -48,14 +61,18 @@ function Diente(props){
               </div>   
           </div> 
         
+          <div className={upperState}></div>
+
         </div>
         
+        
+
         <DienteModal showModal= {showModal} 
         onClose={() => toggleModal(false)} 
         num={props.num} 
         seccion={props.seccion}
         diente={estados}
-        submitDiente={setEstados}
+        submitDiente={handleConfirm}
         />
     </>
     )

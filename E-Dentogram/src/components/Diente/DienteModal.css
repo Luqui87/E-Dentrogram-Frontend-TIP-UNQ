@@ -79,5 +79,10 @@
 }
 
 .diente>div>.selected{
-    background-color: rgb(233, 233, 233);
+    background-color: rgb(129, 125, 125);
+}
+
+.modalDiente>.cuerpo>.diente>.EXTRACTION{
+    border-top: 1vh solid #255272 ;
+    border-bottom: 1vh solid #255272;
 }
