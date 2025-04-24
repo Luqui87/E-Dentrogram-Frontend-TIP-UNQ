@@ -103,8 +103,8 @@ function DienteModal(props){
             .catch(error => {
                 toast.error("Cambios no confirmados")
                 console.log(error)
-            })
-                
+            }) 
+
         } else{
 
         }

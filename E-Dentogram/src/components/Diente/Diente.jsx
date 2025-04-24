@@ -71,7 +71,7 @@ function Diente(props){
         onClose={() => toggleModal(false)} 
         num={props.num} 
         seccion={props.seccion}
-        diente={estados}
+        diente={{...estados,...{upperState: upperState}}}
         submitDiente={handleConfirm}
         />
     </>
