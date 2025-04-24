@@ -8,8 +8,6 @@ import Home from "./pages/Home/Home";
 import PageNotFound from "./pages/PageNotFound/PageNotFound";
 
 import Register from "./pages/Register/Register";
-import Login from "./pages/Login/Login";
-import Diente from "./components/Diente/Diente";
 
 const App = () => {
   return (
@@ -17,11 +15,10 @@ const App = () => {
       <Router>
         <Navbar />
         <Routes>
-          <Route path="/" element={<Diente />} />
-         {/*  <Route path="/register" element={<Register />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/home" element={<Home />} />
           <Route path="/paciente/:id" element={<PacienteView />} />
-          <Route path="*" element={<PageNotFound />} /> */}
+          <Route path="*" element={<PageNotFound />} /> 
         </Routes>
         <ToastContainer
           position="bottom-center"
