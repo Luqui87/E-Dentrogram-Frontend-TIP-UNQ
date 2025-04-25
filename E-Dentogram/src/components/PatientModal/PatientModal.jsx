@@ -16,22 +16,6 @@ const PatientModal = ({ showModal, onClose, dentistId }) => {
     telephone: "",
     email: "",
   });
-
-
-  useEffect(() => {
-      const handleEsc = (event) => {
-        if (event.key === 'Escape') {
-          onClose()
-        }
-      };
-      window.addEventListener('keydown', handleEsc);
-
-      return () => {
-        window.removeEventListener('keydown', handleEsc);
-      };
-    }, []);
-
-
     
   const handleSubmit = () => {
     if (!form.medicalRecord) {
