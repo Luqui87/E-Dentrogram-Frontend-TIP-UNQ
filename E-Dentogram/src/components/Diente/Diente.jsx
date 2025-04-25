@@ -20,7 +20,7 @@ function Diente(props){
         setUpperState(upper)
     }
 
-    /* useEffect(() => {
+    useEffect(() => {
         if (props.state){
             setEstados(props.state)
             
@@ -30,7 +30,7 @@ function Diente(props){
                 setUpperSte(firstValue)
             }
         }
-    },[]) */
+    },[]) 
 
     return(
     <>  

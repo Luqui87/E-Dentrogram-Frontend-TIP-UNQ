@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import "./PatientModal.css";
 import API from "../../service/API";
 import { toast } from "react-toastify";
+import { useEffect } from "react";
+import Modal from '../Modal'
 
-const PatientModal = ({ onClose, dentistId }) => {
+const PatientModal = ({ showModal, onClose, dentistId }) => {
   const [activeTab, setActiveTab] = useState("agregar");
   const [form, setForm] = useState({
     medicalRecord: "",
@@ -15,6 +17,22 @@ const PatientModal = ({ onClose, dentistId }) => {
     email: "",
   });
 
+
+  useEffect(() => {
+      const handleEsc = (event) => {
+        if (event.key === 'Escape') {
+          onClose()
+        }
+      };
+      window.addEventListener('keydown', handleEsc);
+
+      return () => {
+        window.removeEventListener('keydown', handleEsc);
+      };
+    }, []);
+
+
+    
   const handleSubmit = () => {
     if (!form.medicalRecord) {
       toast.error("Hay campos vacios");
@@ -36,8 +54,7 @@ const PatientModal = ({ onClose, dentistId }) => {
   };
 
   return (
-    <div className="modal-overlay">
-      <div className="modal">
+    <Modal isOpen={showModal} onClose={onClose}>
         <div className="tabs">
           <button
             className={activeTab === "agregar" ? "active" : ""}
@@ -56,20 +73,24 @@ const PatientModal = ({ onClose, dentistId }) => {
         <div className="modal-body">
           {activeTab === "agregar" ? (
             <div className="form">
-              <label>Historia Clínica</label>
-              <input
-                type="text"
-                value={form.medicalRecord}
-                onChange={(e) =>
-                  setForm((prev) => ({
-                    ...prev,
-                    medicalRecord: e.target.value,
-                  }))
-                }
-              />
+              <div className="field" style={{display:"flex", alignItems:"center"}}>
+                <label>Historia Clínica</label>
+                <input
+                  type="text"
+                  value={form.medicalRecord}
+                  onChange={(e) =>
+                    setForm((prev) => ({
+                      ...prev,
+                      medicalRecord: e.target.value,
+                    }))
+                  }
+                />
+              </div>
+              
             </div>
           ) : (
             <div className="form">
+              <div className="field">
               <label>Historia Clínica</label>
               <input
                 type="text"
@@ -81,72 +102,92 @@ const PatientModal = ({ onClose, dentistId }) => {
                   }))
                 }
               />
-              <label>DNI</label>
-              <input
-                type="text"
-                value={form.dni}
-                onChange={(e) =>
-                  setForm((prev) => ({
-                    ...prev,
-                    dni: e.target.value,
-                  }))
-                }
-              />
-              <label>Nombre</label>
-              <input
-                type="text"
-                value={form.name}
-                onChange={(e) =>
-                  setForm((prev) => ({
-                    ...prev,
-                    name: e.target.value,
-                  }))
-                }
-              />
-              <label>Dirección</label>
-              <input
-                type="text"
-                value={form.address}
-                onChange={(e) =>
-                  setForm((prev) => ({
-                    ...prev,
-                    address: e.target.value,
-                  }))
-                }
-              />
-              <label>Fecha de nacimiento</label>
-              <input
-                type="date"
-                value={form.birthdate}
-                onChange={(e) =>
-                  setForm((prev) => ({
-                    ...prev,
-                    birthdate: e.target.value,
-                  }))
-                }
-              />
-              <label>Teléfono</label>
-              <input
-                type="text"
-                value={form.telephone}
-                onChange={(e) =>
-                  setForm((prev) => ({
-                    ...prev,
-                    telephone: e.target.value,
-                  }))
-                }
-              />
-              <label>Email</label>
-              <input
-                type="email"
-                value={form.email}
-                onChange={(e) =>
-                  setForm((prev) => ({
-                    ...prev,
-                    email: e.target.value,
-                  }))
-                }
-              />
+              </div>
+              
+              <div className="field">
+                <label>DNI</label>
+                <input
+                  type="text"
+                  value={form.dni}
+                  onChange={(e) =>
+                    setForm((prev) => ({
+                      ...prev,
+                      dni: e.target.value,
+                    }))
+                  }
+                />
+              </div>
+              
+              <div className="field">
+                <label>Nombre</label>
+                <input
+                  type="text"
+                  value={form.name}
+                  onChange={(e) =>
+                    setForm((prev) => ({
+                      ...prev,
+                      name: e.target.value,
+                    }))
+                  }
+                />
+              </div>
+              
+              <div className="field">
+                <label>Dirección</label>
+                <input
+                  type="text"
+                  value={form.address}
+                  onChange={(e) =>
+                    setForm((prev) => ({
+                      ...prev,
+                      address: e.target.value,
+                    }))
+                  }
+                />
+              </div>
+              
+              <div className="field">
+                <label>Fecha de nacimiento</label>
+                <input
+                  type="date"
+                  value={form.birthdate}
+                  onChange={(e) =>
+                    setForm((prev) => ({
+                      ...prev,
+                      birthdate: e.target.value,
+                    }))
+                  }
+                />
+              </div>
+              
+              <div className="field">
+                <label>Teléfono</label>
+                <input
+                  type="text"
+                  value={form.telephone}
+                  onChange={(e) =>
+                    setForm((prev) => ({
+                      ...prev,
+                      telephone: e.target.value,
+                    }))
+                  }
+                />
+              </div>
+              
+              <div className="field">
+                <label>Email</label>
+                <input
+                  type="email"
+                  value={form.email}
+                  onChange={(e) =>
+                    setForm((prev) => ({
+                      ...prev,
+                      email: e.target.value,
+                    }))
+                  }
+                />
+              </div>
+             
             </div>
           )}
         </div>
@@ -159,8 +200,7 @@ const PatientModal = ({ onClose, dentistId }) => {
             Cancelar
           </button>
         </div>
-      </div>
-    </div>
+    </Modal>
   );
 };
 

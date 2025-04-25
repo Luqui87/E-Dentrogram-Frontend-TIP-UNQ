@@ -51,7 +51,9 @@ const Home = () => {
         // 5xx => "Ocurrió un error, consulte al administrador del sistema"
         // cualquier otra cosa => error.message
       })
-      .finally();
+      .finally(() => {
+        setLoading(false)
+      });
   }, []);
 
   const handleApiError = (error) => {
@@ -93,9 +95,8 @@ const Home = () => {
         </button>
       </div>
 
-      {showModal && (
-        <PatientModal onClose={handleCloseModal} dentistId={dentistId} />
-      )}
+      <PatientModal showModal={showModal} onClose={handleCloseModal} dentistId={dentistId} />
+      
 
       <PersonTable
         patients={patients}

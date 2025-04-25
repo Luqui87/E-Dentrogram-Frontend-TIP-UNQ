@@ -60,22 +60,29 @@ function Login() {
     );
   };
 
-  const handleLogin = () => {
-    API.login({
-      username: insUsername,
-      password: insPassword,
-    })
-      .then((res) => {
-        toast.success("Dentista ingresado exitosamente");
+  const handleLogin = (event) => {
 
-        const token = res.data.accessToken;
-        localStorage.setItem("token", token);
+    console.log(event)
 
-        navigate("/home");
+    if (event.key === 'Enter' || event == undefined){
+      API.login({
+        username: insUsername,
+        password: insPassword,
       })
-      .catch((res) => {
-        toast.error(res.data);
-      });
+        .then((res) => {
+          toast.success("Dentista ingresado exitosamente");
+  
+          const token = res.data.accessToken;
+          localStorage.setItem("token", token);
+  
+          navigate("/home");
+        })
+        .catch((res) => {
+          toast.error(res.data);
+        });
+    }
+
+    
   };
 
   return (
@@ -105,6 +112,7 @@ function Login() {
             className="input"
             value={insPassword}
             onChange={(e) => setInsPassword(e.target.value)}
+            onKeyDown={handleLogin}
           />
         </div>
 
@@ -113,13 +121,14 @@ function Login() {
             className="button-66"
             role="button"
             onClick={() => handleLogin()}
+            onKeyDown={handleLogin}
           >
             Ingresar
           </button>
         </div>
 
         <span>
-          No tenes una cuenta? <a href="/register">Registrate</a>{" "}
+          No tenes una cuenta? <a href="/register">Regístrate</a>{" "}
         </span>
       </div>
     </main>

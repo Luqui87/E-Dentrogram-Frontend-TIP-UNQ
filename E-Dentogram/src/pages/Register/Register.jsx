@@ -89,8 +89,9 @@ function Register(){
         )
     }
 
-    const handleRegister = () => {
-        if (newPassword !== "" && newPassword == confirmPasword){
+    const handleRegister = (event) => {
+        if ((newPassword !== "" && newPassword == confirmPasword) &&
+        (event.key === 'Enter' || event === undefined)){
             API.register({
                 username: newUsername,
                 password: newPassword
@@ -113,7 +114,7 @@ function Register(){
     }
 
     return (
-        <main style={{justifyContent: "center"}}>
+        <main >
             <div className="register-box">
                 <div><span className='header'>Registrarse</span></div>
                 <div>
@@ -133,7 +134,6 @@ function Register(){
                         value={newPassword}
                         onChange={(e) => handleChangePassword(e)}
                     />
-                    <br />
                     {strength > 0 ? (
                         <progress
                         hidden={newPassword.length === 0}
@@ -142,7 +142,6 @@ function Register(){
                         max="4"
                         />
                     ) : null}
-                    <br />
                     <div className={`feedback strength-${strength}`} hidden={newPassword.length === 0}>
                         {feedback}
                     </div>
@@ -156,11 +155,17 @@ function Register(){
                      type={seePassword2? "text": "password"}
                      className="input"
                     value={confirmPasword}
-                    onChange={(e) => checkPassword(e)}/>
+                    onChange={(e) => checkPassword(e)}
+                    onKeyDown={handleRegister}
+                    />
                     {!samePassword ? <span style={{color:"red", fontSize:"13px",}}>*Contraseñas no coinciden</span> : <></> }
                 </div>
                 <div className='register-button'>
-                    <button className="button-66" role="button" onClick={() => handleRegister()}> Register</button>
+                    <button className="button-66" 
+                    role="button" 
+                    onClick={() => handleRegister()}
+                    onKeyDown={handleRegister}
+                    > Register</button>
                     
                 </div>
             </div>

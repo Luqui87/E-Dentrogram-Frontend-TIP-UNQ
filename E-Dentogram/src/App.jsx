@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar/Navbar";
 import PacienteView from "./pages/Paciente/PacienteView";
 import Home from "./pages/Home/Home";
 import PageNotFound from "./pages/PageNotFound/PageNotFound";
+import Login from './pages/Login/Login'
 
 import Register from "./pages/Register/Register";
 
@@ -18,6 +19,7 @@ const App = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/home" element={<Home />} />
           <Route path="/paciente/:id" element={<PacienteView />} />
+          <Route path="/login" element={<Login/>} />
           <Route path="*" element={<PageNotFound />} /> 
         </Routes>
         <ToastContainer
