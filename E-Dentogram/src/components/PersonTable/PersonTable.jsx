@@ -1,8 +1,10 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./PersonTable.css";
+import API from "../../service/API";
+import { toast } from "react-toastify";
 
-const PersonTable = ({ patients, searchTerm, setPatients }) => {
+const PersonTable = ({ patients, searchTerm, setPatients, dentistId }) => {
   const navigate = useNavigate();
 
   const filteredPersons = patients.filter((person) =>
@@ -10,11 +12,19 @@ const PersonTable = ({ patients, searchTerm, setPatients }) => {
   );
 
   const handleRowClick = (id) => {
-    navigate(`/paciente/${id}`); // cambiar id por medicalRecord
+    navigate(`/paciente/${id}`);
   };
 
   const handleDelete = (id, event) => {
-    event.stopPropagation(); // Evita que se active el handleRowClick
+    event.stopPropagation();
+    API.removePatient(dentistId, id)
+      .then(() => {
+        toast.success("Se ha eliminado al paciente")
+      })
+      .catch((error) => {
+        toast.error("No se han podido cargar los pacientes");
+      })
+      .finally();
     setPatients((prevPatients) =>
       prevPatients.filter((person) => person.medicalRecord !== id)
     );
@@ -45,7 +55,7 @@ const PersonTable = ({ patients, searchTerm, setPatients }) => {
               <td>
                 <button
                   className="delete-button"
-                  onClick={(event) => handleDelete(person.medicalRecord, event)} // cambiar por un endpoint de sacarlo del medico
+                  onClick={(event) => handleDelete(person.medicalRecord, event)}
                 >
                   Borrar
                 </button>

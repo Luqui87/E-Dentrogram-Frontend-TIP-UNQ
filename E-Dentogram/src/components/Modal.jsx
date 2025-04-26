@@ -1,5 +1,20 @@
+import { useEffect } from "react";
 
 function Modal({isOpen, onClose, children}){
+
+    useEffect(() => {
+        const handleEsc = (event) => {
+          if (event.key === 'Escape') {
+            onClose()
+          }
+        };
+        window.addEventListener('keydown', handleEsc);
+  
+        return () => {
+          window.removeEventListener('keydown', handleEsc);
+        };
+      }, []);
+
 
     if (!isOpen) return null;
 
@@ -31,6 +46,8 @@ function Modal({isOpen, onClose, children}){
                 border: "2px solid #000",
                 borderRadius: "10px",
                 boxShadow: "2px solid black",
+                maxHeight:"85vh",
+                overflowY:"auto"
             }}
         >
             {children}

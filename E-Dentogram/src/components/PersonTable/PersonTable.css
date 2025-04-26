@@ -1,5 +1,5 @@
 .table-container {
-  width: 90%;
+  /* width: 90%; */
   margin: 10px auto 0 auto;
   overflow-x: auto;
   border-radius: 10px;
@@ -37,6 +37,7 @@
   display: block;
   max-height: 300px;
   overflow-y: auto;
+  background-color: #FFFFFF;
 }
 
 .person-table thead,

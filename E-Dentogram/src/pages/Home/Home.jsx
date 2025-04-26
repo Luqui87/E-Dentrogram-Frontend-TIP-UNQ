@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 import PersonTable from "../../components/PersonTable/PersonTable.jsx";
 import "./Home.css";
 import API from "../../service/API.jsx";
-import "../../components/loader.css"
+import "../../components/loader.css";
+import { toast } from "react-toastify";
+import PatientModal from "../../components/PatientModal/PatientModal.jsx";
 
 const Home = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -11,16 +13,23 @@ const Home = () => {
 
   const [loading, setLoading] = useState(true);
 
+  const [dentistId, setDentistId] = useState("");
+
+  const [showModal, setShowModal] = useState(false);
+
   const handleAddClick = () => {
-    // Agregar logica
-    console.log("Botón Agregar clickeado");
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
   };
 
   useEffect(() => {
     // useEffect(async () => {
     // try {
     //   setLoading(true);
-  
+
     //   const [_patients, _otraCosa] = await API.getAllSimplePatients();
     //   setPatients(_patients);
     // }
@@ -29,31 +38,48 @@ const Home = () => {
     // }
     setLoading(true);
 
-    API.getAllSimplePatients()
-      .then(([_patients, _otraCosa]) => setPatients(_patients))
-      // TODO: implementar .catch() + Toast + función general para tratar errores
-      // 4xx => mensaje de error
-      // 5xx => "Ocurrió un error, consulte al administrador del sistema"
-      // cualquier otra cosa => error.message
-      .finally(() => setLoading(false));
-
+    API.getDentist(localStorage.getItem("username"))
+      .then((res) => {
+        setPatients(res.data.patients);
+        setDentistId(res.data.dentistID);
+        setLoading(false);
+      })
+      .catch((error) => {
+        handleApiError(error);
+        // TODO: implementar .catch() + Toast + función general para tratar errores
+        // 4xx => mensaje de error
+        // 5xx => "Ocurrió un error, consulte al administrador del sistema"
+        // cualquier otra cosa => error.message
+      })
   }, []);
 
-  console.log(patients);
+  const handleApiError = (error) => {
+    if (error.response) {
+      const status = error.response.status;
 
-  return (
-    loading ? 
-    <div className="home-container">
-        <span class="loader"></span>
-    </div>     
-    :
+      switch (true) {
+        case status >= 400 && status < 500:
+          toast.error(error.response.data || "Error del cliente.");
+          break;
+        case status >= 500:
+          toast.error("Error del servidor. Consulte al administrador.");
+          break;
+        default:
+          toast.error("Error inesperado.");
+      }
+    } else {
+      toast.error("No se pudo conectar con el servidor.");
+    }
+  };
 
+  return loading ? (
     <div className="home-container">
-      <h1>Lista de Pacientes</h1>
+      <span class="loader" style={{ margin: "auto" }}></span>
+    </div>
+  ) : (
+    <div className="home-container">
       <div className="top-bar">
-        <button onClick={handleAddClick} className="add-button">
-          Agregar
-        </button>
+        <h1>Listado de Pacientes</h1>
         <input
           type="text"
           placeholder="Buscar por nombre..."
@@ -61,11 +87,19 @@ const Home = () => {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
+        <button onClick={handleAddClick} className="add-button">
+          Agregar Paciente +
+        </button>
       </div>
+
+      <PatientModal showModal={showModal} onClose={handleCloseModal} dentistId={dentistId} setPatients={setPatients} />
+      
+
       <PersonTable
         patients={patients}
         searchTerm={searchTerm}
         setPatients={setPatients}
+        dentistId={dentistId}
       />
     </div>
   );

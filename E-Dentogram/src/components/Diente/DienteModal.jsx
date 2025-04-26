@@ -1,8 +1,9 @@
-import './DienteModal.css'
-import Modal from '../Modal'
+import './DienteModal.css';
+import Modal from '../Modal';
 import {useParams} from 'react-router-dom';
 import { useEffect, useState} from 'react'
 import API from '../../service/API';
+import { ToastContainer, toast, Bounce } from 'react-toastify';
 
 function DienteModal(props){
 
@@ -12,7 +13,8 @@ function DienteModal(props){
     const [mesial, setMesial] = useState("");
     const [palatino, setPalatino] = useState("");
     const [selected, setSelected] = useState("");
-    const [showConfirm, setShowConfirm] = useState(false)
+
+    const [upperState, setUpperState] = useState("")
 
     const { id } = useParams()
 
@@ -25,6 +27,7 @@ function DienteModal(props){
         setCentro(props.diente.center);
         setMesial(props.diente.right);
         setPalatino(props.diente.down);
+        setUpperState(props.diente.upperState)
     },[props.diente.up, props.diente.left, props.diente.center, props.diente.right,props.diente.down])
 
 
@@ -37,17 +40,36 @@ function DienteModal(props){
 
     }
 
+    const canBeSelected = (parte) => {
+        return parte.includes("HEALTHY") || parte.includes("CARIES") || parte.includes("RESTORATION")
+    }
+
     const handleSelect = ( parte, stateHandler ) => {     
         
         clearSelected();
 
-        stateHandler(parte + ' selected' );
+        if (canBeSelected(parte)){
+            stateHandler(parte + ' selected' );
         
-        setSelected(()=> stateHandler)
+            setSelected(()=> stateHandler)
 
+        }
 
     }
     
+
+    const handleUpperState = (newState) => {
+
+        clearSelected();
+        
+        setUpperState(newState);
+        setVestibular(newState);
+        setDistal(newState);
+        setCentro(newState);
+        setMesial(newState);
+        setPalatino(newState);
+
+    }
 
     const handleConfirm = () => {
         
@@ -74,13 +96,17 @@ function DienteModal(props){
                     center: centro,
                     right: mesial,
                     down: palatino
-                });
-
-                setShowConfirm(true);
+                }, upperState);
+                props.onClose()
+                toast.success("Cambios confirmados") 
             })
-                
+            .catch(error => {
+                toast.error("Cambios no confirmados")
+                console.log(error)
+            }) 
+
         } else{
-            console.log("No realizo cambios")
+
         }
         
     }
@@ -89,7 +115,6 @@ function DienteModal(props){
         <Modal isOpen={props.showModal} onClose={props.onClose}>
             <div className="modalDiente">
                 <h1>Diente {props.seccion} {props.num}</h1>
-                { showConfirm ? <h2>Cambios confirmados</h2> : null}
                 <div className="cuerpo">
                     <div className="diente">
                         <div id="vestibular"  >
@@ -117,6 +142,8 @@ function DienteModal(props){
                                 
                             </div>   
                         </div> 
+
+                        <div className={upperState}></div>
                     
                     </div>
 
@@ -124,7 +151,9 @@ function DienteModal(props){
                         <div className="btn-group" style={{display:'flex', width:'100%'}}>
                             <button className='CARIES' onClick={() => selected("CARIES")}>Carie</button>
                             <button className='RESTORATION' onClick={() => selected("RESTORATION")}>Restauracion</button>
+                            
                         </div>
+                        <button className='EXCTRACTION' onClick={() => handleUpperState("EXTRACTION")}>Extracción</button>
                         <button className='button' onClick={()=> handleConfirm()}>Confirmar</button>
                     </div>    
 
@@ -132,6 +161,9 @@ function DienteModal(props){
                 </div>
                 
             </div>
+            
+           
+
         </Modal>
     )
 }
