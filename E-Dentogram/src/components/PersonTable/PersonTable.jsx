@@ -18,6 +18,9 @@ const PersonTable = ({ patients, searchTerm, setPatients, dentistId }) => {
   const handleDelete = (id, event) => {
     event.stopPropagation();
     API.removePatient(dentistId, id)
+      .then(() => {
+        toast.success("Se ha eliminado al paciente")
+      })
       .catch((error) => {
         toast.error("No se han podido cargar los pacientes");
       })

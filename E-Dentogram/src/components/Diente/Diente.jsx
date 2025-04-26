@@ -23,11 +23,14 @@ function Diente(props){
     useEffect(() => {
         if (props.state){
             setEstados(props.state)
+
+            const { number, ...rest } = props.state;
             
-            const values = Object.values(props.state);
+            const values = Object.values(rest);
             const firstValue = values[0];
             if (values.every(value => value === firstValue)){
-                setUpperSte(firstValue)
+                console.log("hola")
+                setUpperState(firstValue)
             }
         }
     },[]) 

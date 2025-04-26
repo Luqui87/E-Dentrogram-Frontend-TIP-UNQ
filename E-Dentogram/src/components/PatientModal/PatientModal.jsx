@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { useEffect } from "react";
 import Modal from '../Modal'
 
-const PatientModal = ({ showModal, onClose, dentistId }) => {
+const PatientModal = ({ showModal, onClose, dentistId, setPatients }) => {
   const [activeTab, setActiveTab] = useState("agregar");
   const [form, setForm] = useState({
     medicalRecord: "",
@@ -29,9 +29,13 @@ const PatientModal = ({ showModal, onClose, dentistId }) => {
         const today = new Date().toISOString().split("T")[0];
         updatedForm.birthdate = today;
       }
-      API.addPatient(dentistId, updatedForm);
-      toast.success("Paciente agregado exitosamente.");
-      onClose();
+      API.addPatient(dentistId, updatedForm)
+      .then((res)=> {
+        toast.success("Paciente agregado exitosamente.");
+        setPatients(res.data.patients)
+        onClose();
+      })
+      
     } catch (error) {
       toast.error("Hubo un error al agregar el paciente.");
     }

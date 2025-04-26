@@ -89,38 +89,41 @@ function Register(){
         )
     }
 
-    const handleRegister = (event) => {
-        if ((newPassword !== "" && newPassword == confirmPasword) &&
-        (event.key === 'Enter' || event === undefined)){
-            API.register({
-                username: newUsername,
-                password: newPassword
-            })
-            .then((res) => {
-                toast.success("Dentista registrado exitosamente");
-
-                const token = res.data.accessToken;
-                localStorage.setItem('token', token);
-                localStorage.setItem('username', newUsername)
-                
-                navigate("/")
-
-
-            })
-            .catch((res) => {
-                toast.error(res.data)
-            })
+    const handleEnter = (event) =>{
+        if (event.key === "Enter"){
+          handleRegister()
         }
+      }
+
+    const handleRegister = () => {
+        API.register({
+            username: newUsername,
+            password: newPassword
+        })
+        .then((res) => {
+            toast.success("Dentista registrado exitosamente");
+
+            const token = res.data.accessToken;
+            localStorage.setItem('token', token);
+            localStorage.setItem('username', newUsername)
+            
+            navigate("/home")
+
+
+        })
+        .catch((res) => {
+            toast.error(res.data)
+        })
     }
 
     return (
         <main >
             <div className="register-box">
                 <div><span className='header'>Registrarse</span></div>
-                <div>
+                {/* <div>
                     <span>Nombre y apellido</span>
                     <input required="" type="text" className="input"/>
-                </div>
+                </div> */}
                 <div>
                     <span>Username</span>
                     <input required="" type="text" className="input" value={newUsername} onChange={(e) => setUsername(e.target.value)}/>
@@ -156,7 +159,7 @@ function Register(){
                      className="input"
                     value={confirmPasword}
                     onChange={(e) => checkPassword(e)}
-                    onKeyDown={handleRegister}
+                    onKeyDown={handleEnter}
                     />
                     {!samePassword ? <span style={{color:"red", fontSize:"13px",}}>*Contraseñas no coinciden</span> : <></> }
                 </div>
@@ -164,7 +167,7 @@ function Register(){
                     <button className="button-66" 
                     role="button" 
                     onClick={() => handleRegister()}
-                    onKeyDown={handleRegister}
+                    onKeyDown={handleEnter}
                     > Register</button>
                     
                 </div>

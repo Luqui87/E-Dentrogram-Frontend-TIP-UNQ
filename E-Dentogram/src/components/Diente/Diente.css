@@ -83,6 +83,6 @@
     position: absolute;
     top: 31%;
     background-color: transparent;
-    border-top: 3vh solid #255272;
-    border-bottom: 3vh solid #255272;
+    border-top: 1vh solid #255272;
+    border-bottom: 1vh solid #255272;
 }
