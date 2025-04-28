@@ -105,7 +105,7 @@ function Register(){
 
             const token = res.data.accessToken;
             localStorage.setItem('token', token);
-            localStorage.setItem('username', newUsername)
+            
             
             navigate("/home")
 

@@ -12,7 +12,8 @@ function DienteModal(props){
     const [centro, setCentro] = useState("");
     const [mesial, setMesial] = useState("");
     const [palatino, setPalatino] = useState("");
-    const [selected, setSelected] = useState("");
+    const [selected, setSelected] = useState(null);
+    const [showPrestaciones, setShowPrestaciones] = useState(false)
 
     const [upperState, setUpperState] = useState("")
 
@@ -46,13 +47,34 @@ function DienteModal(props){
 
     const handleSelect = ( parte, stateHandler ) => {     
         
-        clearSelected();
+        if (parte.includes("selected")){
+            clearSelected()
+            setShowPrestaciones(false)
+            return
+        }
 
         if (canBeSelected(parte)){
+            clearSelected()
             stateHandler(parte + ' selected' );
         
-            setSelected(()=> stateHandler)
+            setSelected({parte, stateHandler});
 
+            setShowPrestaciones(true)
+
+        }
+
+    }
+
+    const handlePrestacion = (prestacion) => {
+
+
+        setShowPrestaciones(false);
+        
+        if (selected.parte.includes(prestacion)){
+            selected.stateHandler("HEALTHY");
+        }
+        else{
+            selected.stateHandler(prestacion)
         }
 
     }
@@ -61,6 +83,9 @@ function DienteModal(props){
     const handleUpperState = (newState) => {
 
         clearSelected();
+
+        setSelected(null)
+        setShowPrestaciones(false)
         
         setUpperState(newState);
         setVestibular(newState);
@@ -74,6 +99,7 @@ function DienteModal(props){
     const handleConfirm = () => {
         
         clearSelected()
+        setShowPrestaciones(false)
 
         if ([vestibular, mesial, palatino, distal, centro].some(e=> !e.includes("HEALTHY"))){
 
@@ -114,7 +140,7 @@ function DienteModal(props){
     return(
         <Modal isOpen={props.showModal} onClose={props.onClose}>
             <div className="modalDiente">
-                <h1>Diente {props.seccion} {props.num}</h1>
+                <span style={{fontSize:"2em", borderBottom:"1px solid black"}}> <b>Diente {props.seccion} {props.num}</b></span>
                 <div className="cuerpo">
                     <div className="diente">
                         <div id="vestibular"  >
@@ -148,11 +174,14 @@ function DienteModal(props){
                     </div>
 
                     <div className="prestaciones">
+                        {showPrestaciones && 
+
                         <div className="btn-group" style={{display:'flex', width:'100%'}}>
-                            <button className='CARIES' onClick={() => selected("CARIES")}>Carie</button>
-                            <button className='RESTORATION' onClick={() => selected("RESTORATION")}>Restauracion</button>
+                            <button className='CARIES' onClick={() => handlePrestacion("CARIES")}>Carie</button>
+                            <button className='RESTORATION' onClick={() => handlePrestacion("RESTORATION")}>Restauracion</button>
                             
                         </div>
+                        }
                         <button className='EXCTRACTION' onClick={() => handleUpperState("EXTRACTION")}>Extracción</button>
                         <button className='button' onClick={()=> handleConfirm()}>Confirmar</button>
                     </div>    
