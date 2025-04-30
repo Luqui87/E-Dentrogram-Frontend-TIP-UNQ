@@ -39,8 +39,8 @@
   display: flex;
   /*flex-direction: column; */
   flex-wrap: wrap;
-  gap: 5vh 2vw;
-  width: 50vw;
+  gap: 3vh 0vw;
+  width: 40vw;
   
 }
 
@@ -52,6 +52,7 @@
   display: flex;
   flex-direction: column;
   align-items: start;
+  gap: 5px;
 }
 
 .form label {
@@ -66,7 +67,7 @@
   border: 1px solid #ccc;
   border-radius: 6px;
   outline-color: #2196f3;
-  width: 20vw;
+  width: 15vw;
 }
 
 .modal-footer {
@@ -77,7 +78,7 @@
 }
 
 .confirm-button {
-  background-color: #4caf50;
+  background-color: #0B95C5;
   color: white;
   border: none;
   padding: 8px 14px;

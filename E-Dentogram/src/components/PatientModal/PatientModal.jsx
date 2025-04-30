@@ -42,7 +42,7 @@ const PatientModal = ({ showModal, onClose, dentistId, setPatients }) => {
   };
 
   return (
-    <Modal isOpen={showModal} onClose={onClose}>
+    <Modal isOpen={true} onClose={onClose}>
         <div className="tabs">
           <button
             className={activeTab === "agregar" ? "active" : ""}

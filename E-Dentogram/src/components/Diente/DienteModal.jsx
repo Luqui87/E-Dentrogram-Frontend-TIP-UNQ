@@ -4,6 +4,7 @@ import {useParams} from 'react-router-dom';
 import { useEffect, useState} from 'react'
 import API from '../../service/API';
 import { ToastContainer, toast, Bounce } from 'react-toastify';
+import DienteEstado from './DienteEstado';
 
 function DienteModal(props){
 
@@ -140,9 +141,9 @@ function DienteModal(props){
     return(
         <Modal isOpen={props.showModal} onClose={props.onClose}>
             <div className="modalDiente">
-                <span style={{fontSize:"2em", borderBottom:"1px solid black"}}> <b>Diente {props.seccion} {props.num}</b></span>
+                <span style={{fontSize:"2em", borderBottom:"1px solid grey"}}> <b>Diente {props.seccion} {props.num}</b></span>
                 <div className="cuerpo">
-                    <div className="diente">
+                    <div className="diente modal">
                         <div id="vestibular"  >
                             <div className={vestibular} onClick={() => handleSelect( vestibular, setVestibular)}>
 
@@ -182,7 +183,19 @@ function DienteModal(props){
                             
                         </div>
                         }
-                        <button className='EXCTRACTION' onClick={() => handleUpperState("EXTRACTION")}>Extracción</button>
+                        <div className="states">
+                            <DienteEstado name="Extracción" state="EXTRACTION" stateHandler = {() => handleUpperState("EXTRACTION")}/>
+                            <DienteEstado name="Ausente" state="EXTRACTION" stateHandler = {() => handleUpperState("EXTRACTION")}/>
+                            <DienteEstado name="Corona" state="EXTRACTION" stateHandler = {() => handleUpperState("EXTRACTION")}/>
+                            <DienteEstado name="Extracción" state="EXTRACTION" stateHandler = {() => handleUpperState("EXTRACTION")}/>
+                            <DienteEstado name="Extracción" state="EXTRACTION" stateHandler = {() => handleUpperState("EXTRACTION")}/>
+                            <DienteEstado name="Extracción" state="EXTRACTION" stateHandler = {() => handleUpperState("EXTRACTION")}/>
+                            <DienteEstado name="Extracción" state="EXTRACTION" stateHandler = {() => handleUpperState("EXTRACTION")}/>
+                            <DienteEstado name="Extracción" state="EXTRACTION" stateHandler = {() => handleUpperState("EXTRACTION")}/>
+                        </div>
+                        <div></div>
+
+
                         <button className='button' onClick={()=> handleConfirm()}>Confirmar</button>
                     </div>    
 
