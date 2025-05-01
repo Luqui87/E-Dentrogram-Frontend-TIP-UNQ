@@ -34,6 +34,25 @@ const request = (type, path, body) => {
     });
 };
 
+const handleApiError = (error) => {
+  if (error.response) {
+    const status = error.response.status;
+
+    switch (true) {
+      case status >= 400 && status < 500:
+        "Error del cliente.";
+        break;
+      case status >= 500:
+        "Error del servidor. Consulte al administrador.";
+        break;
+      default:
+        "Error inesperado.";
+    }
+  } else {
+    ("No se pudo conectar con el servidor.");
+  }
+};
+
 const API = {
   getAllSimplePatients: () => request("get", "/allSimplePatients"),
   getDentist: (username) => request("get", `/dentist/user`),

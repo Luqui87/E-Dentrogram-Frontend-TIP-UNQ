@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./PersonTable.css";
 import API from "../../service/API";
+import handleApiError from "../../service/API";
 import { toast } from "react-toastify";
 
 const PersonTable = ({ patients, searchTerm, setPatients, dentistId }) => {
@@ -19,10 +20,10 @@ const PersonTable = ({ patients, searchTerm, setPatients, dentistId }) => {
     event.stopPropagation();
     API.removePatient(dentistId, id)
       .then(() => {
-        toast.success("Se ha eliminado al paciente")
+        toast.success("Se ha eliminado al paciente");
       })
       .catch((error) => {
-        toast.error("No se han podido cargar los pacientes");
+        toast.error(handleApiError(error));
       })
       .finally();
     setPatients((prevPatients) =>
