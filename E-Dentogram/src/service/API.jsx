@@ -27,7 +27,8 @@ const request = (type, path, body) => {
       return response;
     })
     .catch((reason) => {
-      if (reason.response.status == 403) {
+      if (reason.response.status === 403) {
+        localStorage.setItem("previousLocation", window.location.pathname);
         window.history.replaceState(null, null, "/");
         location.reload();
       }

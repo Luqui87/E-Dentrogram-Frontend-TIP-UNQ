@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./PersonTable.css";
 import API from "../../service/API";
@@ -7,6 +7,8 @@ import { toast } from "react-toastify";
 
 const PersonTable = ({ patients, searchTerm, setPatients, dentistId }) => {
   const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
+  const [patientToDelete, setPatientToDelete] = useState(null);
 
   const filteredPersons = patients.filter((person) =>
     person.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -16,19 +18,27 @@ const PersonTable = ({ patients, searchTerm, setPatients, dentistId }) => {
     navigate(`/paciente/${id}`);
   };
 
-  const handleDelete = (id, event) => {
+  const handleDeleteClick = (id, event) => {
     event.stopPropagation();
-    API.removePatient(dentistId, id)
+    setPatientToDelete(id);
+    setShowModal(true);
+  };
+
+  const confirmDelete = () => {
+    API.removePatient(dentistId, patientToDelete)
       .then(() => {
         toast.success("Se ha eliminado al paciente");
+        setPatients((prev) =>
+          prev.filter((person) => person.medicalRecord !== patientToDelete)
+        );
       })
       .catch((error) => {
         toast.error(handleApiError(error));
       })
-      .finally();
-    setPatients((prevPatients) =>
-      prevPatients.filter((person) => person.medicalRecord !== id)
-    );
+      .finally(() => {
+        setShowModal(false);
+        setPatientToDelete(null);
+      });
   };
 
   return (
@@ -56,7 +66,9 @@ const PersonTable = ({ patients, searchTerm, setPatients, dentistId }) => {
               <td>
                 <button
                   className="delete-button"
-                  onClick={(event) => handleDelete(person.medicalRecord, event)}
+                  onClick={(event) =>
+                    handleDeleteClick(person.medicalRecord, event)
+                  }
                 >
                   Borrar
                 </button>
@@ -65,6 +77,25 @@ const PersonTable = ({ patients, searchTerm, setPatients, dentistId }) => {
           ))}
         </tbody>
       </table>
+
+      {showModal && (
+        <div className="modal-overlay">
+          <div className="modal">
+            <p>¿Estás seguro de que deseas eliminar al paciente?</p>
+            <div className="modal-buttons">
+              <button onClick={confirmDelete} className="confirm-button">
+                Confirmar
+              </button>
+              <button
+                onClick={() => setShowModal(false)}
+                className="cancel-button"
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

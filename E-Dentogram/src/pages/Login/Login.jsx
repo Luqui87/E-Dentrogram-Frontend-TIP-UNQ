@@ -78,7 +78,11 @@ function Login() {
         const token = res.data.accessToken;
         localStorage.setItem("token", token);
 
-        navigate("/home");
+        const previousLocation =
+          localStorage.getItem("previousLocation") || "/home";
+        localStorage.removeItem("previousLocation");
+
+        navigate(previousLocation);
       })
       .catch((error) => {
         toast.error(handleApiError(error));
