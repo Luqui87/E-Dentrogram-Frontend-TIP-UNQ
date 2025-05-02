@@ -56,7 +56,7 @@ const handleApiError = (error) => {
 
 const API = {
   getAllSimplePatients: () => request("get", "/allSimplePatients"),
-  getDentist: (username) => request("get", `/dentist/user`),
+  getDentist: () => request("get", `/dentist/user`),
   getPatient: (id) => request("get", `/patient/${id}`),
   updateTeeth: (id, body) => request("put", `/update/tooth/${id}`, body),
   register: (body) => request("post", "/register", body),
@@ -64,7 +64,7 @@ const API = {
   removePatient: (dentistId, patientMedicalRecord) =>
     request("put", `/dentist/Remove/${dentistId}/${patientMedicalRecord}`),
   addPatient: (dentistId, body) =>
-    request("put", `/dentist/add/${dentistId}`, body),
+    request("post", `/dentist/add/${dentistId}`, body),
 };
 
 export default API;
