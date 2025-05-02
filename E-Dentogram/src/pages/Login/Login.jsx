@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import "./Login.css";
 import API from "../../service/API";
+import handleApiError from "../../service/API";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -60,14 +61,13 @@ function Login() {
     );
   };
 
-  const handleEnter = (event) =>{
-    if (event.key === "Enter"){
-      handleLogin()
+  const handleEnter = (event) => {
+    if (event.key === "Enter") {
+      handleLogin();
     }
-  }
+  };
 
   const handleLogin = () => {
-
     API.login({
       username: insUsername,
       password: insPassword,
@@ -78,13 +78,15 @@ function Login() {
         const token = res.data.accessToken;
         localStorage.setItem("token", token);
 
-        navigate("/home");
-      })
-      .catch((res) => {
-        toast.error(res.data);
-      });
+        const previousLocation =
+          localStorage.getItem("previousLocation") || "/home";
+        localStorage.removeItem("previousLocation");
 
-    
+        navigate(previousLocation);
+      })
+      .catch((error) => {
+        toast.error(handleApiError(error));
+      });
   };
 
   return (

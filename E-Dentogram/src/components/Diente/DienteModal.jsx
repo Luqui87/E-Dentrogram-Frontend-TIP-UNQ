@@ -144,7 +144,7 @@ function DienteModal(props){
             <div className="modalDiente">
                 <span style={{fontSize:"2em", borderBottom:"1px solid grey"}}> <b>Diente {props.seccion} {props.num}</b></span>
                 <div className="cuerpo">
-                    <div className="diente modal">
+                    <div className="diente">
                         <div id="vestibular"  >
                             <div className={vestibular} onClick={() => handleSelect( vestibular, setVestibular)}>
 

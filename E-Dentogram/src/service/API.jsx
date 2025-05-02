@@ -27,11 +27,31 @@ const request = (type, path, body) => {
       return response;
     })
     .catch((reason) => {
-      if (reason.response.status == 403) {
+      if (reason.response.status === 403) {
+        localStorage.setItem("previousLocation", window.location.pathname);
         window.history.replaceState(null, null, "/");
         location.reload();
       }
     });
+};
+
+const handleApiError = (error) => {
+  if (error.response) {
+    const status = error.response.status;
+
+    switch (true) {
+      case status >= 400 && status < 500:
+        "Error del cliente.";
+        break;
+      case status >= 500:
+        "Error del servidor. Consulte al administrador.";
+        break;
+      default:
+        "Error inesperado.";
+    }
+  } else {
+    ("No se pudo conectar con el servidor.");
+  }
 };
 
 const API = {
