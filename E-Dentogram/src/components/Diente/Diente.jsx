@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import './Diente.css'
 import DienteModal from './DienteModal';
+import { States } from './States';
 
 function Diente(props){
 
@@ -64,7 +65,7 @@ function Diente(props){
               </div>   
           </div> 
         
-          <div className={upperState}></div>
+          {States[upperState]}
 
         </div>
         

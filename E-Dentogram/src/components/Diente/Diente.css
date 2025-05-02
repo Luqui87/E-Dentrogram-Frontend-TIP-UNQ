@@ -77,13 +77,19 @@
 
 }
 
-.diente>div.EXTRACTION{
-    width: 100%;
-    height: 33%;
+svg.EXTRACTION{
     position: absolute;
-    top: 33%;
-    background-color: transparent !important;
-    border-top: 1vh solid #255272;
-    border-bottom: 1vh solid #255272
+    width: 100%;
+    height: 90%;
+    left: 0%;
+    top: 4%;
 }
 
+
+svg.AUSENTE{
+    position: absolute;
+    width: 100%;
+    height: 90%;
+    left: 0%;
+    top: 5%;
+}

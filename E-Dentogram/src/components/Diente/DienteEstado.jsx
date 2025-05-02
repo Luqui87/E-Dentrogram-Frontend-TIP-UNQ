@@ -1,6 +1,9 @@
 import { useState } from "react"
+import { States } from "./States.jsx"
 
 function Tooth({color}){
+
+    
 
     return(
         <svg className="tooth-state" height="200px" width="200px" version="1.1" id="Layer_1"
@@ -76,8 +79,8 @@ function DienteEstado({name, state, stateHandler}){
                 </div>   
             </div> 
          */}
-          <div className={state}></div>
-
+         {/*  <div className={state}></div> */}
+            {States[state]}        
         </div>
 
         </div>

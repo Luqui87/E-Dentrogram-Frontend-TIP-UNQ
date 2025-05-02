@@ -5,6 +5,7 @@ import { useEffect, useState} from 'react'
 import API from '../../service/API';
 import { ToastContainer, toast, Bounce } from 'react-toastify';
 import DienteEstado from './DienteEstado';
+import { States } from './States';
 
 function DienteModal(props){
 
@@ -170,7 +171,7 @@ function DienteModal(props){
                             </div>   
                         </div> 
 
-                        <div className={upperState}></div>
+                        {States[upperState]}
                     
                     </div>
 
@@ -185,13 +186,14 @@ function DienteModal(props){
                         }
                         <div className="states">
                             <DienteEstado name="Extracción" state="EXTRACTION" stateHandler = {() => handleUpperState("EXTRACTION")}/>
-                            <DienteEstado name="Ausente" state="EXTRACTION" stateHandler = {() => handleUpperState("EXTRACTION")}/>
-                            <DienteEstado name="Corona" state="EXTRACTION" stateHandler = {() => handleUpperState("EXTRACTION")}/>
+                            <DienteEstado name="Ausente" state="AUSENTE" stateHandler = {() => handleUpperState("AUSENTE")}/>
                             <DienteEstado name="Extracción" state="EXTRACTION" stateHandler = {() => handleUpperState("EXTRACTION")}/>
+                            <DienteEstado name="Ausente" state="AUSENTE" stateHandler = {() => handleUpperState("EXTRACTION")}/>
                             <DienteEstado name="Extracción" state="EXTRACTION" stateHandler = {() => handleUpperState("EXTRACTION")}/>
+                            <DienteEstado name="Ausente" state="AUSENTE" stateHandler = {() => handleUpperState("EXTRACTION")}/>
                             <DienteEstado name="Extracción" state="EXTRACTION" stateHandler = {() => handleUpperState("EXTRACTION")}/>
-                            <DienteEstado name="Extracción" state="EXTRACTION" stateHandler = {() => handleUpperState("EXTRACTION")}/>
-                            <DienteEstado name="Extracción" state="EXTRACTION" stateHandler = {() => handleUpperState("EXTRACTION")}/>
+                            <DienteEstado name="Ausente" state="AUSENTE" stateHandler = {() => handleUpperState("EXTRACTION")}/>
+
                         </div>
                         <div></div>
 

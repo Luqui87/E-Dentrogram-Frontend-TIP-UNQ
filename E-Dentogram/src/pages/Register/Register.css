@@ -176,10 +176,10 @@ progress {
 
 .seePassword{
   position: absolute;
-  width: 36px;
+  width: 11%;
   color: grey;
-  left: 357px;
-  top: 27px;
+  left: 87%;
+  top: 35%;
 }
 
 .seePassword:hover{

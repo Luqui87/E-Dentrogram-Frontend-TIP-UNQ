@@ -18,12 +18,11 @@ const App = () => {
       <Router>
         <Navbar />
         <Routes>
-         {/*  <Route path="/register" element={<Register />} />
+           <Route path="/register" element={<Register />} />
+           <Route path="/" element={<Login/>} /> 
           <Route path="/home" element={<Home />} />
           <Route path="/paciente/:id" element={<PacienteView />} />
-          <Route path="/" element={<Login/>} />
-          <Route path="*" element={<PageNotFound />} />  */}
-          <Route path="/modal" element={<Diente/>} />
+          <Route path="*" element={<PageNotFound />} /> 
         </Routes>
         <ToastContainer
           position="bottom-center"
