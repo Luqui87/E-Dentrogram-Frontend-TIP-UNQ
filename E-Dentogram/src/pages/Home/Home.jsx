@@ -41,7 +41,119 @@ const Home = () => {
 
     API.getDentist(localStorage.getItem("username"))
       .then((res) => {
-        setPatients(res.data.patients);
+        setPatients(
+          [
+              {
+                "medicalRecord": 318,
+                "dni": 412345678,
+                "name": "Carlos Fernández",
+                "address": "Mitre 789",
+                "birthdate": "1988-09-14",
+                "telephone": 1167890123,
+                "email": "carlos.fernandez@gmail.com"
+              },
+              {
+                "medicalRecord": 507,
+                "dni": 437654321,
+                "name": "Ana Martínez",
+                "address": "San Martín 456",
+                "birthdate": "1992-12-30",
+                "telephone": 1156789012,
+                "email": "ana.martinez@gmail.com"
+              },
+              {
+                "medicalRecord": 134,
+                "dni": 42594982,
+                "name": "Lucas Alvarez",
+                "address": "Bragado 1947",
+                "birthdate": "2000-10-12",
+                "telephone": 1153276406,
+                "email": "alvarezlucas@gmail.com"
+              },
+              {
+                "medicalRecord": 623,
+                "dni": 405678912,
+                "name": "Sofía Ramírez",
+                "address": "Corrientes 333",
+                "birthdate": "1999-07-18",
+                "telephone": 1176543289,
+                "email": "sofia.ramirez@gmail.com"
+              },
+              {
+                "medicalRecord": 215,
+                "dni": 429875421,
+                "name": "María López",
+                "address": "Av. Rivadavia 2020",
+                "birthdate": "1995-05-23",
+                "telephone": 1145678920,
+                "email": "maria.lopez@gmail.com"
+              },
+              {
+                "medicalRecord": 215,
+                "dni": 429875421,
+                "name": "María López",
+                "address": "Av. Rivadavia 2020",
+                "birthdate": "1995-05-23",
+                "telephone": 1145678920,
+                "email": "maria.lopez@gmail.com"
+              },
+              {
+                "medicalRecord": 215,
+                "dni": 429875421,
+                "name": "María López",
+                "address": "Av. Rivadavia 2020",
+                "birthdate": "1995-05-23",
+                "telephone": 1145678920,
+                "email": "maria.lopez@gmail.com"
+              },
+              {
+                "medicalRecord": 215,
+                "dni": 429875421,
+                "name": "María López",
+                "address": "Av. Rivadavia 2020",
+                "birthdate": "1995-05-23",
+                "telephone": 1145678920,
+                "email": "maria.lopez@gmail.com"
+              },
+              {
+                "medicalRecord": 215,
+                "dni": 429875421,
+                "name": "María López",
+                "address": "Av. Rivadavia 2020",
+                "birthdate": "1995-05-23",
+                "telephone": 1145678920,
+                "email": "maria.lopez@gmail.com"
+              },
+              {
+                "medicalRecord": 215,
+                "dni": 429875421,
+                "name": "María López",
+                "address": "Av. Rivadavia 2020",
+                "birthdate": "1995-05-23",
+                "telephone": 1145678920,
+                "email": "maria.lopez@gmail.com"
+              },
+              {
+                "medicalRecord": 215,
+                "dni": 429875421,
+                "name": "María López",
+                "address": "Av. Rivadavia 2020",
+                "birthdate": "1995-05-23",
+                "telephone": 1145678920,
+                "email": "maria.lopez@gmail.com"
+              },
+              {
+                "medicalRecord": 215,
+                "dni": 429875421,
+                "name": "María López",
+                "address": "Av. Rivadavia 2020",
+                "birthdate": "1995-05-23",
+                "telephone": 1145678920,
+                "email": "maria.lopez@gmail.com"
+              }
+            ]
+  
+        );
         setDentistId(res.data.dentistID);
         setLoading(false);
       })
