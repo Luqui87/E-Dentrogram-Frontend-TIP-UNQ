@@ -10,6 +10,10 @@ axios.defaults.timeout = 10000;
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
 const request = (type, path, body) => {
+  if (!localStorage.getItem("previousLocation")) {
+    localStorage.setItem("previousLocation", window.location.pathname);
+  }
+
   return axios
     .request({
       url: path,
@@ -38,19 +42,16 @@ const request = (type, path, body) => {
 const handleApiError = (error) => {
   if (error.response) {
     const status = error.response.status;
-
     switch (true) {
       case status >= 400 && status < 500:
-        "Error del cliente.";
-        break;
+        return "Error del cliente.";
       case status >= 500:
-        "Error del servidor. Consulte al administrador.";
-        break;
+        return "Error del servidor. Consulte al administrador.";
       default:
-        "Error inesperado.";
+        return "Error inesperado.";
     }
   } else {
-    ("No se pudo conectar con el servidor.");
+    return "No se pudo conectar con el servidor.";
   }
 };
 

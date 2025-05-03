@@ -78,9 +78,12 @@ function Login() {
         const token = res.data.accessToken;
         localStorage.setItem("token", token);
 
-        const previousLocation =
-          localStorage.getItem("previousLocation") || "/home";
+        let previousLocation = localStorage.getItem("previousLocation");
         localStorage.removeItem("previousLocation");
+
+        if (!previousLocation || previousLocation === "/") {
+          previousLocation = "/home";
+        }
 
         navigate(previousLocation);
       })
