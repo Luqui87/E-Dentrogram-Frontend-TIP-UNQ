@@ -186,14 +186,8 @@ function DienteModal(props){
                         }
                         <div className="states">
                             <DienteEstado name="Extracción" state="EXTRACTION" stateHandler = {() => handleUpperState("EXTRACTION")}/>
-                            <DienteEstado name="Ausente" state="AUSENTE" stateHandler = {() => handleUpperState("AUSENTE")}/>
-                            <DienteEstado name="Extracción" state="EXTRACTION" stateHandler = {() => handleUpperState("EXTRACTION")}/>
-                            <DienteEstado name="Ausente" state="AUSENTE" stateHandler = {() => handleUpperState("EXTRACTION")}/>
-                            <DienteEstado name="Extracción" state="EXTRACTION" stateHandler = {() => handleUpperState("EXTRACTION")}/>
-                            <DienteEstado name="Ausente" state="AUSENTE" stateHandler = {() => handleUpperState("EXTRACTION")}/>
-                            <DienteEstado name="Extracción" state="EXTRACTION" stateHandler = {() => handleUpperState("EXTRACTION")}/>
-                            <DienteEstado name="Ausente" state="AUSENTE" stateHandler = {() => handleUpperState("EXTRACTION")}/>
-
+                            <DienteEstado name="Ausente" state="MISSING" stateHandler = {() => handleUpperState("MISSING")}/>
+                            <DienteEstado name="A Erupcionar" state="ERUPT" stateHandler = {() => handleUpperState("ERUPT")}/>
                         </div>
                         <div></div>
 

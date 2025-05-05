@@ -48,7 +48,8 @@ function DienteEstado({name, state, stateHandler}){
             <div 
             onMouseEnter={() => setColor("grey")} 
             onMouseLeave={() => setColor("white")} 
-            onClick={() => stateHandler()}>
+            onClick={() => stateHandler()}
+            style={{position:"relative"}}>
 
                 <Tooth color={color} />
                 

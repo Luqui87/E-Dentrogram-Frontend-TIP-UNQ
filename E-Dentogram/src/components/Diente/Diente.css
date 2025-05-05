@@ -86,10 +86,18 @@ svg.EXTRACTION{
 }
 
 
-svg.AUSENTE{
+svg.MISSING{
     position: absolute;
     width: 100%;
-    height: 90%;
+    height: 100%;
     left: 0%;
-    top: 5%;
+    top: 0%;
+}
+
+svg.ERUPT{
+    position: absolute;
+  width: 90%;
+  height: 90%;
+  left: 5%;
+  top: 5%;
 }
