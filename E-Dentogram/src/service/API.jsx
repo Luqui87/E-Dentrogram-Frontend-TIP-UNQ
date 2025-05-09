@@ -10,6 +10,10 @@ axios.defaults.timeout = 10000;
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
 const request = (type, path, body) => {
+  if (!localStorage.getItem("previousLocation")) {
+    localStorage.setItem("previousLocation", window.location.pathname);
+  }
+
   return axios
     .request({
       url: path,
@@ -38,25 +42,22 @@ const request = (type, path, body) => {
 const handleApiError = (error) => {
   if (error.response) {
     const status = error.response.status;
-
     switch (true) {
       case status >= 400 && status < 500:
-        "Error del cliente.";
-        break;
+        return "Error del cliente.";
       case status >= 500:
-        "Error del servidor. Consulte al administrador.";
-        break;
+        return "Error del servidor. Consulte al administrador.";
       default:
-        "Error inesperado.";
+        return "Error inesperado.";
     }
   } else {
-    ("No se pudo conectar con el servidor.");
+    return "No se pudo conectar con el servidor.";
   }
 };
 
 const API = {
   getAllSimplePatients: () => request("get", "/allSimplePatients"),
-  getDentist: (username) => request("get", `/dentist/user`),
+  getDentist: () => request("get", `/dentist/user`),
   getPatient: (id) => request("get", `/patient/${id}`),
   updateTeeth: (id, body) => request("put", `/update/tooth/${id}`, body),
   register: (body) => request("post", "/register", body),
@@ -64,7 +65,7 @@ const API = {
   removePatient: (dentistId, patientMedicalRecord) =>
     request("put", `/dentist/Remove/${dentistId}/${patientMedicalRecord}`),
   addPatient: (dentistId, body) =>
-    request("put", `/dentist/add/${dentistId}`, body),
+    request("post", `/dentist/add/${dentistId}`, body),
 };
 
 export default API;

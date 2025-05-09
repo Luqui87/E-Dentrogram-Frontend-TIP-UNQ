@@ -1,0 +1,11 @@
+version: "3.8"
+
+services:
+  e-dentogram-front:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5174:80"
+    container_name: e-dentogram
+    restart: unless-stopped
