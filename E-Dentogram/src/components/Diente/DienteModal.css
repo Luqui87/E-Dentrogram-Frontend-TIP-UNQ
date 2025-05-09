@@ -3,13 +3,13 @@
     flex-direction: column;
     text-align: center;
     gap: 15px;
-    width: 40vw;
+    width: 50vw;
 }
 
 .modalDiente>.cuerpo{
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 30px;
 }
 
 .modalDiente>.cuerpo>.diente{
@@ -73,7 +73,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-
+    align-items: end;
 }
 
 .states>*{
@@ -93,7 +93,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 5px;
+    gap: 10px;
 }
 
 .RESTORATION{
@@ -120,3 +120,7 @@
     height: 70%;
     top: 25%;
 }  
+
+.modalDiente .diente>div>div:hover{
+    background-color: grey;
+}

@@ -37,9 +37,9 @@ function Tooth({color}){
 
 
 
-function DienteEstado({name, state, stateHandler}){
+function DienteEstado({name, state, stateHandler, propColor}){
 
-    const [color, setColor] = useState("white")
+    const [color, setColor] = useState(propColor|| "white")
 
     return(
         <div className="state">
@@ -47,7 +47,7 @@ function DienteEstado({name, state, stateHandler}){
 
             <div 
             onMouseEnter={() => setColor("grey")} 
-            onMouseLeave={() => setColor("white")} 
+            onMouseLeave={() => setColor(propColor || "white")} 
             onClick={() => stateHandler()}
             style={{position:"relative"}}>
 

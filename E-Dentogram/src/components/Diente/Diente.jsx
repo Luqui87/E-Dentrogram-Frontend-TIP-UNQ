@@ -20,24 +20,27 @@ function Diente(props){
         setEstados(estados)
         setUpperState(upper)
     }
+    
+
+    const totalState = () => {
+        const { number, ...rest } = props.state;
+            
+            const values = Object.values(rest);
+            const firstValue = values[0];
+
+            return values.every(value => value === firstValue) ? firstValue : estados.upperState 
+    }
 
     useEffect(() => {
         if (props.state){
             setEstados(props.state)
 
-            const { number, ...rest } = props.state;
             
-            const values = Object.values(rest);
-            const firstValue = values[0];
-            if (values.every(value => value === firstValue)){
-                console.log("hola")
-                setUpperState(firstValue)
-            }
         }
     },[]) 
 
     return(
-    <>  
+    <>
         <div className="diente normal" onClick={() => {toggleModal(!showModal), console.log(estados)}}>
             <div id="vestibular">
               <div className={estados.up}>

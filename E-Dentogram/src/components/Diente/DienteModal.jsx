@@ -98,6 +98,13 @@ function DienteModal(props){
 
     }
 
+    const handlePartialState = (newState) => {
+        clearSelected();
+        setShowPrestaciones(false)
+
+        setUpperState(newState)
+    }
+
     const handleConfirm = () => {
         
         clearSelected()
@@ -105,14 +112,14 @@ function DienteModal(props){
 
         if ([vestibular, mesial, palatino, distal, centro].some(e=> !e.includes("HEALTHY"))){
 
-            const putTooth = [{
+            const putTooth = {
                 number: number,
                 up: vestibular.replaceAll(" selected", ""),
                 right: mesial.replaceAll(" selected", ""),
                 down: palatino.replaceAll(" selected", ""),
                 left: distal.replaceAll(" selected", ""),
                 center: centro.replaceAll(" selected", "")
-            }]
+            }
             
 
             API.updateTeeth(id, putTooth)
@@ -185,9 +192,14 @@ function DienteModal(props){
                         </div>
                         }
                         <div className="states">
+                            <DienteEstado name="Saludable" state="HEALTHY" stateHandler = {() => handleUpperState("HEALTHY")}/>
                             <DienteEstado name="Extracción" state="EXTRACTION" stateHandler = {() => handleUpperState("EXTRACTION")}/>
                             <DienteEstado name="Ausente" state="MISSING" stateHandler = {() => handleUpperState("MISSING")}/>
+                            <DienteEstado name="Ausente (Por no Erupción)" state="MISSING-NOERUPT" stateHandler = {() => handleUpperState("MISSING-NOERUPT")}/>
                             <DienteEstado name="A Erupcionar" state="ERUPT" stateHandler = {() => handleUpperState("ERUPT")}/>
+                            <DienteEstado name="Implante" state="IMPLANT" stateHandler = {() => handleUpperState("IMPLANT")} propColor={"red"}/>
+                            <DienteEstado name="Corona" state="CORONA" stateHandler = {() => handlePartialState("CORONA")}/>
+                            <DienteEstado name="Corona Filtrada" state="CORONA-FILTRADA" stateHandler = {() => handlePartialState("CORONA-FILTRADA")}/>
                         </div>
                         <div></div>
 

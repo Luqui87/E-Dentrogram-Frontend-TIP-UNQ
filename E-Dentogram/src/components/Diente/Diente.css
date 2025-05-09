@@ -1,12 +1,14 @@
 .diente {
-    display: grid; 
-    grid-template-columns: 0.7fr 1.5fr 0.7fr; 
-    grid-template-rows: 0.7fr 1.5fr 0.7fr; 
-    gap: 0px 0px; 
+    display: grid;
+    grid-template-columns: 0.7fr 1.5fr 0.7fr;
+    grid-template-rows: 0.7fr 1.5fr 0.7fr;
+    gap: 0px 0px;
     height: 100%;
     width: 100%;
     position: relative;
 }
+
+
 
 .diente>div{
     display: flex;
@@ -77,8 +79,15 @@
 
 }
 
-svg.EXTRACTION{
+.tooth-state ~ svg, .diente svg{
     position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0%;
+    top: 0%;
+}
+
+svg.EXTRACTION{
     width: 100%;
     height: 90%;
     left: 0%;
@@ -87,7 +96,6 @@ svg.EXTRACTION{
 
 
 svg.MISSING{
-    position: absolute;
     width: 100%;
     height: 100%;
     left: 0%;
@@ -95,9 +103,23 @@ svg.MISSING{
 }
 
 svg.ERUPT{
-    position: absolute;
   width: 90%;
   height: 90%;
   left: 5%;
   top: 5%;
+}
+
+.IMPLANT{
+    background-color: red !important;
+}
+
+.diente:has(.CORONA), .state>div:has(.CORONA){
+    border: 3px solid red;
+
+}
+
+.diente:has(.CORONA-FILTRADA), .state>div:has(.CORONA-FILTRADA){
+    border: 4px solid red;
+    outline: 4px solid blue;
+    outline-offset: 4px;
 }
