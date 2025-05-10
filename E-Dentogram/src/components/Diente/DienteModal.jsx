@@ -49,7 +49,7 @@ function DienteModal(props){
     }
 
     const canBeSelected = (parte) => {
-        return parte.includes("HEALTHY") || parte.includes("CARIES") || parte.includes("RESTORATION")
+        return parte.includes("HEALTHY") || parte.includes("CARIES") || parte.includes("RESTORATION") || parte.includes("HEALTHFUL")
     }
 
     const handleSelect = ( parte, stateHandler ) => {     
