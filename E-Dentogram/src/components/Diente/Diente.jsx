@@ -11,31 +11,36 @@ function Diente(props){
         left:"HEALTHY",
         center:"HEALTHY",
         right:"HEALTHY",
-        down:"HEALTHY"
+        down:"HEALTHY",
+        special: "NOTHING"
     })
     const [upperState, setUpperState] = useState("")
     
 
-    const handleConfirm = (estados,upper) =>{
+    const handleConfirm = (estados) =>{
         setEstados(estados)
-        setUpperState(upper)
+        
+        setUpperState(getUpperState(estados))
     }
     
 
-    const totalState = () => {
-        const { number, ...rest } = props.state;
-            
-            const values = Object.values(rest);
-            const firstValue = values[0];
+    const getUpperState = (estados) => {
+        const {special, ...rest} = estados
 
-            return values.every(value => value === firstValue) ? firstValue : estados.upperState 
+        const values = Object.values(rest);
+        const firstValue = values[0];
+
+        return values.every(value => value === firstValue) && !["HEALTHY", "RESTORATION", "CARIES","HEALTHFUL"].includes(firstValue) ? firstValue : special
+        
     }
+    
 
     useEffect(() => {
         if (props.state){
             setEstados(props.state)
-
-            
+            const { number, ...rest } = props.state;
+                
+            setUpperState(getUpperState(rest) )
         }
     },[]) 
 

@@ -102,7 +102,7 @@ svg.MISSING{
     top: 0%;
 }
 
-svg.ERUPT{
+svg.TO_ERUPT{
   width: 90%;
   height: 90%;
   left: 5%;
@@ -113,12 +113,12 @@ svg.ERUPT{
     background-color: red !important;
 }
 
-.diente:has(.CORONA), .state>div:has(.CORONA){
+.diente:has(.DENTAL_CROWNS), .state>div:has(.DENTAL_CROWNS){
     border: 3px solid red;
 
 }
 
-.diente:has(.CORONA-FILTRADA), .state>div:has(.CORONA-FILTRADA){
+.diente:has(.DENTAL_CROWNS_WITH_ROOT_CANAL_TREATMENT), .state>div:has(.DENTAL_CROWNS_WITH_ROOT_CANAL_TREATMENT){
     border: 4px solid red;
     outline: 4px solid blue;
     outline-offset: 4px;

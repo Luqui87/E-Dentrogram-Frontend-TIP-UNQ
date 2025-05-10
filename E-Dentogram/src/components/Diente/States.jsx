@@ -4,7 +4,7 @@ export const States = {
                     <line x1="0" y1="100" x2="100" y2="0" stroke="red" strokeWidth="5" />
                 </svg>                    
     ,
-    "MISSING-NOERUPT" : <svg viewBox="0 0 100 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" className="MISSING-NOERUPT">
+    "MISSING_NO_ERUPTION" : <svg viewBox="0 0 100 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" className="MISSING_NO_ERUPTION">
                             <line x1="0" y1="0" x2="100" y2="100" stroke="#255272" strokeWidth="5" />
                             <line x1="0" y1="100" x2="100" y2="0" stroke="#255272" strokeWidth="5" />
                         </svg>                    
@@ -14,7 +14,7 @@ export const States = {
                         <path d="M0.978516 15.5H571.021" stroke="#255272" stroke-width="30"/>
                    </svg>
     ,
-    "ERUPT" : <svg width="466" height="471" viewBox="0 0 466 471" fill="none" xmlns="http://www.w3.org/2000/svg" className="ERUPT">
+    "TO_ERUPT" : <svg width="466" height="471" viewBox="0 0 466 471" fill="none" xmlns="http://www.w3.org/2000/svg" className="ERUPT">
                 <g filter="url(#filter0_d_0_1)">
                 <path d="M105 -2.45544e-05L4.35112 175.223L206.423 174.776L105 -2.45544e-05ZM106 452L123.5 451.961L122.848 157.461L105.348 157.5L87.8485 157.538L88.5 452.039L106 452Z" fill="#255272"/>
                 </g>
@@ -44,8 +44,8 @@ export const States = {
                 </filter>
                 </defs>
             </svg>,
-    "CORONA" : <div className="CORONA"></div>,
-    "CORONA-FILTRADA": <div className="CORONA-FILTRADA"></div>
+    "DENTAL_CROWNS" : <div className="DENTAL_CROWNS"></div>,
+    "DENTAL_CROWNS_WITH_ROOT_CANAL_TREATMENT": <div className="DENTAL_CROWNS_WITH_ROOT_CANAL_TREATMENT"></div>
     
     
 }

@@ -6,6 +6,7 @@ import API from '../../service/API';
 import { ToastContainer, toast, Bounce } from 'react-toastify';
 import DienteEstado from './DienteEstado';
 import { States } from './States';
+import handleApiError from "../../service/API";
 
 function DienteModal(props){
 
@@ -14,6 +15,9 @@ function DienteModal(props){
     const [centro, setCentro] = useState("");
     const [mesial, setMesial] = useState("");
     const [palatino, setPalatino] = useState("");
+    const [special, setSpecial] = useState("")
+
+
     const [selected, setSelected] = useState(null);
     const [showPrestaciones, setShowPrestaciones] = useState(false)
 
@@ -30,7 +34,8 @@ function DienteModal(props){
         setCentro(props.diente.center);
         setMesial(props.diente.right);
         setPalatino(props.diente.down);
-        setUpperState(props.diente.upperState)
+        setSpecial(props.diente.special)
+        setUpperState(props.diente.upperState);
     },[props.diente.up, props.diente.left, props.diente.center, props.diente.right,props.diente.down])
 
 
@@ -82,7 +87,7 @@ function DienteModal(props){
     }
     
 
-    const handleUpperState = (newState) => {
+    const handleTotalState = (newState) => {
 
         clearSelected();
 
@@ -96,11 +101,22 @@ function DienteModal(props){
         setMesial(newState);
         setPalatino(newState);
 
+        setSpecial("NOTHING")
+
     }
 
-    const handlePartialState = (newState) => {
+    const handleSpecialState = (newState) => {
         clearSelected();
         setShowPrestaciones(false)
+
+        setSpecial(newState)
+
+        setUpperState("HEALTHFUL");
+        setVestibular("HEALTHFUL");
+        setDistal("HEALTHFUL");
+        setCentro("HEALTHFUL");
+        setMesial("HEALTHFUL");
+        setPalatino("HEALTHFUL");
 
         setUpperState(newState)
     }
@@ -110,7 +126,7 @@ function DienteModal(props){
         clearSelected()
         setShowPrestaciones(false)
 
-        if ([vestibular, mesial, palatino, distal, centro].some(e=> !e.includes("HEALTHY"))){
+        if ([vestibular, mesial, palatino, distal, centro].some(e=> !e.includes("HEALTHY")) || special != "NOTHING"){
 
             const putTooth = {
                 number: number,
@@ -118,7 +134,8 @@ function DienteModal(props){
                 right: mesial.replaceAll(" selected", ""),
                 down: palatino.replaceAll(" selected", ""),
                 left: distal.replaceAll(" selected", ""),
-                center: centro.replaceAll(" selected", "")
+                center: centro.replaceAll(" selected", ""),
+                special: special
             }
             
 
@@ -130,16 +147,17 @@ function DienteModal(props){
                     left: distal,
                     center: centro,
                     right: mesial,
-                    down: palatino
+                    down: palatino,
+                    special: special
                 }, upperState);
+
                 props.onClose()
                 toast.success("Cambios confirmados") 
             })
-            .catch(error => {
-                toast.error("Cambios no confirmados")
-                console.log(error)
-            }) 
-
+            .catch((error) => {
+                toast.error(handleApiError(error));
+                
+              })
         } else{
 
         }
@@ -192,14 +210,14 @@ function DienteModal(props){
                         </div>
                         }
                         <div className="states">
-                            <DienteEstado name="Saludable" state="HEALTHY" stateHandler = {() => handleUpperState("HEALTHY")}/>
-                            <DienteEstado name="Extracción" state="EXTRACTION" stateHandler = {() => handleUpperState("EXTRACTION")}/>
-                            <DienteEstado name="Ausente" state="MISSING" stateHandler = {() => handleUpperState("MISSING")}/>
-                            <DienteEstado name="Ausente (Por no Erupción)" state="MISSING-NOERUPT" stateHandler = {() => handleUpperState("MISSING-NOERUPT")}/>
-                            <DienteEstado name="A Erupcionar" state="ERUPT" stateHandler = {() => handleUpperState("ERUPT")}/>
-                            <DienteEstado name="Implante" state="IMPLANT" stateHandler = {() => handleUpperState("IMPLANT")} propColor={"red"}/>
-                            <DienteEstado name="Corona" state="CORONA" stateHandler = {() => handlePartialState("CORONA")}/>
-                            <DienteEstado name="Corona Filtrada" state="CORONA-FILTRADA" stateHandler = {() => handlePartialState("CORONA-FILTRADA")}/>
+                            <DienteEstado name="Saludable" state="HEALTHY" stateHandler = {() => handleTotalState("HEALTHFUL")}/>
+                            <DienteEstado name="Extracción" state="EXTRACTION" stateHandler = {() => handleTotalState("EXTRACTION")}/>
+                            <DienteEstado name="Ausente" state="MISSING" stateHandler = {() => handleTotalState("MISSING")}/>
+                            <DienteEstado name="Ausente (Por no Erupción)" state="MISSING_NO_ERUPTION" stateHandler = {() => handleTotalState("MISSING_NO_ERUPTION")}/>
+                            <DienteEstado name="A Erupcionar" state="TO_ERUPT" stateHandler = {() => handleTotalState("TO_ERUPT")}/>
+                            <DienteEstado name="Implante" state="IMPLANT" stateHandler = {() => handleTotalState("IMPLANT")} propColor={"red"}/>
+                            <DienteEstado name="Corona" state="DENTAL_CROWNS" stateHandler = {() => handleSpecialState("DENTAL_CROWNS")}/>
+                            <DienteEstado name="Corona Filtrada" state="DENTAL_CROWNS_WITH_ROOT_CANAL_TREATMENT" stateHandler = {() => handleSpecialState("DENTAL_CROWNS_WITH_ROOT_CANAL_TREATMENT")}/>
                         </div>
                         <div></div>
 
