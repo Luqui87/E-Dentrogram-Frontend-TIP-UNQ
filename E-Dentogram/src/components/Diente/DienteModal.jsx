@@ -52,6 +52,10 @@ function DienteModal(props){
         return parte.includes("HEALTHY") || parte.includes("CARIES") || parte.includes("RESTORATION") || parte.includes("HEALTHFUL")
     }
 
+    const stateChange = (state) => {
+        return ["HEALTHY", "CARIES", "RESTORATION"].includes(state) ? state : "HEALTHFUL"
+    }
+
     const handleSelect = ( parte, stateHandler ) => {     
         
         if (parte.includes("selected")){
@@ -112,11 +116,11 @@ function DienteModal(props){
         setSpecial(newState)
 
         setUpperState("HEALTHFUL");
-        setVestibular("HEALTHFUL");
-        setDistal("HEALTHFUL");
-        setCentro("HEALTHFUL");
-        setMesial("HEALTHFUL");
-        setPalatino("HEALTHFUL");
+        setVestibular(stateChange(vestibular))
+        setDistal(stateChange(distal));
+        setCentro(stateChange(centro));
+        setMesial(stateChange(mesial));
+        setPalatino(stateChange(palatino));
 
         setUpperState(newState)
     }
