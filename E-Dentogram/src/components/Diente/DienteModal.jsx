@@ -4,6 +4,9 @@ import {useParams} from 'react-router-dom';
 import { useEffect, useState} from 'react'
 import API from '../../service/API';
 import { ToastContainer, toast, Bounce } from 'react-toastify';
+import DienteEstado from './DienteEstado';
+import { States } from './States';
+import handleApiError from "../../service/API";
 
 function DienteModal(props){
 
@@ -12,7 +15,11 @@ function DienteModal(props){
     const [centro, setCentro] = useState("");
     const [mesial, setMesial] = useState("");
     const [palatino, setPalatino] = useState("");
-    const [selected, setSelected] = useState("");
+    const [special, setSpecial] = useState("")
+
+
+    const [selected, setSelected] = useState(null);
+    const [showPrestaciones, setShowPrestaciones] = useState(false)
 
     const [upperState, setUpperState] = useState("")
 
@@ -27,7 +34,8 @@ function DienteModal(props){
         setCentro(props.diente.center);
         setMesial(props.diente.right);
         setPalatino(props.diente.down);
-        setUpperState(props.diente.upperState)
+        setSpecial(props.diente.special)
+        setUpperState(props.diente.upperState);
     },[props.diente.up, props.diente.left, props.diente.center, props.diente.right,props.diente.down])
 
 
@@ -41,26 +49,54 @@ function DienteModal(props){
     }
 
     const canBeSelected = (parte) => {
-        return parte.includes("HEALTHY") || parte.includes("CARIES") || parte.includes("RESTORATION")
+        return parte.includes("HEALTHY") || parte.includes("CARIES") || parte.includes("RESTORATION") || parte.includes("HEALTHFUL")
+    }
+
+    const stateChange = (state) => {
+        return ["HEALTHY", "CARIES", "RESTORATION"].includes(state) ? state : "HEALTHFUL"
     }
 
     const handleSelect = ( parte, stateHandler ) => {     
         
-        clearSelected();
+        if (parte.includes("selected")){
+            clearSelected()
+            setShowPrestaciones(false)
+            return
+        }
 
         if (canBeSelected(parte)){
+            clearSelected()
             stateHandler(parte + ' selected' );
         
-            setSelected(()=> stateHandler)
+            setSelected({parte, stateHandler});
 
+            setShowPrestaciones(true)
+
+        }
+
+    }
+
+    const handlePrestacion = (prestacion) => {
+
+
+        setShowPrestaciones(false);
+        
+        if (selected.parte.includes(prestacion)){
+            selected.stateHandler("HEALTHY");
+        }
+        else{
+            selected.stateHandler(prestacion)
         }
 
     }
     
 
-    const handleUpperState = (newState) => {
+    const handleTotalState = (newState) => {
 
         clearSelected();
+
+        setSelected(null)
+        setShowPrestaciones(false)
         
         setUpperState(newState);
         setVestibular(newState);
@@ -69,22 +105,42 @@ function DienteModal(props){
         setMesial(newState);
         setPalatino(newState);
 
+        setSpecial("NOTHING")
+
+    }
+
+    const handleSpecialState = (newState) => {
+        clearSelected();
+        setShowPrestaciones(false)
+
+        setSpecial(newState)
+
+        setUpperState("HEALTHFUL");
+        setVestibular(stateChange(vestibular))
+        setDistal(stateChange(distal));
+        setCentro(stateChange(centro));
+        setMesial(stateChange(mesial));
+        setPalatino(stateChange(palatino));
+
+        setUpperState(newState)
     }
 
     const handleConfirm = () => {
         
         clearSelected()
+        setShowPrestaciones(false)
 
-        if ([vestibular, mesial, palatino, distal, centro].some(e=> !e.includes("HEALTHY"))){
+        if ([vestibular, mesial, palatino, distal, centro].some(e=> !e.includes("HEALTHY")) || special != "NOTHING"){
 
-            const putTooth = [{
+            const putTooth = {
                 number: number,
                 up: vestibular.replaceAll(" selected", ""),
                 right: mesial.replaceAll(" selected", ""),
                 down: palatino.replaceAll(" selected", ""),
                 left: distal.replaceAll(" selected", ""),
-                center: centro.replaceAll(" selected", "")
-            }]
+                center: centro.replaceAll(" selected", ""),
+                special: special
+            }
             
 
             API.updateTeeth(id, putTooth)
@@ -95,16 +151,17 @@ function DienteModal(props){
                     left: distal,
                     center: centro,
                     right: mesial,
-                    down: palatino
+                    down: palatino,
+                    special: special
                 }, upperState);
+
                 props.onClose()
                 toast.success("Cambios confirmados") 
             })
-            .catch(error => {
-                toast.error("Cambios no confirmados")
-                console.log(error)
-            }) 
-
+            .catch((error) => {
+                toast.error(handleApiError(error));
+                
+              })
         } else{
 
         }
@@ -114,7 +171,7 @@ function DienteModal(props){
     return(
         <Modal isOpen={props.showModal} onClose={props.onClose}>
             <div className="modalDiente">
-                <h1>Diente {props.seccion} {props.num}</h1>
+                <span style={{fontSize:"2em", borderBottom:"1px solid grey"}}> <b>Diente {props.seccion} {props.num}</b></span>
                 <div className="cuerpo">
                     <div className="diente">
                         <div id="vestibular"  >
@@ -143,17 +200,32 @@ function DienteModal(props){
                             </div>   
                         </div> 
 
-                        <div className={upperState}></div>
+                        {States[upperState]}
                     
                     </div>
 
                     <div className="prestaciones">
+                        {showPrestaciones && 
+
                         <div className="btn-group" style={{display:'flex', width:'100%'}}>
-                            <button className='CARIES' onClick={() => selected("CARIES")}>Carie</button>
-                            <button className='RESTORATION' onClick={() => selected("RESTORATION")}>Restauracion</button>
+                            <button className='CARIES' onClick={() => handlePrestacion("CARIES")}>Carie</button>
+                            <button className='RESTORATION' onClick={() => handlePrestacion("RESTORATION")}>Restauracion</button>
                             
                         </div>
-                        <button className='EXCTRACTION' onClick={() => handleUpperState("EXTRACTION")}>Extracción</button>
+                        }
+                        <div className="states">
+                            <DienteEstado name="Saludable" state="HEALTHY" stateHandler = {() => handleTotalState("HEALTHFUL")}/>
+                            <DienteEstado name="Extracción" state="EXTRACTION" stateHandler = {() => handleTotalState("EXTRACTION")}/>
+                            <DienteEstado name="Ausente" state="MISSING" stateHandler = {() => handleTotalState("MISSING")}/>
+                            <DienteEstado name="Ausente (Por no Erupción)" state="MISSING_NO_ERUPTION" stateHandler = {() => handleTotalState("MISSING_NO_ERUPTION")}/>
+                            <DienteEstado name="A Erupcionar" state="TO_ERUPT" stateHandler = {() => handleTotalState("TO_ERUPT")}/>
+                            <DienteEstado name="Implante" state="IMPLANT" stateHandler = {() => handleTotalState("IMPLANT")} propColor={"red"}/>
+                            <DienteEstado name="Corona" state="DENTAL_CROWNS" stateHandler = {() => handleSpecialState("DENTAL_CROWNS")}/>
+                            <DienteEstado name="Corona Filtrada" state="DENTAL_CROWNS_WITH_ROOT_CANAL_TREATMENT" stateHandler = {() => handleSpecialState("DENTAL_CROWNS_WITH_ROOT_CANAL_TREATMENT")}/>
+                        </div>
+                        <div></div>
+
+
                         <button className='button' onClick={()=> handleConfirm()}>Confirmar</button>
                     </div>    
 

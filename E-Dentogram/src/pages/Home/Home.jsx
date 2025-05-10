@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import PersonTable from "../../components/PersonTable/PersonTable.jsx";
 import "./Home.css";
 import API from "../../service/API.jsx";
+import handleApiError from "../../service/API.jsx";
 import "../../components/loader.css";
 import { toast } from "react-toastify";
 import PatientModal from "../../components/PatientModal/PatientModal.jsx";
@@ -45,32 +46,9 @@ const Home = () => {
         setLoading(false);
       })
       .catch((error) => {
-        handleApiError(error);
-        // TODO: implementar .catch() + Toast + función general para tratar errores
-        // 4xx => mensaje de error
-        // 5xx => "Ocurrió un error, consulte al administrador del sistema"
-        // cualquier otra cosa => error.message
-      })
+        toast.error(handleApiError(error));
+      });
   }, []);
-
-  const handleApiError = (error) => {
-    if (error.response) {
-      const status = error.response.status;
-
-      switch (true) {
-        case status >= 400 && status < 500:
-          toast.error(error.response.data || "Error del cliente.");
-          break;
-        case status >= 500:
-          toast.error("Error del servidor. Consulte al administrador.");
-          break;
-        default:
-          toast.error("Error inesperado.");
-      }
-    } else {
-      toast.error("No se pudo conectar con el servidor.");
-    }
-  };
 
   return loading ? (
     <div className="home-container">
@@ -92,8 +70,12 @@ const Home = () => {
         </button>
       </div>
 
-      <PatientModal showModal={showModal} onClose={handleCloseModal} dentistId={dentistId} setPatients={setPatients} />
-      
+      <PatientModal
+        showModal={showModal}
+        onClose={handleCloseModal}
+        dentistId={dentistId}
+        setPatients={setPatients}
+      />
 
       <PersonTable
         patients={patients}

@@ -105,7 +105,7 @@ function Register(){
 
             const token = res.data.accessToken;
             localStorage.setItem('token', token);
-            localStorage.setItem('username', newUsername)
+            
             
             navigate("/home")
 
@@ -117,7 +117,7 @@ function Register(){
     }
 
     return (
-        <main >
+        <main style={{justifyContent:"center"}}>
             <div className="register-box">
                 <div><span className='header'>Registrarse</span></div>
                 {/* <div>
@@ -137,13 +137,17 @@ function Register(){
                         value={newPassword}
                         onChange={(e) => handleChangePassword(e)}
                     />
+                    
+                </div>
+
+                <div>
                     {strength > 0 ? (
-                        <progress
+                    <progress
                         hidden={newPassword.length === 0}
                         className={`password strength-${strength}`}
                         value={strength}
                         max="4"
-                        />
+                    />
                     ) : null}
                     <div className={`feedback strength-${strength}`} hidden={newPassword.length === 0}>
                         {feedback}
@@ -161,6 +165,8 @@ function Register(){
                     onChange={(e) => checkPassword(e)}
                     onKeyDown={handleEnter}
                     />
+                </div>
+                <div>
                     {!samePassword ? <span style={{color:"red", fontSize:"13px",}}>*Contraseñas no coinciden</span> : <></> }
                 </div>
                 <div className='register-button'>

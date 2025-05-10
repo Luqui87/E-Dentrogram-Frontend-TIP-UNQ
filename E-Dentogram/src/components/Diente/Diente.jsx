@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import './Diente.css'
 import DienteModal from './DienteModal';
+import { States } from './States';
 
 function Diente(props){
 
@@ -10,33 +11,41 @@ function Diente(props){
         left:"HEALTHY",
         center:"HEALTHY",
         right:"HEALTHY",
-        down:"HEALTHY"
+        down:"HEALTHY",
+        special: "NOTHING"
     })
     const [upperState, setUpperState] = useState("")
     
 
-    const handleConfirm = (estados,upper) =>{
+    const handleConfirm = (estados) =>{
         setEstados(estados)
-        setUpperState(upper)
+        
+        setUpperState(getUpperState(estados))
     }
+    
+
+    const getUpperState = (estados) => {
+        const {special, ...rest} = estados
+
+        const values = Object.values(rest);
+        const firstValue = values[0];
+
+        return values.every(value => value === firstValue) && !["HEALTHY", "RESTORATION", "CARIES","HEALTHFUL"].includes(firstValue) ? firstValue : special
+        
+    }
+    
 
     useEffect(() => {
         if (props.state){
             setEstados(props.state)
-
             const { number, ...rest } = props.state;
-            
-            const values = Object.values(rest);
-            const firstValue = values[0];
-            if (values.every(value => value === firstValue)){
-                console.log("hola")
-                setUpperState(firstValue)
-            }
+                
+            setUpperState(getUpperState(rest) )
         }
     },[]) 
 
     return(
-    <>  
+    <>
         <div className="diente normal" onClick={() => {toggleModal(!showModal), console.log(estados)}}>
             <div id="vestibular">
               <div className={estados.up}>
@@ -64,7 +73,7 @@ function Diente(props){
               </div>   
           </div> 
         
-          <div className={upperState}></div>
+          {States[upperState]}
 
         </div>
         
