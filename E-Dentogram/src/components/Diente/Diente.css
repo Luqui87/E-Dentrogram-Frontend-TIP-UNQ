@@ -1,0 +1,125 @@
+.diente {
+    display: grid;
+    grid-template-columns: 0.7fr 1.5fr 0.7fr;
+    grid-template-rows: 0.7fr 1.5fr 0.7fr;
+    gap: 0px 0px;
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+
+
+.diente>div{
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    box-sizing: border-box;
+    background-color: black;
+}
+
+.diente>div>div{
+    width: 100%;
+    height: 100%;
+    background-color: white;
+}
+ 
+.normal.diente:hover>div>div, .diente.estado:hover>div>div{
+    background-color: rgb(233, 233, 233);
+}
+
+.diente.modal>div>div:hover{
+    background-color: rgb(233, 233, 233);
+}
+
+#vestibular {
+    grid-area: 1 / 1 / 2 / 4;
+    clip-path: polygon(0% 0%, 100% 0%, 76% 100%, 24% 100%);
+    padding: 4%;
+}
+
+#vestibular > div {
+    clip-path: polygon(4% 0%, 96% 0%, 76% 100%, 24% 100%);
+}
+
+#distal {   
+    grid-area: 1 / 1 / 4 / 2;
+    clip-path: polygon(0% 0%, 100% 24%, 100% 76%, 0% 100%);
+    padding: 16%;
+}
+
+#distal>div{
+    clip-path: polygon(0% 4%, 100% 24%, 100% 76%, 0% 96%)
+}
+
+#centro {   
+    grid-area: 2 / 2 / 3 / 3;
+    background-color: black;
+    padding: 8%;
+}
+
+#mesial { 
+    grid-area: 1 / 3 / 4 / 4;
+    clip-path: polygon(0% 24%, 100% 0%, 100% 100%, 0% 76%);
+    padding:16%
+}
+
+#mesial > div{
+    clip-path: polygon(0% 24%, 100% 4%, 100% 96%, 0% 76%)
+}
+
+#palatino { 
+    grid-area: 3 / 1 / 4 / 4;
+    clip-path: polygon(24% 0%, 76% 0%, 100% 100%, 0% 100%);
+    padding: 4%;
+} 
+
+#palatino > div{
+    clip-path: polygon(24% 0%, 78% 0%, 100% 114%, 0% 117%)
+
+}
+
+.tooth-state ~ svg, .diente svg{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0%;
+    top: 0%;
+}
+
+svg.EXTRACTION{
+    width: 100%;
+    height: 90%;
+    left: 0%;
+    top: 4%;
+}
+
+
+svg.MISSING{
+    width: 100%;
+    height: 100%;
+    left: 0%;
+    top: 0%;
+}
+
+svg.TO_ERUPT{
+  width: 90%;
+  height: 90%;
+  left: 5%;
+  top: 5%;
+}
+
+.IMPLANT{
+    background-color: red !important;
+}
+
+.diente:has(.DENTAL_CROWNS), .state>div:has(.DENTAL_CROWNS){
+    border: 3px solid red;
+
+}
+
+.diente:has(.DENTAL_CROWNS_WITH_ROOT_CANAL_TREATMENT), .state>div:has(.DENTAL_CROWNS_WITH_ROOT_CANAL_TREATMENT){
+    border: 4px solid red;
+    outline: 4px solid blue;
+    outline-offset: 4px;
+}

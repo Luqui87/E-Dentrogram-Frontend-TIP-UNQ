@@ -1,0 +1,10 @@
+main {
+    height: 92vh;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 2%;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    gap: 5vh;
+}

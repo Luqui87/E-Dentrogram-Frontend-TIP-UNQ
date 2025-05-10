@@ -1,0 +1,187 @@
+.register-box{
+    width: 400px;
+    padding: 35px;
+    background-color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: solid rgba(0, 0, 0, 0.301) 1px;
+    font-family: Helvetica, Arial, sans-serif;
+    gap: 10px;
+    vertical-align:middle;
+}
+
+.register-box .header{
+    font-size: 2em;
+}
+
+.register-box div {
+    flex: 1 1 0%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.register-box input[type=text], .register-box [type=password]{
+    width: 400px;
+    padding: 1vh 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 3px solid #ccc;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    outline: none;
+    font-size: 1.4em;
+}
+
+.register-box  input[type=text]:focus, .register-box  input[type=password]:focus {
+    border: 3px solid #555;
+ }
+
+
+ .register-button{
+    margin: 10px 0;
+ }
+
+ .button-66 {
+   background-color: #0e70ccbb;
+   border-radius: 4px;
+   border: 0;
+   box-shadow: rgba(1,60,136,.5) 0 -1px 3px 0 inset,rgba(0,44,97,.1) 0 3px 6px 0;
+   box-sizing: border-box;
+   color: #fff;
+   cursor: pointer;
+   display: inherit;
+   font-family: "Space Grotesk",-apple-system,system-ui,"Segoe UI",Roboto,Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+   font-size: 18px;
+   font-weight: 700;
+   line-height: 24px;
+   margin: 0;
+   min-height: 56px;
+   min-width: 120px;
+   padding: 16px 166px;
+   position: relative;
+   text-align: center;
+   user-select: none;
+   -webkit-user-select: none;
+   touch-action: manipulation;
+   vertical-align: baseline;
+   transition: all .2s cubic-bezier(.22, .61, .36, 1);
+ }
+ 
+ .button-66:hover {
+   background-color: #0e70cc;
+   transform: translateY(-2px);
+ }
+
+
+ .password {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  height: 5px;
+  background: #ddd;
+  border-radius: 5px;
+  width: 300px;
+}
+.password:before,
+.password:after {
+  content: "";
+  height: inherit;
+  background: transparent;
+  display: block;
+  border-color: #ddd;
+  border-style: solid;
+  border-width: 0 1px 0;
+  position: absolute;
+  width: calc(25% - 1px );
+  z-index: 10;
+}
+.password:before {
+  left: calc(25% );
+}
+.password:after {
+  right: calc(25%);
+}
+
+.strength-1::-webkit-progress-value {
+  background-color: #f25f5c;
+  width: 100%;
+}
+.strength-2::-webkit-progress-value {
+  background-color: orange;
+  width: 100%;
+}
+
+.strength-3::-webkit-progress-value {
+  background-color: #70c1b3; 
+  width: 100%;  
+}
+
+.strength-4::-webkit-progress-value {
+  background-color: #084c1eba; 
+  width: 100%;  
+}
+
+.strength-1,
+.strength-0s{
+  color: #f25f5c;
+  display: flex;
+  font-size: 11px;
+  font-weight: 500;
+  margin-top: 5px;
+}
+.strength-2 {
+  color: orange;
+  display: flex;
+  font-size: 11px;
+  font-weight: 500;
+  margin-top: 5px;
+}
+
+.strength-3 {
+  color: #70c1b3;
+  display: flex;
+  font-size: 11px;
+  font-weight: 500;
+  margin-top: 5px;
+}
+
+.strength-4 {
+  color: #084c1eba;
+  display: flex;
+  font-size: 11px;
+  font-weight: 500;
+  margin-top: 5px;
+}
+
+.feedback{
+  display: inherit !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+progress {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 10px;
+  border: none;
+  background-color: #eee;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+
+.seePassword{
+  position: absolute;
+  width: 11%;
+  color: grey;
+  left: 87%;
+  top: 35%;
+}
+
+.seePassword:hover{
+  cursor: pointer;
+}
