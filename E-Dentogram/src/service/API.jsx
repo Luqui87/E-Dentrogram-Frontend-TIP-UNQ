@@ -30,13 +30,13 @@ const request = (type, path, body) => {
       // TODO: devolver response.data
       return response;
     })
-    .catch((reason) => {
+   /*  .catch((reason) => {
       if (reason.response.status === 403) {
         localStorage.setItem("previousLocation", window.location.pathname);
         window.history.replaceState(null, null, "/");
         location.reload();
       }
-    });
+    }); */
 };
 
 const handleApiError = (error) => {
@@ -62,6 +62,8 @@ const API = {
   updateTeeth: (id, body) => request("put", `/update/tooth/${id}`, body),
   register: (body) => request("post", "/register", body),
   login: (body) => request("post", "/login", body),
+  loginGoogle: (body) => request("post", "/login/google", body),
+  registerGoogle: (body) => request("post", "/register/google", body),
   removePatient: (dentistId, patientMedicalRecord) =>
     request("put", `/dentist/Remove/${dentistId}/${patientMedicalRecord}`),
   addPatient: (dentistId, body) =>
