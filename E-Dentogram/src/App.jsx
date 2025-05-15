@@ -12,12 +12,15 @@ import Register from "./pages/Register/Register";
 import Diente from "./components/Diente/Diente";
 import PatientModal from "./components/PatientModal/PatientModal";
 import Calendario from "./components/Calendario/Calendario";
+import { GoogleApiProvider } from 'react-gapi'
 
 const App = () => {
   return (
     <>
+      <GoogleApiProvider clientId={"1042049294933-6706691g5vb2fgonludemk973v9mlgeb.apps.googleusercontent.com"}>
       <Router>
         <Navbar />
+        
         <Routes>
            <Route path="/" element={<Login/>} /> 
            <Route path="/register" element={<Register />} />
@@ -26,6 +29,7 @@ const App = () => {
           <Route path="*" element={<PageNotFound />} /> 
           <Route path="/calendario" element={<Calendario/>} />
         </Routes>
+        
         <ToastContainer
           position="bottom-center"
           autoClose={5000}
@@ -40,6 +44,7 @@ const App = () => {
           transition={Bounce}
         />
       </Router>
+      </GoogleApiProvider>
     </>
   );
 };

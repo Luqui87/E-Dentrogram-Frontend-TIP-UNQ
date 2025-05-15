@@ -4,6 +4,9 @@ import API from "../../service/API";
 import handleApiError from "../../service/API";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useGoogleApi } from "react-gapi";
+import GoogleAuth from "../../components/GoogleAuth";
+
 
 function Login() {
   const [insUsername, setInsUsername] = useState("");
@@ -11,6 +14,13 @@ function Login() {
   const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
+
+  const gapi = useGoogleApi({
+    scopes: [
+      "profile",
+      "https://www.googleapis.com/auth/calendar.events.readonly"
+    ],
+  })
 
   useEffect(() => {
     localStorage.removeItem("token");
@@ -92,6 +102,31 @@ function Login() {
       });
   };
 
+  const handleGoogleLogin = () => {
+    gapi.auth2.getAuthInstance().signIn().then((res) => {
+
+        const idToken = res.xc.id_token;
+
+        API.loginGoogle(idToken)
+          .then((res) => {
+
+            localStorage.setItem("token", res.data.accessToken);
+
+            let previousLocation = localStorage.getItem("previousLocation");
+            localStorage.removeItem("previousLocation");
+
+            if (!previousLocation || previousLocation === "/") {
+              previousLocation = "/home";
+            }
+
+            navigate(previousLocation);
+          })
+          .catch((error) => {
+            toast.error(handleApiError(error));
+          });
+    });
+  }
+
   return (
     <main style={{ justifyContent: "center" }}>
       <div className="register-box">
@@ -137,6 +172,8 @@ function Login() {
         <span>
           No tenes una cuenta? <a href="/register">Regístrate</a>{" "}
         </span>
+        <hr className="style-one"/>
+        <GoogleAuth handleGoogleLogin={handleGoogleLogin}/>
       </div>
     </main>
   );

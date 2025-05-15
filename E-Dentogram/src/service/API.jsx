@@ -30,13 +30,13 @@ const request = (type, path, body) => {
       // TODO: devolver response.data
       return response;
     })
-   /*  .catch((reason) => {
+    .catch((reason) => {
       if (reason.response.status === 403) {
         localStorage.setItem("previousLocation", window.location.pathname);
         window.history.replaceState(null, null, "/");
         location.reload();
       }
-    }); */
+    });
 };
 
 const handleApiError = (error) => {
