@@ -27,7 +27,7 @@ const App = () => {
           <Route path="/home" element={<Home />} />
           <Route path="/paciente/:id" element={<PacienteView />} />
           <Route path="*" element={<PageNotFound />} /> 
-          <Route path="/calendario" element={<Calendario/>} />
+          <Route path="/Calendario" element={<Calendario/>} />
         </Routes>
         
         <ToastContainer

@@ -17,9 +17,10 @@ function Navbar() {
     <>
       {token && (
         <header>
-          <div onClick={() => navigate("/Home")} className="logo-section">
-            <img src={logo} alt="Logo de aplicación" />
-            <a>E-Dentogram</a>
+          <div  className="logo-section">
+            <img src={logo} alt="Logo de aplicación" onClick={() => navigate("/Home")} />
+            <a onClick={() => navigate("/Home")}>E-Dentogram</a>
+            <a onClick={()=> navigate("/Calendario")} style={{marginLeft:"20px"}}>Calendario</a>
           </div>
           <button className="logout-button" onClick={handleLogout}>
             {logoutIccon}

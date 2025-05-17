@@ -43,7 +43,7 @@ function CalendarApp() {
       });
   };
 
-  return <div>Check the console for events!</div>;
+  return <div></div>;
 }
 
 export default CalendarApp;
