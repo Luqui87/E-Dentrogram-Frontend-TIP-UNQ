@@ -62,6 +62,8 @@ const API = {
   updateTeeth: (id, body) => request("put", `/update/tooth/${id}`, body),
   register: (body) => request("post", "/register", body),
   login: (body) => request("post", "/login", body),
+  loginGoogle: (body) => request("post", "/login/google", body),
+  registerGoogle: (body) => request("post", "/register/google", body),
   removePatient: (dentistId, patientMedicalRecord) =>
     request("put", `/dentist/Remove/${dentistId}/${patientMedicalRecord}`),
   addPatient: (dentistId, body) =>
