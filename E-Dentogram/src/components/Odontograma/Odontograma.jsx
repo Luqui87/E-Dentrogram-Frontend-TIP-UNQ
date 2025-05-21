@@ -20,7 +20,7 @@ function Odontograma( {type,teeth} ){
     switch (type){
         case "Mixto":
             return (
-        <div className="odontograma mixto">
+            <div className="odontograma mixto">
 
             <div className="adulto">
                 
@@ -29,11 +29,25 @@ function Odontograma( {type,teeth} ){
                         {dientes(8,1)}
                         <span>1</span>
                     </div>
+                    
                     <div className="dientes">
                         {dientes(8,2)}
                         <span>2</span>
                     </div>
                 </div>
+                
+                <div className="seccion mixto">
+                    <div className="dientes">
+                        {dientes(5,5)}
+                        <span>5</span>
+                    </div>
+                    <div className="dientes">
+                        {dientes(5,6)}
+                        <span>6</span>
+                    </div>
+                </div>
+                
+                
             
                 <div className="seccion">
                     <div className="dientes">
@@ -45,21 +59,8 @@ function Odontograma( {type,teeth} ){
                         <span>3</span>
                     </div>
                 </div>
-            
-            </div>
 
-            <div className="niñez mixto">
-                <div className="seccion">
-                    <div className="dientes">
-                        {dientes(5,5)}
-                        <span>5</span>
-                    </div>
-                    <div className="dientes">
-                        {dientes(5,6)}
-                        <span>6</span>
-                    </div>
-                </div>
-                <div className="seccion">
+                <div className="seccion mixto">
                     <div className="dientes">
                         {dientes(5,8)}
                         <span>8</span>
@@ -69,10 +70,11 @@ function Odontograma( {type,teeth} ){
                         <span>7</span>
                     </div>
                 </div>
+            
             </div>
 
-
         </div>
+        
     )
     case "Adulto":
         return(
@@ -142,3 +144,59 @@ function Odontograma( {type,teeth} ){
 }
 
 export default Odontograma
+
+/* 
+<div className="odontograma mixto">
+
+            <div className="adulto">
+                
+                <div className="seccion">
+                    <div className="dientes">
+                        {dientes(8,1)}
+                        <span>1</span>
+                    </div>
+                    <div className="dientes">
+                        {dientes(8,2)}
+                        <span>2</span>
+                    </div>
+                </div>
+            
+                <div className="seccion">
+                    <div className="dientes">
+                        {dientes(8,4)}
+                        <span>4</span>
+                    </div>
+                    <div className="dientes">
+                        {dientes(8,3)}
+                        <span>3</span>
+                    </div>
+                </div>
+            
+            </div>
+
+            <div className="niñez mixto">
+                <div className="seccion">
+                    <div className="dientes">
+                        {dientes(5,5)}
+                        <span>5</span>
+                    </div>
+                    <div className="dientes">
+                        {dientes(5,6)}
+                        <span>6</span>
+                    </div>
+                </div>
+                <div className="seccion">
+                    <div className="dientes">
+                        {dientes(5,8)}
+                        <span>8</span>
+                    </div>
+                    <div className="dientes">
+                        {dientes(5,7)}
+                        <span>7</span>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+*/
