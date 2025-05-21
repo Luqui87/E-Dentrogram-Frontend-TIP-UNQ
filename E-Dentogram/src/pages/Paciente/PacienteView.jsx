@@ -30,7 +30,16 @@ function PacienteView() {
     </main>
   ) : (
     <main>
-      <PacienteCard patient={patient} />
+      <div className="patient-info">
+         <PacienteCard patient={patient} />
+          <select className="classic">
+            <option>Adulto</option>
+            <option>Infante</option>
+            <option>Mixto</option>
+          </select>
+      </div>
+     
+      
       <Odontograma teeth={patient.teeth} />
     </main>
   );
