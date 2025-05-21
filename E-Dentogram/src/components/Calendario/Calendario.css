@@ -58,6 +58,12 @@
   width: 90%;
 }
 
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+}
+
 /* Estilos para DateTimePicker */
 .react-datetime-picker {
   width: 100%;
@@ -164,8 +170,79 @@
 .field {
   display: flex;
   flex-direction: column;
-  align-items: start;
-  gap: 5px;
+  margin-bottom: 1rem;
+}
+
+.field label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.field input[type="text"] {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  transition: border 0.3s ease;
+}
+
+.field input[type="text"]:focus {
+  outline: none;
+  border: 1px solid #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+.createEventButton {
+  background-color: #28a745; /* Verde Bootstrap */
+  color: white;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 1rem;
+  margin-right: 0.5rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.createEventButton:hover {
+  background-color: #218838;
+  transform: scale(1.03);
+}
+
+.createEventButton:active {
+  background-color: #1e7e34;
+  transform: scale(0.97);
+}
+
+.cancelEventButton {
+  background-color: #f44336;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.cancelEventButton:hover {
+  background-color: #af2016;
+  transform: scale(1.03);
+}
+
+.cancelEventButton:active {
+  background-color: #a11b11;
+  transform: scale(0.97);
+}
+
+.bold-text {
+  font-weight: bold;
 }
 
 /* Responsive: reduce tamaño en pantallas pequeñas */

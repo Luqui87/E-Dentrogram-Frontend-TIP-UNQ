@@ -12,16 +12,13 @@ const CLIENT_ID =
   "1042049294933-6706691g5vb2fgonludemk973v9mlgeb.apps.googleusercontent.com";
 const DISCOVERY_DOC =
   "https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest";
-
 const SCOPES = "https://www.googleapis.com/auth/calendar.events";
 
 function CalendarApp() {
   const [events, setEvents] = useState([]);
-
   const [start, setStart] = useState(new Date());
   const [end, setEnd] = useState(new Date());
   const [eventName, setEventName] = useState("");
-
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
@@ -67,7 +64,11 @@ function CalendarApp() {
   };
 
   async function createCalendarEvent() {
-    console.log(` creando evento de calendario `);
+    if (start >= end) {
+      toast.error("La fecha de inicio debe ser anterior a la fecha de fin.");
+      return;
+    }
+
     const event = {
       summary: eventName,
       description: "",
@@ -96,29 +97,20 @@ function CalendarApp() {
         body: JSON.stringify(event),
       }
     )
+      .then((data) => data.json())
       .then((data) => {
-        return data.json();
-      })
-      .then((data) => {
-        console.log(`------- data  : ${data}`);
+        console.log("Evento creado:", data);
         toast.success("Evento agendado");
+        setIsModalOpen(false);
+        setEventName("");
+        setStart(new Date());
+        setEnd(new Date());
       })
       .catch((error) => {
-        console.error("Error al crear evento:", error); // temporal
+        console.error("Error al crear evento:", error); // cambiar por api handler error
         toast.error("Error al crear el evento");
       });
   }
-
-  console.log(`start : ${start}`);
-  console.log(`end : ${end}`);
-  console.log(`eventName : ${eventName}`);
-  console.log(`--------------TOKEN--------------------`);
-  if (gapi.auth2 && gapi.auth2.getAuthInstance) {
-    console.log(
-      gapi.auth2.getAuthInstance().currentUser.get().getGrantedScopes()
-    );
-  }
-  console.log(`--------------------------------------`);
 
   return (
     <main>
@@ -152,6 +144,7 @@ function CalendarApp() {
             onClick={() => setIsModalOpen(false)}
           ></div>
           <div className="modal-content">
+            <h2>Agendar Cita</h2>
             <div className="field">
               <label>Nombre del evento</label>
               <input
@@ -159,14 +152,24 @@ function CalendarApp() {
                 onChange={(e) => setEventName(e.target.value)}
               />
             </div>
-
-            <h2>Agendar Cita</h2>
-            <p>Inicio de la cita</p>
+            <p className="bold-text">Inicio de la cita</p>
             <DateTimePicker onChange={setStart} value={start} />
-            <p>Fin de la cita</p>
+            <p className="bold-text">Fin de la cita</p>
             <DateTimePicker onChange={setEnd} value={end} />
-            <button onClick={() => createCalendarEvent()}>Crear evento</button>
-            <button onClick={() => setIsModalOpen(false)}>Cerrar</button>
+            <div className="modal-buttons">
+              <button
+                className="cancelEventButton"
+                onClick={() => setIsModalOpen(false)}
+              >
+                Cerrar
+              </button>
+              <button
+                className="createEventButton"
+                onClick={createCalendarEvent}
+              >
+                Crear evento
+              </button>
+            </div>
           </div>
         </>
       )}
