@@ -7,19 +7,30 @@
     align-items: center;
     gap: 10%;
     color: #95b6bd;
+    justify-content: center;
 }
 
 .odontograma>div{
     display: flex;
     flex-direction: column;
+    
+}
+
+.mixto>div{
     flex: 1 1 0%;
 }
 
 .adulto{
     width: 100%;
+    height: 60%;
 }
 
 .niñez{
+    width: 100%;
+    height: 60%;
+}
+
+.niñez.mixto{
     width: 60%;
 }
 
