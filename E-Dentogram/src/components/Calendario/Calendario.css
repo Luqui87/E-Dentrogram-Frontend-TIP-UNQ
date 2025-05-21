@@ -1,8 +1,193 @@
+/* Calendario container */
 .calendario {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
-.fc-view-harness.fc-view-harness-active{
-    background-color: white;
+/* FullCalendar fondo */
+.fc-view-harness.fc-view-harness-active {
+  background-color: white;
+}
+
+/* Botón de agendar evento */
+.agendar-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  margin: 10px 0;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 18px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.agendar-btn:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+.agendar-btn:active {
+  background-color: #004085;
+  transform: scale(1);
+}
+
+/* Estilo para el modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+.modal-content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 36px 40px;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+  z-index: 1000;
+  max-width: 820px;
+  width: 90%;
+}
+
+/* Estilos para DateTimePicker */
+.react-datetime-picker {
+  width: 100%;
+  font-size: 20px;
+  box-sizing: border-box;
+  margin-bottom: 26px;
+  user-select: none;
+}
+
+/* Wrapper flex que contiene inputs y botones */
+.react-datetime-picker__wrapper {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  padding: 12px 18px;
+  background-color: #fff;
+  min-height: 56px;
+  box-sizing: border-box;
+  transition: border-color 0.25s ease;
+}
+
+/* Inputs individuales */
+.react-datetime-picker__inputGroup__input {
+  flex-grow: 1;
+  min-width: 3.5em;
+  font-size: 20px;
+  padding: 8px 12px;
+  height: 44px;
+  line-height: 44px;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  text-align: center;
+  color: #222;
+  border-radius: 6px;
+  transition: background-color 0.25s ease;
+  user-select: text;
+  cursor: text;
+}
+
+/* Selector AM/PM */
+.react-datetime-picker__inputGroup__amPm {
+  font-size: 18px;
+  padding: 8px 16px;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  background-color: #fff;
+  height: 44px;
+  line-height: 44px;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Botones de iconos */
+.react-datetime-picker__button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  margin: 0 6px;
+  min-width: 48px;
+  min-height: 48px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border-radius: 8px;
+}
+
+.react-datetime-picker__button:hover {
+  background-color: #e6f0ff;
+}
+
+/* SVG iconos más grandes y colores definidos */
+.react-datetime-picker__button svg {
+  width: 26px;
+  height: 26px;
+  fill: #007bff;
+  transition: fill 0.3s ease;
+}
+
+.react-datetime-picker__button:hover svg {
+  fill: #0056b3;
+}
+
+/* Focus para inputs - borde azul */
+.react-datetime-picker__inputGroup__input:focus {
+  background-color: #e6f0ff;
+  border-radius: 6px;
+  outline: none;
+}
+
+/* Focus para AM/PM */
+.react-datetime-picker__inputGroup__amPm:focus,
+.react-datetime-picker__inputGroup__amPm:hover {
+  background-color: #cce4ff;
+  border-color: #007bff;
+  outline: none;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 5px;
+}
+
+/* Responsive: reduce tamaño en pantallas pequeñas */
+@media (max-width: 480px) {
+  .react-datetime-picker__wrapper {
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 16px;
+    min-height: auto;
+  }
+
+  .react-datetime-picker__inputGroup__input,
+  .react-datetime-picker__inputGroup__amPm {
+    width: 100%;
+    height: 44px;
+    line-height: 44px;
+    font-size: 18px;
+  }
+
+  .react-datetime-picker__button {
+    min-width: 44px;
+    min-height: 44px;
+    margin: 4px 0;
+  }
 }
