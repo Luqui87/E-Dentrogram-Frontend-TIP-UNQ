@@ -20,7 +20,7 @@ function PacienteView() {
   });
   const [isLoading, SetLoading] = useState(false);
   const { id } = useParams();
-  const [type, setType] = useState("Infante")
+  const [type, setType] = useState("Adulto")
 
   /* useEffect(() => {
     API.getPatient(id)

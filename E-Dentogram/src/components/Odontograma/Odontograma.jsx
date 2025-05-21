@@ -47,7 +47,16 @@ function Odontograma( {type,teeth} ){
                     </div>
                 </div>
                 
-                
+                <div className="seccion mixto">
+                    <div className="dientes">
+                        {dientes(5,8)}
+                        <span>8</span>
+                    </div>
+                    <div className="dientes">
+                        {dientes(5,7)}
+                        <span>7</span>
+                    </div>
+                </div>    
             
                 <div className="seccion">
                     <div className="dientes">
@@ -57,17 +66,6 @@ function Odontograma( {type,teeth} ){
                     <div className="dientes">
                         {dientes(8,3)}
                         <span>3</span>
-                    </div>
-                </div>
-
-                <div className="seccion mixto">
-                    <div className="dientes">
-                        {dientes(5,8)}
-                        <span>8</span>
-                    </div>
-                    <div className="dientes">
-                        {dientes(5,7)}
-                        <span>7</span>
                     </div>
                 </div>
             
