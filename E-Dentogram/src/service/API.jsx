@@ -68,6 +68,7 @@ const API = {
     request("put", `/dentist/Remove/${dentistId}/${patientMedicalRecord}`),
   addPatient: (dentistId, body) =>
     request("post", `/dentist/add/${dentistId}`, body),
+  sendWhatsapp: (body) => request("post", "/send", body),
 };
 
 export default API;

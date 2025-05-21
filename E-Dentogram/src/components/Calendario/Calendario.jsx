@@ -8,6 +8,9 @@ import "./Calendario.css";
 import DateTimePicker from "react-datetime-picker";
 import { toast } from "react-toastify";
 
+import API from "../../service/API";
+import handleApiError from "../../service/API";
+
 const CLIENT_ID =
   "1042049294933-6706691g5vb2fgonludemk973v9mlgeb.apps.googleusercontent.com";
 const DISCOVERY_DOC =
@@ -20,6 +23,11 @@ function CalendarApp() {
   const [end, setEnd] = useState(new Date());
   const [eventName, setEventName] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [patients, setPatients] = useState([]);
+  const [dentistId, setDentistId] = useState("");
+
+  const [selectedPatient, setSelectedPatient] = useState(null);
 
   useEffect(() => {
     const initClient = () => {
@@ -40,6 +48,15 @@ function CalendarApp() {
     };
 
     gapi.load("client:auth2", initClient);
+
+    API.getDentist(localStorage.getItem("username"))
+      .then((res) => {
+        setPatients(res.data.patients);
+        setDentistId(res.data.dentistID);
+      })
+      .catch((error) => {
+        toast.error(handleApiError(error));
+      });
   }, []);
 
   const listUpcomingEvents = () => {
@@ -63,11 +80,36 @@ function CalendarApp() {
       });
   };
 
+  function sendMessage(patientTel) {
+    const argentinaTime = new Date(start).toLocaleString("es-AR", {
+      timeZone: "America/Argentina/Buenos_Aires",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+
+    const argentinaDate = new Date(start).toLocaleDateString("es-AR", {
+      timeZone: "America/Argentina/Buenos_Aires",
+    });
+
+    console.log(`---- tel : ${patientTel} `);
+    API.sendWhatsapp({
+      number: patientTel,
+      message: `Se agendó una reunión con el dentista a las ${argentinaTime} el día ${argentinaDate}.`,
+    });
+  }
+
   async function createCalendarEvent() {
+    if (!selectedPatient) {
+      toast.error("Debes seleccionar un paciente.");
+      return;
+    }
+
     if (start >= end) {
       toast.error("La fecha de inicio debe ser anterior a la fecha de fin.");
       return;
     }
+
+    const patientTel = String(selectedPatient.telephone);
 
     const event = {
       summary: eventName,
@@ -98,9 +140,10 @@ function CalendarApp() {
       }
     )
       .then((data) => data.json())
-      .then((data) => {
-        console.log("Evento creado:", data);
+      .then(() => {
         toast.success("Evento agendado");
+        sendMessage(patientTel);
+
         setIsModalOpen(false);
         setEventName("");
         setStart(new Date());
@@ -146,6 +189,23 @@ function CalendarApp() {
           <div className="modal-content">
             <h2>Agendar Cita</h2>
             <div className="field">
+              <div className="field">
+                <label className="bold-text">Seleccionar Paciente</label>
+                <select
+                  onChange={(e) =>
+                    setSelectedPatient(
+                      patients.find((p) => p.dni === parseInt(e.target.value))
+                    )
+                  }
+                >
+                  <option value="">Seleccionar paciente</option>
+                  {patients.map((patient) => (
+                    <option key={patient.dni} value={patient.dni}>
+                      {patient.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
               <label>Nombre del evento</label>
               <input
                 type="text"

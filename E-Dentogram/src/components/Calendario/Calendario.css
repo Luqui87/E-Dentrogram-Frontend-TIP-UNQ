@@ -1,15 +1,12 @@
-/* Calendario container */
 .calendario {
   width: 100%;
   height: 100%;
 }
 
-/* FullCalendar fondo */
 .fc-view-harness.fc-view-harness-active {
   background-color: white;
 }
 
-/* Botón de agendar evento */
 .agendar-btn {
   background-color: #007bff;
   color: white;
@@ -33,7 +30,6 @@
   transform: scale(1);
 }
 
-/* Estilo para el modal */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -64,7 +60,26 @@
   margin-top: 1.5rem;
 }
 
-/* Estilos para DateTimePicker */
+select {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+}
+
+select:focus {
+  border-color: #4a90e2;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+}
+
+option {
+  padding: 0.5rem;
+}
+
 .react-datetime-picker {
   width: 100%;
   font-size: 20px;
@@ -73,7 +88,6 @@
   user-select: none;
 }
 
-/* Wrapper flex que contiene inputs y botones */
 .react-datetime-picker__wrapper {
   display: flex;
   align-items: center;
@@ -87,7 +101,6 @@
   transition: border-color 0.25s ease;
 }
 
-/* Inputs individuales */
 .react-datetime-picker__inputGroup__input {
   flex-grow: 1;
   min-width: 3.5em;
@@ -106,7 +119,6 @@
   cursor: text;
 }
 
-/* Selector AM/PM */
 .react-datetime-picker__inputGroup__amPm {
   font-size: 18px;
   padding: 8px 16px;
@@ -120,7 +132,6 @@
   transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
-/* Botones de iconos */
 .react-datetime-picker__button {
   display: flex;
   align-items: center;
@@ -140,7 +151,6 @@
   background-color: #e6f0ff;
 }
 
-/* SVG iconos más grandes y colores definidos */
 .react-datetime-picker__button svg {
   width: 26px;
   height: 26px;
@@ -152,14 +162,12 @@
   fill: #0056b3;
 }
 
-/* Focus para inputs - borde azul */
 .react-datetime-picker__inputGroup__input:focus {
   background-color: #e6f0ff;
   border-radius: 6px;
   outline: none;
 }
 
-/* Focus para AM/PM */
 .react-datetime-picker__inputGroup__amPm:focus,
 .react-datetime-picker__inputGroup__amPm:hover {
   background-color: #cce4ff;
@@ -195,7 +203,7 @@
 }
 
 .createEventButton {
-  background-color: #28a745; /* Verde Bootstrap */
+  background-color: #28a745;
   color: white;
   padding: 0.6rem 1.2rem;
   font-size: 1rem;
@@ -245,7 +253,6 @@
   font-weight: bold;
 }
 
-/* Responsive: reduce tamaño en pantallas pequeñas */
 @media (max-width: 480px) {
   .react-datetime-picker__wrapper {
     flex-direction: column;
