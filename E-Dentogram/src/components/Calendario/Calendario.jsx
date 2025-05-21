@@ -46,10 +46,12 @@ function CalendarApp() {
         singleEvents: true,
         maxResults: 100,
         orderBy: 'startTime',
+        q:'E-Dentograma'
       })
       .then(response => {
         const getEvents = response.result.items.map((d) => ({title: d.summary , start:d.start.dateTime, end:d.end.dateTime }));
         setEvents(getEvents)
+        console.log(getEvents)
       });
   };
 
