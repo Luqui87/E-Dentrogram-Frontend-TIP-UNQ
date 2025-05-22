@@ -11,6 +11,7 @@ import 'react-datetime-picker/dist/DateTimePicker.css';
 import 'react-calendar/dist/Calendar.css';
 import 'react-clock/dist/Clock.css';
 
+
 import API from "../../service/API";
 import handleApiError from "../../service/API";
 import Modal from "../Modal";
@@ -181,7 +182,10 @@ function CalendarApp() {
             timeGridWeek: { buttonText: "Semana" },
           }}
           events={events}
-          
+          scrollTime= "07:00:00"
+          allDaySlot={false}
+          nowIndicator={true}
+
           customButtons={{
             addEventButton: {
               text: "Agendar Cita",
