@@ -132,8 +132,9 @@ function Register(){
 
         API.registerGoogle(idToken)
             .then((res) => {
-
+            
             localStorage.setItem("token", res.data.accessToken);
+            localStorage.setItem("GoogleToken", idToken);
 
             navigate("/home");
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { gapi } from "gapi-script";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
@@ -24,14 +24,43 @@ const SCOPES = "https://www.googleapis.com/auth/calendar.events";
 
 function CalendarApp() {
   const [events, setEvents] = useState([]);
+
   const [start, setStart] = useState(new Date());
   const [end, setEnd] = useState(new Date());
   const [eventName, setEventName] = useState("");
+
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [patients, setPatients] = useState([]);
 
   const [selectedPatient, setSelectedPatient] = useState(null);
+
+  const popoverRef = useRef(null);
+  const [popoverContent, setPopoverContent] = useState('');
+  const [popoverStyle, setPopoverStyle] = useState({ display: 'none' });
+
+  
+  const listUpcomingEvents = () => {
+    gapi.client.calendar.events
+      .list({
+        calendarId: "primary",
+        timeMin: new Date().toISOString(),
+        showDeleted: false,
+        singleEvents: true,
+        maxResults: 100,
+        orderBy: "startTime",
+        q: "E-Dentograma",
+      })
+      .then((response) => {
+        const getEvents = response.result.items.map((d) => ({
+          title: d.summary,
+          start: d.start.dateTime,
+          end: d.end.dateTime,
+          description: d.description
+        }));
+        setEvents(getEvents);
+      });
+  };
 
   useEffect(() => {
     const initClient = () => {
@@ -62,26 +91,7 @@ function CalendarApp() {
       });
   }, []);
 
-  const listUpcomingEvents = () => {
-    gapi.client.calendar.events
-      .list({
-        calendarId: "primary",
-        timeMin: new Date().toISOString(),
-        showDeleted: false,
-        singleEvents: true,
-        maxResults: 100,
-        orderBy: "startTime",
-        q: "E-Dentograma",
-      })
-      .then((response) => {
-        const getEvents = response.result.items.map((d) => ({
-          title: d.summary,
-          start: d.start.dateTime,
-          end: d.end.dateTime,
-        }));
-        setEvents(getEvents);
-      });
-  };
+  /////////////////////////////////////////
 
   function sendMessage(patientTel) {
     const argentinaTime = new Date(start).toLocaleString("es-AR", {
@@ -115,7 +125,7 @@ function CalendarApp() {
 
     const event = {
       summary: eventName,
-      description: "E-Dentograma",
+      description: `Turno con ${selectedPatient.name}. Historia clinica ${selectedPatient.medicalRecord}. E-Dentograma`,
       start: {
         dateTime: start.toISOString(),
         timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
@@ -126,10 +136,7 @@ function CalendarApp() {
       },
     };
 
-    const tokenGoogle = gapi.auth2
-      .getAuthInstance()
-      .currentUser.get()
-      .getAuthResponse().access_token;
+    const tokenGoogle = localStorage.getItem("GoogleToken")
 
     await fetch(
       "https://www.googleapis.com/calendar/v3/calendars/primary/events",
@@ -164,6 +171,36 @@ function CalendarApp() {
       });
   }
 
+  /////////////////////////////////////////
+  const handleMouseEnter = (info) => {
+    const { clientX, clientY } = info.jsEvent;
+
+    let description = info.event.extendedProps.description
+    description = description.substring(0, description.length - 12)
+
+    setPopoverContent(
+      <div>
+        <span style={{fontSize:"2em"}}>{info.event.title}</span>
+        <hr className="style-one"/>
+
+        <span>{description}</span>
+      </div>
+
+    );
+    setPopoverStyle({
+      display: 'block',
+      position: 'absolute',
+      top: `${clientY + 10}px`,
+      left: `${clientX + 10}px`
+    });
+  };
+
+  const handleMouseLeave = () => {
+    setPopoverStyle({ display: 'none' });
+  };
+  /////////////////////////////////////////
+
+
   return (
     <main>
       <div className="calendario">
@@ -186,12 +223,16 @@ function CalendarApp() {
           allDaySlot={false}
           nowIndicator={true}
 
+          eventMouseEnter={handleMouseEnter}
+          eventMouseLeave={handleMouseLeave}
+
           customButtons={{
             addEventButton: {
               text: "Agendar Cita",
               click: () => setIsModalOpen(true)
               }
           }}
+
         />
       </div>
       
@@ -256,7 +297,11 @@ function CalendarApp() {
           </div>
         
       </Modal>
-      
+
+      <div ref={popoverRef} className="custom-popover" style={popoverStyle}>
+        {popoverContent}
+      </div>
+
     </main>
   );
 }
