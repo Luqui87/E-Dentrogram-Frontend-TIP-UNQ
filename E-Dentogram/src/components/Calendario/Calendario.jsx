@@ -7,9 +7,13 @@ import esLocale from "@fullcalendar/core/locales/es";
 import "./Calendario.css";
 import DateTimePicker from "react-datetime-picker";
 import { toast } from "react-toastify";
+import 'react-datetime-picker/dist/DateTimePicker.css';
+import 'react-calendar/dist/Calendar.css';
+import 'react-clock/dist/Clock.css';
 
 import API from "../../service/API";
 import handleApiError from "../../service/API";
+import Modal from "../Modal";
 
 const CLIENT_ID =
   "1042049294933-6706691g5vb2fgonludemk973v9mlgeb.apps.googleusercontent.com";
@@ -140,6 +144,12 @@ function CalendarApp() {
       .then(() => {
         toast.success("Evento agendado");
         sendMessage(patientTel);
+        
+
+        setEvents(events.concat([{
+          title: eventName,
+          start: start.toISOString(),
+          end:end.toISOString()}]));
 
         setIsModalOpen(false);
         setEventName("");
@@ -156,10 +166,6 @@ function CalendarApp() {
   return (
     <main>
       <div className="calendario">
-        <button className="agendar-btn" onClick={() => setIsModalOpen(true)}>
-          Agendar Evento
-        </button>
-
         <FullCalendar
           plugins={[dayGridPlugin, timeGridPlugin]}
           initialView="timeGridWeek"
@@ -167,7 +173,7 @@ function CalendarApp() {
           height={"100%"}
           headerToolbar={{
             left: "prev,next today",
-            center: "title",
+            center: "title addEventButton",
             right: "dayGridMonth,timeGridWeek",
           }}
           views={{
@@ -175,15 +181,17 @@ function CalendarApp() {
             timeGridWeek: { buttonText: "Semana" },
           }}
           events={events}
+          
+          customButtons={{
+            addEventButton: {
+              text: "Agendar Cita",
+              click: () => setIsModalOpen(true)
+              }
+          }}
         />
       </div>
-
-      {isModalOpen && (
-        <>
-          <div
-            className="modal-overlay"
-            onClick={() => setIsModalOpen(false)}
-          ></div>
+      
+      <Modal isOpen={isModalOpen} onClose={()=> setIsModalOpen(false)}>
           <div className="modal-content">
             <h2>Agendar Cita</h2>
             <div className="field">
@@ -216,10 +224,17 @@ function CalendarApp() {
                 onChange={(e) => setEventName(e.target.value)}
               />
             </div>
-            <p className="bold-text">Inicio de la cita</p>
-            <DateTimePicker onChange={setStart} value={start} />
-            <p className="bold-text">Fin de la cita</p>
-            <DateTimePicker onChange={setEnd} value={end} />
+            <div className="dates-pickers">
+              <div className="field">
+                <p className="bold-text">Inicio de la cita</p>
+                <DateTimePicker onChange={setStart} value={start} />
+              </div>
+              <div className="field">
+                <p className="bold-text">Fin de la cita</p>
+                <DateTimePicker onChange={setEnd} value={end} />
+              </div>
+            </div>
+            
             <div className="modal-buttons">
               <button
                 className="cancelEventButton"
@@ -235,8 +250,9 @@ function CalendarApp() {
               </button>
             </div>
           </div>
-        </>
-      )}
+        
+      </Modal>
+      
     </main>
   );
 }
