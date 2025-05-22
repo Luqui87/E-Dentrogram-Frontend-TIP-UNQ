@@ -25,7 +25,6 @@ function CalendarApp() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [patients, setPatients] = useState([]);
-  const [dentistId, setDentistId] = useState("");
 
   const [selectedPatient, setSelectedPatient] = useState(null);
 
@@ -52,7 +51,6 @@ function CalendarApp() {
     API.getDentist(localStorage.getItem("username"))
       .then((res) => {
         setPatients(res.data.patients);
-        setDentistId(res.data.dentistID);
       })
       .catch((error) => {
         toast.error(handleApiError(error));
@@ -108,12 +106,11 @@ function CalendarApp() {
       toast.error("La fecha de inicio debe ser anterior a la fecha de fin.");
       return;
     }
-
     const patientTel = String(selectedPatient.telephone);
 
     const event = {
       summary: eventName,
-      description: "",
+      description: "E-Dentograma",
       start: {
         dateTime: start.toISOString(),
         timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
@@ -148,6 +145,7 @@ function CalendarApp() {
         setEventName("");
         setStart(new Date());
         setEnd(new Date());
+        setSelectedPatient(null);
       })
       .catch((error) => {
         console.error("Error al crear evento:", error); // cambiar por api handler error
@@ -192,15 +190,21 @@ function CalendarApp() {
               <div className="field">
                 <label className="bold-text">Seleccionar Paciente</label>
                 <select
+                  value={selectedPatient?.medicalRecord || ""}
                   onChange={(e) =>
                     setSelectedPatient(
-                      patients.find((p) => p.dni === parseInt(e.target.value))
+                      patients.find(
+                        (p) => p.medicalRecord === parseInt(e.target.value)
+                      )
                     )
                   }
                 >
                   <option value="">Seleccionar paciente</option>
                   {patients.map((patient) => (
-                    <option key={patient.dni} value={patient.dni}>
+                    <option
+                      key={patient.medicalRecord}
+                      value={patient.medicalRecord}
+                    >
                       {patient.name}
                     </option>
                   ))}
