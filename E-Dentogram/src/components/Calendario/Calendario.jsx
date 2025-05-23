@@ -136,7 +136,10 @@ function CalendarApp() {
       },
     };
 
-    const tokenGoogle = localStorage.getItem("GoogleToken")
+    const tokenGoogle = gapi.auth2
+      .getAuthInstance()
+      .currentUser.get()
+      .getAuthResponse().access_token;
 
     await fetch(
       "https://www.googleapis.com/calendar/v3/calendars/primary/events",
