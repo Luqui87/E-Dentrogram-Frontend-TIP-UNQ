@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 
 function PacienteView() {
   const [patient, setPatient] = useState({});
-  const [isLoading, SetLoading] = useState(false);
+  const [isLoading, SetLoading] = useState(true);
   const { id } = useParams();
   const [type, setType] = useState("Adulto")
 
@@ -27,7 +27,7 @@ function PacienteView() {
 
   return isLoading ? (
     <main style={{ alignItems: "center", justifyContent: "center" }}>
-      <span class="loader"></span>
+      <span className="loader"></span>
     </main>
   ) : (
     <main>
@@ -41,7 +41,7 @@ function PacienteView() {
       </div>
      
       
-      <Odontograma type={type} teeth={patient.teeth} />
+      <Odontograma type={type} teeth={patient.teeth} /> 
     </main>
   );
 }
