@@ -9,8 +9,6 @@ import PageNotFound from "./pages/PageNotFound/PageNotFound";
 import Login from './pages/Login/Login'
 
 import Register from "./pages/Register/Register";
-import Diente from "./components/Diente/Diente";
-import PatientModal from "./components/PatientModal/PatientModal";
 import Calendario from "./components/Calendario/Calendario";
 import { GoogleApiProvider } from 'react-gapi'
 
@@ -22,12 +20,12 @@ const App = () => {
         <Navbar />
         
         <Routes>
-          <Route path="/" element={<PacienteView/>} /> 
-          {/* <Route path="/register" element={<Register />} />
+          <Route path="/" element={<Login/>} /> 
+          <Route path="/register" element={<Register />} />
           <Route path="/home" element={<Home />} />
           <Route path="/paciente/:id" element={<PacienteView />} />
           <Route path="*" element={<PageNotFound />} /> 
-          <Route path="/Calendario" element={<Calendario/>} /> */}
+          <Route path="/Calendario" element={<Calendario/>} />
         </Routes>
         
         <ToastContainer
