@@ -152,18 +152,18 @@ function DienteModal(props){
                     special: special
                 }, upperState);
 
+                
+
+            API.updateTeeth(id, putTooth)
+            .then(() =>{
                 props.onClose()
                 toast.success("Cambios confirmados") 
-
-            /* API.updateTeeth(id, putTooth)
-            .then(() =>{
-
                 
             })
             .catch((error) => {
                 toast.error(handleApiError(error));
                 
-              }) */
+              })
         } else{
 
         }
