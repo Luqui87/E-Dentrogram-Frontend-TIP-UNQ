@@ -111,6 +111,7 @@ function Login() {
           .then((res) => {
 
             localStorage.setItem("token", res.data.accessToken);
+            localStorage.setItem("GoogleToken", idToken);
 
             let previousLocation = localStorage.getItem("previousLocation");
             localStorage.removeItem("previousLocation");
