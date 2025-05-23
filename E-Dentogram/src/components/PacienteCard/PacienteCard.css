@@ -1,7 +1,7 @@
 .pacienteCard{
     background-color: #FFFFFF;
     width: 70%;
-    height: 20%;
+    height: 100%;
     display: flex;
     align-items: center;
     box-shadow: 0 0 10px black;

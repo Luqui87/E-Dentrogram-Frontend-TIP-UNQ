@@ -8,9 +8,10 @@ import handleApiError from "../../service/API";
 import { toast } from "react-toastify";
 
 function PacienteView() {
-  const [patient, setPatient] = useState("");
-  const [isLoading, SetLoading] = useState(true);
+  const [patient, setPatient] = useState({});
+  const [isLoading, SetLoading] = useState(false);
   const { id } = useParams();
+  const [type, setType] = useState("Adulto")
 
   useEffect(() => {
     API.getPatient(id)
@@ -22,7 +23,7 @@ function PacienteView() {
         toast.error(handleApiError(error));
       })
       .finally();
-  }, []);
+  }, []); 
 
   return isLoading ? (
     <main style={{ alignItems: "center", justifyContent: "center" }}>
@@ -30,8 +31,17 @@ function PacienteView() {
     </main>
   ) : (
     <main>
-      <PacienteCard patient={patient} />
-      <Odontograma teeth={patient.teeth} />
+      <div className="patient-info">
+         <PacienteCard patient={patient} />
+          <select value={type} onChange={e => setType(e.target.value)} className="classic">
+            <option>Adulto</option>
+            <option>Infante</option>
+            <option>Mixto</option>
+          </select>
+      </div>
+     
+      
+      <Odontograma type={type} teeth={patient.teeth} />
     </main>
   );
 }
