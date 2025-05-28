@@ -1,0 +1,17 @@
+.historial{
+    width: 70%;
+    height: 100%;
+}
+
+.historial.inactive{
+    display: none;
+}
+
+.historial .diente{
+    width: 50px;
+    height: 50px;
+}
+
+.historial .person-table th, .historial .person-table td{
+    padding: 10px;
+}

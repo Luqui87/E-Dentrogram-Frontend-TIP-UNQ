@@ -6,12 +6,16 @@ import { useEffect, useState } from "react";
 import API from "../../service/API";
 import handleApiError from "../../service/API";
 import { toast } from "react-toastify";
+import Historial from "../../components/Historial/Historial";
 
 function PacienteView() {
   const [patient, setPatient] = useState({});
   const [isLoading, SetLoading] = useState(true);
   const { id } = useParams();
   const [type, setType] = useState("Adulto")
+
+  const [activeTab, setActiveTab] = useState("odontograma");
+
 
   useEffect(() => {
     API.getPatient(id)
@@ -38,10 +42,26 @@ function PacienteView() {
             <option>Infante</option>
             <option>Mixto</option>
           </select>
+
+          <div className="tab">
+            <button
+              className={activeTab === "odontograma" ? "active" : ""}
+              onClick={() => setActiveTab("odontograma")}
+            >
+              Odontograma
+            </button>
+            <button
+              className={activeTab === "historial" ? "active" : ""}
+              onClick={() => setActiveTab("historial")}
+            >
+              Historial
+            </button>
+          </div>
       </div>
      
       
-      <Odontograma type={type} teeth={patient.teeth} /> 
+      <Odontograma type={type} teeth={patient.teeth} active={activeTab === "odontograma" ? "active" : "inactive"}/> 
+      <Historial active={activeTab === "historial" ? "active" : "inactive"}/>        
     </main>
   );
 }

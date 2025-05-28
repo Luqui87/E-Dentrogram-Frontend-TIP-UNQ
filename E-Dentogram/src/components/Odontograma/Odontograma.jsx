@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import Diente from '../Diente/Diente'
 import './Odontograma.css'
 
-function Odontograma( {type,teeth} ){
+function Odontograma( {type,teeth, active} ){
 
     function dientes(n, seccion){
 
@@ -18,7 +18,7 @@ function Odontograma( {type,teeth} ){
     }
 
     return (
-            <div className={`odontograma ${type}`}>
+            <div className={`odontograma ${type} ${active}`}>
                 
                 <div className={`seccion adulto ${type}`}>
                     <div className="dientes">

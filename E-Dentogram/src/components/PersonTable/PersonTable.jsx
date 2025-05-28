@@ -66,7 +66,7 @@ const PersonTable = ({ patients, searchTerm, setPatients, dentistId }) => {
               <td>{person.medicalRecord}</td>
               <td>{person.dni}</td>
               <td>{person.telephone}</td>
-              <td>
+              <td className="buttons">
                 <button
                   className="delete-button"
                   onClick={(event) =>

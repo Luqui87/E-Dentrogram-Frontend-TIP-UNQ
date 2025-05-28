@@ -107,7 +107,7 @@ function Login() {
 
         const idToken = res.xc.id_token;
 
-        API.loginGoogle(idToken)
+        API.loginGoogle({token: idToken})
           .then((res) => {
 
             localStorage.setItem("token", res.data.accessToken);

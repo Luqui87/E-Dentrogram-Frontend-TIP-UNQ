@@ -130,7 +130,7 @@ function Register(){
 
         const idToken = res.xc.id_token;
 
-        API.registerGoogle(idToken)
+        API.registerGoogle({token: idToken})
             .then((res) => {
             
             localStorage.setItem("token", res.data.accessToken);

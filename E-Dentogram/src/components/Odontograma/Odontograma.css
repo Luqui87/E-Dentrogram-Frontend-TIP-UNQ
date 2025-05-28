@@ -9,13 +9,17 @@
     flex-direction: column;
 }
 
+.odontograma.inactive{
+    display: none;
+}
+
 .odontograma.Infante {
     height: 50%;
     margin: auto;
 }
 
 .odontograma.Adulto{
-    height: 50%;
+    height: 35%;
     margin: auto;
 }
 
@@ -44,10 +48,14 @@
     display: none;
 }
 
+.odontograma.Infante .seccion:fis{
+    border-bottom: 5px solid #95b6bd;
+}
+
 .odontograma.Mixto .seccion:first-child{
     border-bottom: 0;
 }
-.odontograma.Mixto .seccion:nth-child(2){
+.odontograma.Mixto .seccion:nth-child(2), .odontograma.Infante .seccion:nth-child(2){
     border-bottom: 5px solid #95b6bd;
 }
 

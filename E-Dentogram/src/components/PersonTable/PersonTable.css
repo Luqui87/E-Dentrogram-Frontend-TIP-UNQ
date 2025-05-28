@@ -113,8 +113,8 @@
   z-index: 2;
 }
 
-.person-table th:last-child,
-.person-table td:last-child {
+.home-container .person-table th:last-child,
+.home-container .person-table td:last-child {
   width: 5%; /* Ajusta este valor según lo pequeño que quieras la columna */
   padding: 3px;
 }
