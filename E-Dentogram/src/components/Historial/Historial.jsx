@@ -113,7 +113,7 @@ function Historial({ active, id, rerender }) {
                     <tbody>
                         {Array.isArray(changes) && changes.length > 0 ? (
                             changes.map((cambio, index) => (
-                                <tr key={`${cambio.diente}-${index}`}>
+                                <tr key={`${cambio.date}`}>
                                     <td></td>
                                     <td>{formatDate(cambio.date)}</td>
                                     <td>{cambio.tooth_number}</td>
