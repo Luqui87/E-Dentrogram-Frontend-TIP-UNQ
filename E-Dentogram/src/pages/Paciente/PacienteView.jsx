@@ -12,7 +12,7 @@ function PacienteView() {
   const [patient, setPatient] = useState({});
   const [isLoading, SetLoading] = useState(true);
   const { id } = useParams();
-  const [patientId, setId] = useState("")
+  const [render, setRender] = useState(false)
   const [type, setType] = useState("Adulto")
   const [record, setRecord] = useState({})
 
@@ -24,7 +24,6 @@ function PacienteView() {
     API.getPatient(id)
     .then((res) => {
       setPatient(res.data)
-      setId(id)
       SetLoading(false)
     })
     .catch((error) => {
@@ -66,8 +65,8 @@ function PacienteView() {
       </div>
      
       
-      <Odontograma type={type} teeth={patient.teeth} active={activeTab === "odontograma" ? "active" : "inactive"} setRecord={() => setId(id)}/> 
-      <Historial record={record} id={patientId} active={activeTab === "historial" ? "active" : "inactive"}/>        
+      <Odontograma type={type} teeth={patient.teeth} active={activeTab === "odontograma" ? "active" : "inactive"} setRecord={() => setRender(!render) }/> 
+      <Historial rerender={render} id={id} active={activeTab === "historial" ? "active" : "inactive"}/>        
     </main>
   );
 }

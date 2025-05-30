@@ -3,11 +3,25 @@ import Diente from "../Diente/Diente"
 import './Historial.css'
 import API from "../../service/API"
 
-function Historial({ active, id }) {
+function Historial({ active, id, rerender }) {
     const [changes, setChanges] = useState([])
     const [page, setPage] = useState(0)
     const [totalPages, setTotalPages] = useState(1)
     const [loading, setLoading] = useState(false)
+
+    const formatDate = (date) =>{
+        const fecha = new Date(date.replace(/(\.\d{3})\d*/, '$1'));
+
+        const formateada = fecha.toLocaleString('es-ES', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+
+        return formateada;
+    }
 
     const pageSize = 10
 
@@ -39,7 +53,7 @@ function Historial({ active, id }) {
     if (id) {
         fetchPage(0)
     }
-}, [id])
+    }, [rerender])
 
     const handlePageClick = (num) => {
         if (num !== page && num >= 0 && num < totalPages) {
@@ -101,7 +115,7 @@ function Historial({ active, id }) {
                             changes.map((cambio, index) => (
                                 <tr key={`${cambio.diente}-${index}`}>
                                     <td></td>
-                                    <td>{cambio.date}</td>
+                                    <td>{formatDate(cambio.date)}</td>
                                     <td>{cambio.tooth_number}</td>
                                     <td>
                                         <Diente state={{
