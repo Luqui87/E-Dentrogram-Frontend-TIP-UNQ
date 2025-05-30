@@ -23,6 +23,21 @@ function Historial({ active, id, rerender }) {
         return formateada;
     }
 
+    const formatNumero = (numero) => {
+        if (numero <= 4 * 8) {
+            // Secciones 1 a 4
+            const seccion = Math.ceil(numero / 8);
+            const orden = numero - (seccion - 1) * 8;
+            return `${seccion} ${orden}`;
+        } else {
+            // Secciones 5 a 8
+            const numeroRelativo = numero - 4 * 8;
+            const seccion = 4 + Math.ceil(numeroRelativo / 5);
+            const orden = numeroRelativo - (Math.ceil(numeroRelativo / 5) - 1) * 5;
+        return `${seccion} ${orden}`;
+  }
+    }
+
     const pageSize = 10
 
     const fetchPage = (pageNumber) => {
@@ -116,7 +131,7 @@ function Historial({ active, id, rerender }) {
                                 <tr key={`${cambio.date}`}>
                                     <td></td>
                                     <td>{formatDate(cambio.date)}</td>
-                                    <td>{cambio.tooth_number}</td>
+                                    <td>{formatNumero(cambio.tooth_number)}</td>
                                     <td>
                                         <Diente state={{
                                             up: cambio.before[0],
