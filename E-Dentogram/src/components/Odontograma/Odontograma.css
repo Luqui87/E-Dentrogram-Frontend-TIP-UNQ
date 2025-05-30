@@ -2,7 +2,7 @@
     display: flex;
     box-sizing: border-box;
     width: 100%;
-    height: 74%;
+    height: 60vh;
     align-items: center;
     color: #95b6bd;
     justify-content: center;
@@ -14,12 +14,13 @@
 }
 
 .odontograma.Infante {
-    height: 50%;
+    height: 30vh;
     margin: auto;
+    width: 60vw;
 }
 
 .odontograma.Adulto{
-    height: 35%;
+    height: 30vh;
     margin: auto;
 }
 

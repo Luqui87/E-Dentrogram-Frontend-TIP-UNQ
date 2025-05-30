@@ -143,19 +143,13 @@ function DienteModal(props){
             }
             
 
-            props.submitDiente({
-                    up: vestibular,
-                    left: distal,
-                    center: centro,
-                    right: mesial,
-                    down: palatino,
-                    special: special
-                }, upperState);
+            
 
                 
 
             API.updateTeeth(id, putTooth)
-            .then(() =>{
+            .then((res) =>{
+                props.submitDiente(res.data);
                 props.onClose()
                 toast.success("Cambios confirmados") 
                 

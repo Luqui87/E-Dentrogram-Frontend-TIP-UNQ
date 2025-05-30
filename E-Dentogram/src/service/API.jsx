@@ -65,10 +65,11 @@ const API = {
   loginGoogle: (body) => request("post", "/login/google", body),
   registerGoogle: (body) => request("post", "/register/google", body),
   removePatient: (dentistId, patientMedicalRecord) =>
-    request("put", `/dentist/Remove/${dentistId}/${patientMedicalRecord}`),
+  request("put", `/dentist/Remove/${dentistId}/${patientMedicalRecord}`),
   addPatient: (dentistId, body) =>
-    request("post", `/dentist/add/${dentistId}`, body),
+  request("post", `/dentist/add/${dentistId}`, body),
   sendWhatsapp: (body) => request("post", "/send", body),
+  getPatientRecord: (id,page) => request("get", `/patient/records/${id}/${page}`)
 };
 
 export default API;

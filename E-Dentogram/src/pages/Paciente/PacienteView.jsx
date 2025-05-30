@@ -12,21 +12,27 @@ function PacienteView() {
   const [patient, setPatient] = useState({});
   const [isLoading, SetLoading] = useState(true);
   const { id } = useParams();
+  const [patientId, setId] = useState("")
   const [type, setType] = useState("Adulto")
+  const [record, setRecord] = useState({})
 
   const [activeTab, setActiveTab] = useState("odontograma");
 
 
   useEffect(() => {
+    
     API.getPatient(id)
-      .then((res) => {
-        setPatient(res.data);
-        SetLoading(false);
-      })
-      .catch((error) => {
+    .then((res) => {
+      setPatient(res.data)
+      setId(id)
+      SetLoading(false)
+    })
+    .catch((error) => {
         toast.error(handleApiError(error));
       })
-      .finally();
+    .finally();
+
+
   }, []); 
 
   return isLoading ? (
@@ -37,13 +43,13 @@ function PacienteView() {
     <main>
       <div className="patient-info">
          <PacienteCard patient={patient} />
-          <select value={type} onChange={e => setType(e.target.value)} className="classic">
+          <select value={type} onChange={e => setType(e.target.value)} className={`classic ${activeTab !== "odontograma" ? "inactive" : ""}`}>
             <option>Adulto</option>
             <option>Infante</option>
             <option>Mixto</option>
           </select>
 
-          <div className="tab">
+          <div className="tab " >
             <button
               className={activeTab === "odontograma" ? "active" : ""}
               onClick={() => setActiveTab("odontograma")}
@@ -60,8 +66,8 @@ function PacienteView() {
       </div>
      
       
-      <Odontograma type={type} teeth={patient.teeth} active={activeTab === "odontograma" ? "active" : "inactive"}/> 
-      <Historial active={activeTab === "historial" ? "active" : "inactive"}/>        
+      <Odontograma type={type} teeth={patient.teeth} active={activeTab === "odontograma" ? "active" : "inactive"} setRecord={() => setId(id)}/> 
+      <Historial record={record} id={patientId} active={activeTab === "historial" ? "active" : "inactive"}/>        
     </main>
   );
 }

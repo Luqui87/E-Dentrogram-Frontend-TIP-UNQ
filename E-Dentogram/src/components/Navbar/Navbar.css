@@ -6,6 +6,10 @@ header {
   align-items: center;
   padding: 10px;
   box-sizing: border-box;
+  position: sticky;
+  top: 0;
+  overflow: hidden;
+  z-index: 100;
 }
 
 header div {

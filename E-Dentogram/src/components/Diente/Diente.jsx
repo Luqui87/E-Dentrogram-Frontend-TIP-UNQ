@@ -17,10 +17,13 @@ function Diente(props){
     const [upperState, setUpperState] = useState("")
     
 
-    const handleConfirm = (estados) =>{
-        setEstados(estados)
+    const handleConfirm = (change) =>{
+        const {number, ...rest} = change
+        setEstados(rest)
         
-        setUpperState(getUpperState(estados))
+        setUpperState(getUpperState(rest))
+
+        props.setRecord()
     }
     
 
