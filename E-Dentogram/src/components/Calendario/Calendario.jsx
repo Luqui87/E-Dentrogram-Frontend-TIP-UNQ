@@ -23,6 +23,7 @@ const DISCOVERY_DOC =
 const SCOPES = "https://www.googleapis.com/auth/calendar.events";
 
 function CalendarApp() {
+  const [isLoading, setIsLoading] = useState(true)
   const [events, setEvents] = useState([]);
 
   const [start, setStart] = useState(new Date());
@@ -76,6 +77,7 @@ function CalendarApp() {
             authInstance.signIn();
           } else {
             listUpcomingEvents();
+            setIsLoading(false)
           }
         });
     };
@@ -89,6 +91,8 @@ function CalendarApp() {
       .catch((error) => {
         toast.error(handleApiError(error));
       });
+
+   
   }, []);
 
   /////////////////////////////////////////
@@ -204,8 +208,14 @@ function CalendarApp() {
   /////////////////////////////////////////
 
 
-  return (
+  return isLoading ? (
+    <main style={{ alignItems: "center", justifyContent: "center" }}>
+      <span className="loader"></span>
+    </main>
+  ) : (
     <main>
+
+
       <div className="calendario">
         <FullCalendar
           plugins={[dayGridPlugin, timeGridPlugin]}
@@ -242,7 +252,6 @@ function CalendarApp() {
       <Modal isOpen={isModalOpen} onClose={()=> setIsModalOpen(false)}>
           <div className="modal-content">
             <h2>Agendar Cita</h2>
-            <div className="field">
               <div className="field">
                 <label className="bold-text">Seleccionar Paciente</label>
                 <select
@@ -266,12 +275,13 @@ function CalendarApp() {
                   ))}
                 </select>
               </div>
+              <div className="field">
               <label>Nombre del evento</label>
               <input
                 type="text"
                 onChange={(e) => setEventName(e.target.value)}
               />
-            </div>
+              </div>
             <div className="dates-pickers">
               <div className="field">
                 <p className="bold-text">Inicio de la cita</p>

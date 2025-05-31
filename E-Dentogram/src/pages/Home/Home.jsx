@@ -27,16 +27,6 @@ const Home = () => {
   };
 
   useEffect(() => {
-    // useEffect(async () => {
-    // try {
-    //   setLoading(true);
-
-    //   const [_patients, _otraCosa] = await API.getAllSimplePatients();
-    //   setPatients(_patients);
-    // }
-    // finally {
-    //   setLoading(false)
-    // }
     setLoading(true);
 
     API.getDentist(localStorage.getItem("username"))
