@@ -3,13 +3,23 @@ import './Register.css'
 import API from '../../service/API';
 import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
+import GoogleAuth from '../../components/GoogleAuth';
+import { useGoogleApi } from 'react-gapi';
 
 function Register(){
 
     const navigate = useNavigate()
 
+      const gapi = useGoogleApi({
+        scopes: [
+        "profile",
+        "https://www.googleapis.com/auth/calendar.events.readonly"
+        ],
+    })
+
 
     const [newUsername, setUsername] = useState("")
+    const [email, setEmail] = useState("")
     const [newPassword, setPassword] = useState("");
     const [validate, setValidate] = useState({
         hasLow: false,
@@ -98,7 +108,8 @@ function Register(){
     const handleRegister = () => {
         API.register({
             username: newUsername,
-            password: newPassword
+            password: newPassword,
+            email: email
         })
         .then((res) => {
             toast.success("Dentista registrado exitosamente");
@@ -106,14 +117,32 @@ function Register(){
             const token = res.data.accessToken;
             localStorage.setItem('token', token);
             
-            
             navigate("/home")
-
 
         })
         .catch((res) => {
-            toast.error(res.data)
+            toast.error(API.handleApiError(res))
         })
+    }
+
+    const handleGoogleRegister = () => {
+        gapi.auth2.getAuthInstance().signIn().then((res) => {
+
+        const idToken = res.xc.id_token;
+
+        API.registerGoogle({token: idToken})
+            .then((res) => {
+            
+            localStorage.setItem("token", res.data.accessToken);
+            localStorage.setItem("GoogleToken", idToken);
+
+            navigate("/home");
+
+            })
+            .catch((error) => {
+            toast.error(handleApiError(error));
+            });
+    });
     }
 
     return (
@@ -127,6 +156,10 @@ function Register(){
                 <div>
                     <span>Username</span>
                     <input required="" type="text" className="input" value={newUsername} onChange={(e) => setUsername(e.target.value)}/>
+                </div>
+                <div>
+                    <span>Email</span>
+                    <input required="" type="text" className="input" value={email} onChange={(e) => setEmail(e.target.value)}/>
                 </div>
                 <div> 
                     <span>Contraseña</span>
@@ -177,6 +210,9 @@ function Register(){
                     > Register</button>
                     
                 </div>
+                <hr className="style-one"/>
+                <GoogleAuth handleGoogleLogin={handleGoogleRegister}/>
+                
             </div>
             
         </main>

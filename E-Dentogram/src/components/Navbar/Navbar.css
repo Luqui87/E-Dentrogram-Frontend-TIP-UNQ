@@ -6,6 +6,10 @@ header {
   align-items: center;
   padding: 10px;
   box-sizing: border-box;
+  position: sticky;
+  top: 0;
+  overflow: hidden;
+  z-index: 100;
 }
 
 header div {
@@ -13,7 +17,6 @@ header div {
   display: flex;
   align-items: center;
   cursor: pointer;
-  width: 15%;
 }
 
 header div a {
@@ -21,6 +24,7 @@ header div a {
   font-family: Arial, Helvetica, sans-serif;
   text-decoration: solid;
   font-size: 1.5em;
+  white-space: nowrap;
 }
 
 header div img {

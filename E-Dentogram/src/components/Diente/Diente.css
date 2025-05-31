@@ -24,11 +24,11 @@
     background-color: white;
 }
  
-.normal.diente:hover>div>div, .diente.estado:hover>div>div{
+.odontograma .normal.diente:hover>div>div, .diente.estado:hover>div>div{
     background-color: rgb(233, 233, 233);
 }
 
-.diente.modal>div>div:hover{
+.odontograma .diente.modal>div>div:hover{
     background-color: rgb(233, 233, 233);
 }
 

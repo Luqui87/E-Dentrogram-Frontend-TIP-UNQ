@@ -17,10 +17,13 @@ function Diente(props){
     const [upperState, setUpperState] = useState("")
     
 
-    const handleConfirm = (estados) =>{
-        setEstados(estados)
+    const handleConfirm = (change) =>{
+        const {number, ...rest} = change
+        setEstados(rest)
         
-        setUpperState(getUpperState(estados))
+        setUpperState(getUpperState(rest))
+
+        props.setRecord()
     }
     
 
@@ -77,8 +80,8 @@ function Diente(props){
 
         </div>
         
-        
 
+        {props.seccion && 
         <DienteModal showModal= {showModal} 
         onClose={() => toggleModal(false)} 
         num={props.num} 
@@ -86,6 +89,8 @@ function Diente(props){
         diente={{...estados,...{upperState: upperState}}}
         submitDiente={handleConfirm}
         />
+        }
+        
     </>
     )
 }
