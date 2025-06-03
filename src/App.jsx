@@ -12,6 +12,17 @@ import Register from "./pages/Register/Register";
 import Calendario from "./components/Calendario/Calendario";
 import { GoogleApiProvider } from 'react-gapi'
 import Diente from "./components/Diente/Diente";
+import DienteModal from "./components/Diente/DienteModal";
+
+const states = {
+        up:"RESTORATION",
+        left:"HEALTHY",
+        center:"HEALTHY",
+        right:"HEALTHY",
+        down:"HEALTHY",
+        special: "NOTHING",
+        upperState : ""
+        };
 
 const App = () => {
   return (
@@ -27,7 +38,7 @@ const App = () => {
           <Route path="/paciente/:id" element={<PacienteView />} />
           <Route path="*" element={<PageNotFound />} /> 
           <Route path="/Calendario" element={<Calendario/>} />
-          <Route path="/Diente" element={<Diente seccion={1} num={1}/>} />
+          <Route path="/Diente" element={<DienteModal diente={states} showModal={true}/>} />
         </Routes>
         
         <ToastContainer

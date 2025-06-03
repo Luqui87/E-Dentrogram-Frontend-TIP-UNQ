@@ -6,7 +6,7 @@ import API from '../../service/API';
 import { ToastContainer, toast, Bounce } from 'react-toastify';
 import DienteEstado from './DienteEstado';
 import { States } from './States';
-import handleApiError from "../../service/API";
+import {handleApiError} from "../../service/API";
 
 function DienteModal(props){
 
@@ -141,10 +141,6 @@ function DienteModal(props){
                 center: centro.replaceAll(" selected", ""),
                 special: special
             }
-            
-
-            
-
                 
 
             API.updateTeeth(id, putTooth)
