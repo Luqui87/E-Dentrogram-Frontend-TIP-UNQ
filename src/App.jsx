@@ -13,6 +13,7 @@ import Calendario from "./components/Calendario/Calendario";
 import { GoogleApiProvider } from 'react-gapi'
 import Diente from "./components/Diente/Diente";
 import DienteModal from "./components/Diente/DienteModal";
+import Odontograma from "./components/Odontograma/Odontograma";
 
 const states = {
         up:"RESTORATION",
@@ -38,7 +39,7 @@ const App = () => {
           <Route path="/paciente/:id" element={<PacienteView />} />
           <Route path="*" element={<PageNotFound />} /> 
           <Route path="/Calendario" element={<Calendario/>} />
-          <Route path="/Diente" element={<DienteModal diente={states} showModal={true}/>} />
+          <Route path="/Diente" element={<Odontograma active={"active"} type={"Mixto"} teeth={[]} />} />
         </Routes>
         
         <ToastContainer
