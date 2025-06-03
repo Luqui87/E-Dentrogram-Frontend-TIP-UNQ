@@ -49,7 +49,7 @@ function Diente(props){
 
     return(
     <>
-        <div className="diente normal" onClick={() => {toggleModal(!showModal), console.log(estados)}}>
+        <div className="diente normal" onClick={() => toggleModal(!showModal)}>
             <div id="vestibular">
               <div className={estados.up}>
 

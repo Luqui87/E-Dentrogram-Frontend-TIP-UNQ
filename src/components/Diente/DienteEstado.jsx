@@ -42,10 +42,11 @@ function DienteEstado({name, state, stateHandler, propColor}){
     const [color, setColor] = useState(propColor|| "white")
 
     return(
-        <div className="state">
+        <div className="state" role='state'>
             <span>{name}</span>
 
             <div 
+            
             onMouseEnter={() => setColor("grey")} 
             onMouseLeave={() => setColor(propColor || "white")} 
             onClick={() => stateHandler()}
@@ -53,34 +54,6 @@ function DienteEstado({name, state, stateHandler, propColor}){
 
                 <Tooth color={color} />
                 
-                
-{/*                 <div id="vestibular">
-                    <div className={state}>
-
-                    </div>
-                </div>
-                <div id="distal">
-                    <div className={state}>
-                        
-                    </div>    
-                    </div>
-                <div id="centro"> 
-                    <div className={state}>
-                        
-                    </div>
-                </div>
-                <div id="mesial">
-                    <div className={state} >
-                        
-                    </div>
-                </div>
-                <div id="palatino">
-                    <div  className={state}>
-                        
-                </div>   
-            </div> 
-         */}
-         {/*  <div className={state}></div> */}
             {States[state]}        
         </div>
 

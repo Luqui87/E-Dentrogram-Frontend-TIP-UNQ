@@ -4,13 +4,13 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import esLocale from "@fullcalendar/core/locales/es";
-import "./Calendario.css";
+
 import DateTimePicker from "react-datetime-picker";
 import { toast } from "react-toastify";
 import 'react-datetime-picker/dist/DateTimePicker.css';
 import 'react-calendar/dist/Calendar.css';
 import 'react-clock/dist/Clock.css';
-
+import "./Calendario.css";
 
 import API from "../../service/API";
 import handleApiError from "../../service/API";
