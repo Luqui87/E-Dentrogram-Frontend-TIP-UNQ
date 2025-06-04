@@ -11,6 +11,7 @@ import Login from './pages/Login/Login'
 import Register from "./pages/Register/Register";
 import Calendario from "./components/Calendario/Calendario";
 import { GoogleApiProvider } from 'react-gapi'
+import Comparar from "./components/Comparar/Comparar";
 
 
 const App = () => {
@@ -27,6 +28,7 @@ const App = () => {
           <Route path="/paciente/:id" element={<PacienteView />} />
           <Route path="*" element={<PageNotFound />} /> 
           <Route path="/Calendario" element={<Calendario/>} />
+          <Route path="/Comparar" element={<Comparar/>} />
         </Routes>
         
         <ToastContainer
