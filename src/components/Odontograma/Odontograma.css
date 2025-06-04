@@ -24,6 +24,10 @@
     height: 27vh;
 }
 
+.Comparar span{
+    display: none;
+}
+
 .odontograma.Adulto{
     height: 30vh;
     margin: auto;

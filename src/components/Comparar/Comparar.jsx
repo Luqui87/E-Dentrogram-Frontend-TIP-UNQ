@@ -30,17 +30,17 @@ function Comparar(){
 
     return(
         <Modal isOpen={true} >
-
-            <select value={type} onChange={e => setType(e.target.value)} className="classic" style={{right:"1px"}}>
+            <h1>Modificaciones de odontograma</h1>
+            <select value={type} onChange={e => setType(e.target.value)} className="classic" style={{right:"15px", top:"10px"}}>
                 <option>Adulto</option>
                 <option>Infante</option>
           </select>
             <h2 style={{margin:"auto"}}>Version en la fecha 20/05</h2>
-            <Odontograma type={"Infante Comparar"} active={'active'} teeth={mockedTeeth} />
+            <Odontograma type={`${type} Comparar`} active={'active'} teeth={mockedTeeth} />
             <hr style={{height: "5px", backgroundColor: "black"}} />
 
             <h2>Version en la fecha 05/06 </h2>
-            <Odontograma type={"Adulto Comparar"} active={'active'} teeth={mockedTeeth} />
+            <Odontograma type={`${type} Comparar`} active={'active'} teeth={mockedTeeth} />
         </Modal>
     )
 }
