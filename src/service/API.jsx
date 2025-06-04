@@ -30,20 +30,19 @@ const request = (type, path, body) => {
       // TODO: devolver response.data
       return response;
     })
-    .catch((reason) => {
-      if (reason.response.status === 403) {
-        localStorage.setItem("previousLocation", window.location.pathname);
-        window.history.replaceState(null, null, "/");
-        location.reload();
-      }
-    });
 };
 
 const handleApiError = (error) => {
   if (error.response) {
     const status = error.response.status;
     switch (true) {
-      case status >= 400 && status < 500:
+      case status == 403:
+        localStorage.setItem("previousLocation", window.location.pathname);
+        if (window.location.pathname !== "/") {
+          window.location.href = "/";
+        }
+        return("Credenciales erroneas")
+      case status >= 400 && status !== 403 && status < 500:
         return "Error del cliente.";
       case status >= 500:
         return "Error del servidor. Consulte al administrador.";
@@ -65,11 +64,12 @@ const API = {
   loginGoogle: (body) => request("post", "/login/google", body),
   registerGoogle: (body) => request("post", "/register/google", body),
   removePatient: (dentistId, patientMedicalRecord) =>
-  request("put", `/dentist/Remove/${dentistId}/${patientMedicalRecord}`),
+    request("put", `/dentist/Remove/${dentistId}/${patientMedicalRecord}`),
   addPatient: (dentistId, body) =>
-  request("post", `/dentist/add/${dentistId}`, body),
+    request("post", `/dentist/add/${dentistId}`, body),
   sendWhatsapp: (body) => request("post", "/send", body),
-  getPatientRecord: (id,page) => request("get", `/patient/records/${id}/${page}`)
+  getPatientRecord: (id, page) =>
+    request("get", `/patient/records/${id}/${page}`),
 };
 
 export default API;

@@ -4,7 +4,7 @@ import "./PacienteView.css";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import API from "../../service/API";
-import handleApiError from "../../service/API";
+import {handleApiError} from "../../service/API";
 import { toast } from "react-toastify";
 import Historial from "../../components/Historial/Historial";
 
