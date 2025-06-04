@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import "./Login.css";
 import API from "../../service/API";
-import handleApiError from "../../service/API";
+import {handleApiError} from "../../service/API";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useGoogleApi } from "react-gapi";
@@ -12,6 +12,7 @@ function Login() {
   const [insUsername, setInsUsername] = useState("");
   const [insPassword, setInsPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [showWarning, setShowWarning] = useState(false);
 
   const navigate = useNavigate();
 
@@ -51,7 +52,7 @@ function Login() {
     );
   };
 
-  const hideIcon = (handleState) => {
+  const hideIcon = () => {
     return (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -71,36 +72,38 @@ function Login() {
     );
   };
 
-  const handleEnter = (event) => {
-    if (event.key === "Enter") {
-      handleLogin();
+
+  const handleLogin = (event) => {
+    event.preventDefault();
+
+    if (!(insUsername && insPassword)) {
+      setShowWarning(true);
+      return;
     }
-  };
 
-  const handleLogin = () => {
-    API.login({
-      username: insUsername,
-      password: insPassword,
-    })
+    API.login({ username: insUsername, password: insPassword })
       .then((res) => {
-        toast.success("Dentista ingresado exitosamente");
+           toast.success("Dentista ingresado exitosamente");
 
-        const token = res.data.accessToken;
-        localStorage.setItem("token", token);
+          const token = res.data.accessToken;
+          localStorage.setItem("token", token);
 
-        let previousLocation = localStorage.getItem("previousLocation");
-        localStorage.removeItem("previousLocation");
+          let previousLocation = localStorage.getItem("previousLocation");
+          localStorage.removeItem("previousLocation");
 
-        if (!previousLocation || previousLocation === "/") {
-          previousLocation = "/home";
+          if (!previousLocation || previousLocation === "/") {
+            previousLocation = "/home";
+          }
+
+          navigate(previousLocation);
         }
+       
+      )
+    .catch((error) => {
+      toast.error(handleApiError(error));
+    });
+};
 
-        navigate(previousLocation);
-      })
-      .catch((error) => {
-        toast.error(handleApiError(error));
-      });
-  };
 
   const handleGoogleLogin = () => {
     gapi.auth2.getAuthInstance().signIn().then((res) => {
@@ -135,40 +138,40 @@ function Login() {
           <span className="header">Login</span>
         </div>
 
-        <div>
-          <span>Username</span>
-          <input
-            required=""
-            type="text"
-            className="input"
-            value={insUsername}
-            onChange={(e) => setInsUsername(e.target.value)}
-          />
-        </div>
+        <form onSubmit={handleLogin}>
+          <div>
+            <span>Username</span>
+            <input
+              type="text"
+              className="input"
+              value={insUsername}
+              onChange={(e) => setInsUsername(e.target.value)}
+            />
+          </div>
 
-        <div style={{ marginTop: "5px" }}>
-          <span>Contraseña</span>
-          {showPassword ? showIcon() : hideIcon()}
-          <input
-            required=""
-            type={showPassword ? "text" : "password"}
-            className="input"
-            value={insPassword}
-            onChange={(e) => setInsPassword(e.target.value)}
-            onKeyDown={handleEnter}
-          />
-        </div>
+          <div style={{ marginTop: "5px" }}>
+            <span>Contraseña</span>
+            {showPassword ? showIcon() : hideIcon()}
+            <input
+              type={showPassword ? "text" : "password"}
+              className="input"
+              value={insPassword}
+              onChange={(e) => setInsPassword(e.target.value)}
+            />
+          </div>
 
-        <div className="register-button">
-          <button
-            className="button-66"
-            role="button"
-            onClick={() => handleLogin()}
-            onKeyDown={handleEnter}
-          >
-            Ingresar
-          </button>
-        </div>
+          {showWarning && (
+            <span style={{ color: "red", fontSize: "13px" }}>
+              *Se deben completar todos los campos
+            </span>
+          )}
+
+          <div className="register-button">
+            <button className="button-66" type="submit">
+              Ingresar
+            </button>
+          </div>
+        </form>
 
         <span>
           No tenes una cuenta? <a href="/register">Regístrate</a>{" "}

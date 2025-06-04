@@ -30,20 +30,19 @@ const request = (type, path, body) => {
       // TODO: devolver response.data
       return response;
     })
-    .catch((reason) => {
-      if (reason.response.status === 403) {
-        localStorage.setItem("previousLocation", window.location.pathname);
-        window.history.replaceState(null, null, "/");
-        location.reload();
-      }
-    });
 };
 
 const handleApiError = (error) => {
   if (error.response) {
     const status = error.response.status;
     switch (true) {
-      case status >= 400 && status < 500:
+      case status == 403:
+        localStorage.setItem("previousLocation", window.location.pathname);
+        if (window.location.pathname !== "/") {
+          window.location.href = "/";
+        }
+        return("Credenciales erroneas")
+      case status >= 400 && status !== 403 && status < 500:
         return "Error del cliente.";
       case status >= 500:
         return "Error del servidor. Consulte al administrador.";
@@ -74,3 +73,4 @@ const API = {
 };
 
 export default API;
+export {handleApiError}

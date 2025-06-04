@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import GoogleAuth from "../../components/GoogleAuth";
 import { useGoogleApi } from "react-gapi";
+import { handleApiError } from "../../service/API";
 
 function Register() {
   const navigate = useNavigate();
@@ -32,6 +33,8 @@ function Register() {
 
   const [seePassword1, setSeePassword1] = useState(false);
   const [seePassword2, setSeePassword2] = useState(false);
+
+  const [showWarning, setShowWarning] = useState(false);
 
   const strength = Object.values(validate).reduce((a, item) => a + item, 0);
   const feedback = {
@@ -129,6 +132,12 @@ function Register() {
   };
 
   const handleRegister = () => {
+
+    if (! (newUsername && name && email && newPassword && confirmPasword)){
+      setShowWarning(true);
+      return;
+    }
+
     API.register({
       username: newUsername,
       name: name,
@@ -144,7 +153,7 @@ function Register() {
         navigate("/home");
       })
       .catch((res) => {
-        toast.error(API.handleApiError(res));
+        toast.error(handleApiError(res));
       });
   };
 
@@ -185,7 +194,7 @@ function Register() {
           />
         </div>
         <div>
-          <span>Name</span>
+          <span>Nombre</span>
           <input
             required=""
             type="text"
@@ -256,6 +265,11 @@ function Register() {
           ) : (
             <></>
           )}
+
+          {showWarning && <span style={{ color: "red", fontSize: "13px" }}>
+            *Se deben completar todos los campos
+          </span>
+          }
         </div>
         <div className="register-button">
           <button
@@ -267,6 +281,7 @@ function Register() {
             {" "}
             Register
           </button>
+          
         </div>
         <hr className="style-one" />
         <GoogleAuth handleGoogleLogin={handleGoogleRegister} />
