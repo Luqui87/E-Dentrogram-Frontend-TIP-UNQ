@@ -7,7 +7,6 @@ import PacienteView from "./pages/Paciente/PacienteView";
 import Home from "./pages/Home/Home";
 import PageNotFound from "./pages/PageNotFound/PageNotFound";
 import Login from "./pages/Login/Login";
-import QR from "./pages/QR/QR";
 
 import Register from "./pages/Register/Register";
 import Calendario from "./components/Calendario/Calendario";
@@ -30,7 +29,6 @@ const App = () => {
             <Route path="/home" element={<Home />} />
             <Route path="/paciente/:id" element={<PacienteView />} />
             <Route path="/Calendario" element={<Calendario />} />
-            <Route path="/QR" element={<QR />} />
             <Route path="*" element={<PageNotFound />} />
           </Routes>
 

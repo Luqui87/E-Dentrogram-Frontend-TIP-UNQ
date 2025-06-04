@@ -62,11 +62,6 @@ function Navbar() {
                 Calendario
               </a>
             )}
-            {tokenGoogle && (
-              <a onClick={() => navigate("/QR")} style={{ marginLeft: "20px" }}>
-                QR
-              </a>
-            )}
           </div>
           <button className="logout-button" onClick={handleLogout}>
             {logoutIccon}

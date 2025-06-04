@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import API from "../../service/API";
+import API from "../service/API";
 import ReactQRCode from "react-qr-code";
 
 function QR() {
@@ -46,7 +46,7 @@ function QR() {
     return (
       <div style={{ textAlign: "center", padding: "20px" }}>
         <p className="bold-text" style={{ color: "red" }}>
-          El sistema esta vinculardo. Intenta más tarde.
+          El sistema esta vinculado. Intenta más tarde.
         </p>
       </div>
     );
