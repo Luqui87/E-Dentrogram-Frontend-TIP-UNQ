@@ -20,6 +20,10 @@
     width: 60vw;
 }
 
+.Comparar.odontograma.Infante, .Comparar.odontograma.Adulto{
+    height: 27vh;
+}
+
 .odontograma.Adulto{
     height: 30vh;
     margin: auto;
@@ -83,6 +87,11 @@
     flex: 1 1 auto;
     gap: 25px;
     padding-bottom: 10px;
+}
+
+.Comparar .dientes{
+    gap: 15px;
+    padding-top: 10px;
 }
 
 .dientes>span{

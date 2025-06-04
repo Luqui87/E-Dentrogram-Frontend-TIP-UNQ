@@ -8,7 +8,10 @@
     position: relative;
 }
 
-
+.Comparar .diente{
+    height: 8vh;
+    width: 4.7vw;
+}
 
 .diente>div{
     display: flex;
@@ -146,4 +149,5 @@ svg.TO_ERUPT{
     box-shadow: 2px solid black;
     max-height:85vh;
     overflow-y:auto;
+    position: relative;
 }
