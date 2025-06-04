@@ -45,7 +45,7 @@ function DienteEstado({name, state, stateHandler, propColor}){
         <div className="state" role='state'>
             <span>{name}</span>
 
-            <div 
+            <div id={state}
             
             onMouseEnter={() => setColor("grey")} 
             onMouseLeave={() => setColor(propColor || "white")} 

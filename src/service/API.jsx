@@ -73,4 +73,4 @@ const API = {
 };
 
 export default API;
-export {handleApiError}
+export { handleApiError };

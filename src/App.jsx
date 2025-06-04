@@ -11,7 +11,7 @@ import Login from './pages/Login/Login'
 import Register from "./pages/Register/Register";
 import Calendario from "./components/Calendario/Calendario";
 import { GoogleApiProvider } from 'react-gapi'
-import Diente from "./components/Diente/Diente";
+
 
 const App = () => {
   return (
@@ -27,7 +27,6 @@ const App = () => {
           <Route path="/paciente/:id" element={<PacienteView />} />
           <Route path="*" element={<PageNotFound />} /> 
           <Route path="/Calendario" element={<Calendario/>} />
-          <Route path="/Diente" element={<Diente seccion={1} num={1}/>} />
         </Routes>
         
         <ToastContainer

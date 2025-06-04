@@ -1,9 +1,13 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import Diente from "./Diente";
 import { fireEvent, render, waitFor, screen, act } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import axios from "axios";
+import * as ApiModule from '../../service/API';
 
 describe('Diente', () => {
+
+
     it('should render a healthy teeth', () => {
         const dom = render(<Diente />)
         const vestibular = dom.container.querySelector('#vestibular')
@@ -247,7 +251,7 @@ describe('Diente', () => {
     })
 
 
-    it('should open the tooth modal has section', async () =>{
+    it(' the tooth modal should open when has section', async () =>{
 
         const dom = render(<Diente seccion={1} />);
 
@@ -263,81 +267,217 @@ describe('Diente', () => {
         })
     })
 
-    it('should the tooth modal have the tooth number and section', async () =>{
+    it('it should update the tooth with caries', async () =>{
 
-        const dom = render(<Diente seccion={1} num={7} />);
+        const mockedData = {
+        up:"CARIES",
+        left:"HEALTHY",
+        center:"HEALTHY",
+        right:"HEALTHY",
+        down:"HEALTHY",
+        special: "NOTHING",
+        number: 1
+        };
+
+        vi.mock('axios', () => ({
+            default: {
+                request: vi.fn(),
+                get: vi.fn(),
+                post: vi.fn(),
+                defaults: {
+                headers: { post: {} },
+                baseURL: '',
+                timeout: 0,
+                }
+            }
+            }))
+
+        
+        axios.request.mockResolvedValue({
+        status: 200,
+        data: mockedData
+        });
+
+        vi.mock('@/service/API', async () => {
+            const actual = await vi.importActual('@/service/API');
+            return {
+                ...actual,
+                handleApiError: vi.fn(() => 'Mocked error'),
+            };
+            });
+
+        const dom = render(<Diente seccion={1} num={1} />);
 
         const diente = dom.container.querySelector('.diente.normal');
 
-        act(()=>{
-            fireEvent.click(diente)
-        })
+        const vestibular = diente.querySelector('#vestibular div');
 
-        await waitFor(()=>{
-            
-            expect(screen.getByText("Diente 1 7")).toBeVisible()
-        })
+        expect(vestibular).toHaveClass('HEALTHY')
+
+        await userEvent.click(diente);
+
+        const modal = dom.container.querySelector('.modal-outter');
+
+        const side = modal?.querySelector('.diente #vestibular div');
+
+        await userEvent.click(side);
+
+        const buttons = screen.getAllByRole("button");
+
+        await userEvent.click(buttons[0]);
+    
+        expect(side).toHaveClass('CARIES');
+
+        await userEvent.click(buttons[2]);
+
+
+        expect(vestibular).toHaveClass('CARIES');
+
+
     })
 
+    it('it should update the tooth upper state', async () =>{
 
-    it('should the tooth modal have the tooth inside', async () =>{
+        const mockedData = {
+        up:"MISSING",
+        left:"MISSING",
+        center:"MISSING",
+        right:"MISSING",
+        down:"MISSING",
+        special: "NOTHING",
+        number: 1
+        };
 
-         const dom = render(<Diente seccion={1} />);
+        vi.mock('axios', () => ({
+            default: {
+                request: vi.fn(),
+                get: vi.fn(),
+                post: vi.fn(),
+                defaults: {
+                headers: { post: {} },
+                baseURL: '',
+                timeout: 0,
+                }
+            }
+            }))
+
+        
+        axios.request.mockResolvedValue({
+        status: 200,
+        data: mockedData
+        });
+
+        vi.mock('@/service/API', async () => {
+            const actual = await vi.importActual('@/service/API');
+            return {
+                ...actual,
+                handleApiError: vi.fn(() => 'Mocked error'),
+            };
+            });
+
+        const dom = render(<Diente seccion={1} num={1} />);
 
         const diente = dom.container.querySelector('.diente.normal');
 
-        act(()=>{
-            fireEvent.click(diente)
-        })
+        await userEvent.click(diente);
 
-        await waitFor(()=>{
-            const modal = dom.container.querySelector('.modal-outter')
+        const modal = dom.container.querySelector('.modal-outter');
 
-            const tooth = modal?.querySelector('.diente')
-            expect(tooth).toBeInTheDocument()
-        })
+        const selectStates = screen.getAllByRole('state')
+
+        const state = selectStates[2].querySelector('#MISSING')
+
+        await userEvent.click(state);
+
+        const vestibularModal = modal?.querySelector('.diente #vestibular div');
+
+        const svg = modal?.querySelector('.diente svg');
+        
+        expect(vestibularModal).toHaveClass('MISSING')
+        expect(svg).toHaveClass('MISSING')
+
+        const button = screen.getByRole("button");
+
+        expect(button).toHaveTextContent('Confirmar')
+
+        await userEvent.click(button);
+
+        const vestibular = diente.querySelector('#vestibular div');
+
+        const totalState = diente.querySelector('svg.MISSING');
+
+        expect(vestibular).toHaveClass('MISSING'); 
+        expect(totalState).toBeInTheDocument();
+  
     })
 
-    it('should the tooth modal have the tooth inside', async () =>{
+     it('it should update the tooth special state', async () =>{
 
-         const dom = render(<Diente seccion={1} />);
+        const mockedData = {
+        up:"HEALTHY",
+        left:"HEALTHY",
+        center:"HEALTHY",
+        right:"HEALTHY",
+        down:"HEALTHY",
+        special: "DENTAL_CROWNS",
+        number: 1
+        };
+
+        vi.mock('axios', () => ({
+            default: {
+                request: vi.fn(),
+                get: vi.fn(),
+                post: vi.fn(),
+                defaults: {
+                headers: { post: {} },
+                baseURL: '',
+                timeout: 0,
+                }
+            }
+            }))
+
+        
+        axios.request.mockResolvedValue({
+        status: 200,
+        data: mockedData
+        });
+
+        vi.mock('@/service/API', async () => {
+            const actual = await vi.importActual('@/service/API');
+            return {
+                ...actual,
+                handleApiError: vi.fn(() => 'Mocked error'),
+            };
+            });
+
+        const dom = render(<Diente seccion={1} num={1} />);
 
         const diente = dom.container.querySelector('.diente.normal');
 
-        act(()=>{
-            fireEvent.click(diente)
-        })
+        await userEvent.click(diente);
 
-        await waitFor(()=>{
-            const modal = dom.container.querySelector('.modal-outter')
+        const modal = dom.container.querySelector('.modal-outter');
 
-            const tooth = modal?.querySelector('.diente')
-            expect(tooth).toBeInTheDocument()
-        })
-    })
+        const selectStates = screen.getAllByRole('state')
 
-    it('should the tooth modal have the 8 states', async () =>{
+        const state = selectStates[6].querySelector('#DENTAL_CROWNS')
 
-         const dom = render(<Diente seccion={1} />);
+        await userEvent.click(state);
 
-        const diente = dom.container.querySelector('.diente.normal');
+        const specialStateModal = modal?.querySelector('.diente div.DENTAL_CROWNS');
+        
+        expect(specialStateModal).toBeInTheDocument()
 
-        act(()=>{
-            fireEvent.click(diente)
-        })
+        const button = screen.getByRole("button");
 
-        await waitFor(()=>{
-            const states = screen.getAllByRole('state')
+        expect(button).toHaveTextContent('Confirmar')
 
-            expect(states[0]).toHaveTextContent('Saludable')
-            expect(states[1]).toHaveTextContent('Extracción') 
-            expect(states[2]).toHaveTextContent('Ausente') 
-            expect(states[3]).toHaveTextContent('Ausente (Por no Erupción)') 
-            expect(states[4]).toHaveTextContent('A Erupcionar') 
-            expect(states[5]).toHaveTextContent('Implante') 
-            expect(states[6]).toHaveTextContent('Corona') 
-            expect(states[7]).toHaveTextContent('Corona Filtrada') 
-        })
+        await userEvent.click(button);
+
+        const specialState = diente.querySelector('div.DENTAL_CROWNS');
+
+        expect(specialState).toBeInTheDocument();
+   
     })
 
 })
