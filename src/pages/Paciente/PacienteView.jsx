@@ -7,10 +7,11 @@ import API from "../../service/API";
 import {handleApiError} from "../../service/API";
 import { toast } from "react-toastify";
 import Historial from "../../components/Historial/Historial";
+import Comparar from "../../components/Comparar/Comparar";
 
 function PacienteView() {
   const [patient, setPatient] = useState({});
-  const [isLoading, SetLoading] = useState(true);
+  const [isLoading, SetLoading] = useState(false);
   const { id } = useParams();
   const [render, setRender] = useState(false)
   const [type, setType] = useState("Adulto")
@@ -21,7 +22,7 @@ function PacienteView() {
 
   useEffect(() => {
     
-    API.getPatient(id)
+    /* API.getPatient(id)
     .then((res) => {
       setPatient(res.data)
       SetLoading(false)
@@ -29,7 +30,7 @@ function PacienteView() {
     .catch((error) => {
         toast.error(handleApiError(error));
       })
-    .finally();
+    .finally(); */
 
 
   }, []); 
@@ -42,10 +43,10 @@ function PacienteView() {
     <main>
       <div className="patient-info">
          <PacienteCard patient={patient} />
-          <select value={type} onChange={e => setType(e.target.value)} className={`classic ${activeTab !== "odontograma" ? "inactive" : ""}`}>
+          <select value={type} onChange={e => setType(e.target.value)} className={`classic ${activeTab == "historial" ? "inactive" : ""}`}>
             <option>Adulto</option>
             <option>Infante</option>
-            <option>Mixto</option>
+            {activeTab !== "comparar" ? <option>Mixto</option> : <></>}
           </select>
 
           <div className="tab " >
@@ -61,12 +62,19 @@ function PacienteView() {
             >
               Historial
             </button>
+            <button
+            className={activeTab === "comparar" ? "active" : ""}
+              onClick={() => {setActiveTab("comparar"); setType("Adulto")}}
+              >
+              Comparar
+            </button>
           </div>
       </div>
      
       
-      <Odontograma type={type} teeth={patient.teeth} active={activeTab === "odontograma" ? "active" : "inactive"} setRecord={() => setRender(!render) }/> 
-      <Historial rerender={render} id={id} active={activeTab === "historial" ? "active" : "inactive"}/>        
+      <Odontograma type={type} teeth={/* patient.teeth */ []} active={activeTab === "odontograma" ? "active" : "inactive"} setRecord={() => setRender(!render) }/> 
+      <Historial rerender={render} id={id} active={activeTab === "historial" ? "active" : "inactive"}/>
+      <Comparar active={activeTab === "comparar" ? "active" : "inactive"} type={type}/>      
     </main>
   );
 }

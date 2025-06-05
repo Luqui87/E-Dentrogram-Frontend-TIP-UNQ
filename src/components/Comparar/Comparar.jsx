@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import Modal from '../Modal'
 import Odontograma from '../Odontograma/Odontograma'
+import './Comparar.css'
+import DateTimePicker from 'react-datetime-picker'
 
 
 const mockedTeeth = [
@@ -24,24 +26,46 @@ const mockedTeeth = [
         },
     ]
 
-function Comparar(){
+function Comparar({active, type}){
+    const [firstDate, setFirstDate] = useState();
+    const [secondDate, setSecondDate] = useState();
+    const [firstLoading, setFirstLoading] = useState(true)
+    const [secondLoading, setSecondLoading] = useState(true)
 
-    const [type,setType] = useState("Adulto")
+    const handleChange = (date, setFunction) => {
+        
+        setFunction(date.toLocaleDateString());
+  };
 
     return(
-        <Modal isOpen={true} >
-            <h1>Modificaciones de odontograma</h1>
-            <select value={type} onChange={e => setType(e.target.value)} className="classic" style={{right:"15px", top:"10px"}}>
-                <option>Adulto</option>
-                <option>Infante</option>
-          </select>
-            <h2 style={{margin:"auto"}}>Version en la fecha 20/05</h2>
-            <Odontograma type={`${type} Comparar`} active={'active'} teeth={mockedTeeth} />
-            <hr style={{height: "5px", backgroundColor: "black"}} />
-
-            <h2>Version en la fecha 05/06 </h2>
-            <Odontograma type={`${type} Comparar`} active={'active'} teeth={mockedTeeth} />
-        </Modal>
+        <div className={`${active} Comparar`}>
+            <div className="before">
+                <h2>Odontograma a la fecha {firstDate}</h2>
+                {firstDate? 
+                <>
+                {firstLoading ?  
+                    <span className="loader"></span>
+                    :                        
+                        <Odontograma type={`${type} Comparar`} active={'active'} teeth={mockedTeeth}/> 
+                        }
+                </>
+                :<DateTimePicker value={firstDate} onChange={(d) =>handleChange(d,setFirstDate)}/> }
+            </div>
+            <hr />
+            <div className='after'>
+                <h2>Odontograma a la fecha {secondDate}</h2>
+                {secondDate? 
+                <>
+                {secondLoading ?  
+                    <span className="loader"></span>
+                    :                        
+                        <Odontograma type={`${type} Comparar`} active={'active'} teeth={mockedTeeth}/> 
+                        }
+                </>
+                :<DateTimePicker value={secondDate} onChange={(d) => handleChange(d,setSecondDate)}/> }
+            </div>
+                        
+        </div>
     )
 }
 
