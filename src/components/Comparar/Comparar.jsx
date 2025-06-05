@@ -3,38 +3,29 @@ import Modal from '../Modal'
 import Odontograma from '../Odontograma/Odontograma'
 import './Comparar.css'
 import DateTimePicker from 'react-datetime-picker'
+import API from '../../service/API'
 
-
-const mockedTeeth = [
-        {
-        up:"MISSING",
-        left:"MISSING",
-        center:"MISSING",
-        right:"MISSING",
-        down:"MISSING",
-        special: "NOTHING",
-        number: 1
-        },
-        {
-        up:"HEALTHY",
-        left:"HEALTHY",
-        center:"HEALTHY",
-        right:"HEALTHY",
-        down:"HEALTHY",
-        special: "DENTAL_CROWNS_WITH_ROOT_CANAL_TREATMENT",
-        number: 52
-        },
-    ]
-
-function Comparar({active, type}){
+function Comparar({active, type, id}){
     const [firstDate, setFirstDate] = useState();
     const [secondDate, setSecondDate] = useState();
     const [firstLoading, setFirstLoading] = useState(true)
     const [secondLoading, setSecondLoading] = useState(true)
 
-    const handleChange = (date, setFunction) => {
+    const [firstOdontogram, setFirstOdontogram] = useState([])
+     const [secondOdontogram, setSecondOdontogram] = useState([])
+
+
+    const handleChange = (date, setDate, setOdontogram, SetLoading) => {
         
-        setFunction(date.toLocaleDateString());
+        setDate(date.toLocaleDateString());
+
+        API.getTeethAtDate(id, date.toLocaleDateString())
+        .then((res) => {
+            setOdontogram(res.data)
+            SetLoading(false)
+        })
+
+
   };
 
     return(
@@ -46,10 +37,10 @@ function Comparar({active, type}){
                 {firstLoading ?  
                     <span className="loader"></span>
                     :                        
-                        <Odontograma type={`${type} Comparar`} active={'active'} teeth={mockedTeeth}/> 
+                        <Odontograma type={`${type} Comparar`} active={'active'} teeth={firstOdontogram}/> 
                         }
                 </>
-                :<DateTimePicker value={firstDate} onChange={(d) =>handleChange(d,setFirstDate)}/> }
+                :<DateTimePicker value={firstDate} onChange={(d) =>handleChange(d,setFirstDate, setFirstOdontogram, setFirstLoading)}/> }
             </div>
             <hr />
             <div className='after'>
@@ -59,10 +50,10 @@ function Comparar({active, type}){
                 {secondLoading ?  
                     <span className="loader"></span>
                     :                        
-                        <Odontograma type={`${type} Comparar`} active={'active'} teeth={mockedTeeth}/> 
+                        <Odontograma type={`${type} Comparar`} active={'active'} teeth={secondOdontogram}/> 
                         }
                 </>
-                :<DateTimePicker value={secondDate} onChange={(d) => handleChange(d,setSecondDate)}/> }
+                :<DateTimePicker value={secondDate} onChange={(d) => handleChange(d,setSecondDate, setSecondOdontogram, setSecondLoading)}/> }
             </div>
                         
         </div>

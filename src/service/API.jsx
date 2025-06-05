@@ -70,6 +70,7 @@ const API = {
   sendWhatsapp: (body) => request("post", "/send", body),
   getPatientRecord: (id, page) =>
     request("get", `/patient/records/${id}/${page}`),
+  getTeethAtDate : (id, date) => request('get',`/tooth/${id}?date=${date}`),
 };
 
 export default API;

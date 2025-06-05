@@ -11,18 +11,16 @@ import Comparar from "../../components/Comparar/Comparar";
 
 function PacienteView() {
   const [patient, setPatient] = useState({});
-  const [isLoading, SetLoading] = useState(false);
+  const [isLoading, SetLoading] = useState(true);
   const { id } = useParams();
   const [render, setRender] = useState(false)
   const [type, setType] = useState("Adulto")
-  const [record, setRecord] = useState({})
-
   const [activeTab, setActiveTab] = useState("odontograma");
 
 
   useEffect(() => {
     
-    /* API.getPatient(id)
+    API.getPatient(id)
     .then((res) => {
       setPatient(res.data)
       SetLoading(false)
@@ -30,7 +28,7 @@ function PacienteView() {
     .catch((error) => {
         toast.error(handleApiError(error));
       })
-    .finally(); */
+    .finally(); 
 
 
   }, []); 
@@ -72,9 +70,9 @@ function PacienteView() {
       </div>
      
       
-      <Odontograma type={type} teeth={/* patient.teeth */ []} active={activeTab === "odontograma" ? "active" : "inactive"} setRecord={() => setRender(!render) }/> 
+      <Odontograma type={type} teeth={patient.teeth} active={activeTab === "odontograma" ? "active" : "inactive"} setRecord={() => setRender(!render) }/> 
       <Historial rerender={render} id={id} active={activeTab === "historial" ? "active" : "inactive"}/>
-      <Comparar active={activeTab === "comparar" ? "active" : "inactive"} type={type}/>      
+      <Comparar active={activeTab === "comparar" ? "active" : "inactive"} type={type} id={id}/>      
     </main>
   );
 }
