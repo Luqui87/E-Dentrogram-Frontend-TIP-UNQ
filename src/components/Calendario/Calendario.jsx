@@ -12,9 +12,9 @@ import 'react-calendar/dist/Calendar.css';
 import 'react-clock/dist/Clock.css';
 import "./Calendario.css";
 
-import API from "../../service/API";
-import handleApiError from "../../service/API";
+import API, {handleApiError} from "../../service/API";
 import Modal from "../Modal";
+import QR from "../QR";
 
 const CLIENT_ID =
   "1042049294933-6706691g5vb2fgonludemk973v9mlgeb.apps.googleusercontent.com";
@@ -39,6 +39,8 @@ function CalendarApp() {
   const popoverRef = useRef(null);
   const [popoverContent, setPopoverContent] = useState('');
   const [popoverStyle, setPopoverStyle] = useState({ display: 'none' });
+
+  const [showQR, setShowQR] = useState(false)
 
   
   const listUpcomingEvents = () => {
@@ -225,7 +227,7 @@ function CalendarApp() {
           headerToolbar={{
             left: "prev,next today",
             center: "title addEventButton",
-            right: "dayGridMonth,timeGridWeek",
+            right: "timeGridWeek,dayGridMonth seeQRButton",
           }}
           views={{
             dayGridMonth: { buttonText: "Mes" },
@@ -242,7 +244,11 @@ function CalendarApp() {
           customButtons={{
             addEventButton: {
               text: "Agendar Cita",
-              click: () => setIsModalOpen(true)
+              click: () => setIsModalOpen(true),
+              },
+              seeQRButton:{
+                text:"Whatsapp",
+                click: () => {setShowQR(true)},
               }
           }}
 
@@ -309,6 +315,10 @@ function CalendarApp() {
             </div>
           </div>
         
+      </Modal>
+
+      <Modal isOpen={showQR} onClose={() => setShowQR(false)}>
+          <QR/>
       </Modal>
 
       <div ref={popoverRef} className="custom-popover" style={popoverStyle}>
