@@ -10,13 +10,7 @@ import Login from "./pages/Login/Login";
 
 import Register from "./pages/Register/Register";
 import Calendario from "./components/Calendario/Calendario";
-<<<<<<< HEAD
 import { GoogleApiProvider } from 'react-gapi'
-import Comparar from "./components/Comparar/Comparar";
-
-=======
-import { GoogleApiProvider } from "react-gapi";
->>>>>>> ft_qr
 
 const App = () => {
   return (
