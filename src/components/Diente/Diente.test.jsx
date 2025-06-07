@@ -434,7 +434,7 @@ describe('Diente', () => {
                 timeout: 0,
                 }
             }
-            }))
+        }))
 
         
         axios.request.mockResolvedValue({

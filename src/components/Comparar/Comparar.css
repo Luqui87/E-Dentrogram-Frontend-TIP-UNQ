@@ -1,0 +1,23 @@
+.Comparar.inactive{
+    display: none;
+}
+
+.Comparar > .before, .Comparar > .after{
+    background-color: #fff0ad98;
+    border-radius: 30px;
+    padding: 10px;
+    border: solid 1px black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 95vw;
+}
+
+.Comparar .odontograma span{
+    display: none;
+}
+
+.Comparar{
+    text-align: center;
+}

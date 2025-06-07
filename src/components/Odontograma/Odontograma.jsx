@@ -10,7 +10,7 @@ function Odontograma( {type,teeth, active, setRecord} ){
 
         return [...Array(n)].map((e, i) => 
             <div className='fila' key={initial + i}>
-                <span>{i + 1}</span>
+                <span>{i + 1}</span> 
                 <Diente seccion={seccion} num={i + 1}
                 state={ teeth.find((tooth) => tooth.number ==  initial +  (i + 1 )  )}
                 setRecord={setRecord}/>
@@ -29,14 +29,14 @@ function Odontograma( {type,teeth, active, setRecord} ){
                     
                     <div className="dientes">
                         {dientes(8,2)}
-                        <span>2</span>
+                        <span>2</span> 
                     </div>
                 </div>
                 
                 <div className={`seccion infante ${type}`}>
                     <div className="dientes">
                         {dientes(5,5)}
-                        <span>5</span>
+                        <span>5</span> 
                     </div>
                     <div className="dientes">
                         {dientes(5,6)}
@@ -62,7 +62,7 @@ function Odontograma( {type,teeth, active, setRecord} ){
                     </div>
                     <div className="dientes">
                         {dientes(8,3)}
-                        <span>3</span>
+                        <span>3</span> 
                     </div>
                 </div>
             

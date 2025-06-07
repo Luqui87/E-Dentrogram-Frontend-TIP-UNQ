@@ -10,7 +10,7 @@ import Login from "./pages/Login/Login";
 
 import Register from "./pages/Register/Register";
 import Calendario from "./components/Calendario/Calendario";
-import { GoogleApiProvider } from "react-gapi";
+import { GoogleApiProvider } from 'react-gapi'
 
 const App = () => {
   return (
