@@ -29,7 +29,7 @@ const request = (type, path, body) => {
       // qué pasa si !response.ok
       // TODO: devolver response.data
       return response;
-    })
+    });
 };
 
 const handleApiError = (error) => {
@@ -41,7 +41,7 @@ const handleApiError = (error) => {
         if (window.location.pathname !== "/") {
           window.location.href = "/";
         }
-        return("Credenciales erroneas")
+        return "Credenciales erroneas";
       case status >= 400 && status !== 403 && status < 500:
         return "Error del cliente.";
       case status >= 500:
@@ -70,6 +70,7 @@ const API = {
   sendWhatsapp: (body) => request("post", "/send", body),
   getPatientRecord: (id, page) =>
     request("get", `/patient/records/${id}/${page}`),
+  getWhatsappQr: () => request("get", `/qr`),
   getTeethAtDate : (id, date) => request('get',`/tooth/${id}/version?date=${date}`),
 };
 
