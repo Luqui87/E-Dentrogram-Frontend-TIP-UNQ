@@ -28,7 +28,6 @@ const App = () => {
           <Route path="/paciente/:id" element={<PacienteView />} />
           <Route path="*" element={<PageNotFound />} /> 
           <Route path="/Calendario" element={<Calendario/>} />
-          <Route path="/Comparar" element={<Comparar/>} />
         </Routes>
         
         <ToastContainer
