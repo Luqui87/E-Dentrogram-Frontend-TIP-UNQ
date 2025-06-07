@@ -19,7 +19,7 @@ function Comparar({active, type, id}){
         
         setDate(date.toLocaleDateString());
 
-        API.getTeethAtDate(id, date.toLocaleDateString())
+        API.getTeethAtDate(id, date.toISOString().split('T')[0])
         .then((res) => {
             setOdontogram(res.data)
             SetLoading(false)
