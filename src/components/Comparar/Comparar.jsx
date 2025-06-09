@@ -4,6 +4,7 @@ import Odontograma from '../Odontograma/Odontograma'
 import './Comparar.css'
 import DateTimePicker from 'react-datetime-picker'
 import API from '../../service/API'
+import { toast } from 'react-toastify'
 
 function Comparar({active, type, id}){
     const [firstDate, setFirstDate] = useState();
@@ -14,24 +15,53 @@ function Comparar({active, type, id}){
     const [firstOdontogram, setFirstOdontogram] = useState([])
      const [secondOdontogram, setSecondOdontogram] = useState([])
 
-
-    const handleChange = (date, setDate, setOdontogram, SetLoading) => {
+    
+    const handleFirstOdontogram = (date) => {
         
-        setDate(date.toLocaleDateString());
+        setFirstDate(date);
 
         API.getTeethAtDate(id, date.toISOString().split('T')[0])
         .then((res) => {
-            setOdontogram(res.data)
-            SetLoading(false)
+            setFirstOdontogram(res.data);
+            setFirstLoading(false);
         })
 
-
   };
+
+
+
+    const checkForChanges = (teeth) => {
+        return teeth.map((tooth) => {
+            const before = firstOdontogram.find(t => t.number === tooth.number);
+
+            const hasChanged = JSON.stringify(tooth) !== JSON.stringify(before);
+
+            return hasChanged ? { ...tooth, change: "change" } : tooth;
+        });
+    };
+
+  const handleSecondontogram = (date) =>{
+
+        if (date < firstDate){
+            toast.warning("La segunda fecha seleccionada debe ser posterior a la primera");
+            return;
+        }
+
+        setSecondDate(date);
+
+        API.getTeethAtDate(id, date.toISOString().split('T')[0])
+        .then((res) => {
+            const changes = checkForChanges(res.data);
+            console.log(changes);
+            setSecondOdontogram(changes);
+            setSecondLoading(false);
+        })
+    }
 
     return(
         <div className={`${active} Comparar`}>
             <div className="before">
-                <h2>Odontograma a la fecha {firstDate}</h2>
+                <h2>Odontograma a la fecha {firstDate?.toLocaleDateString()}</h2>
                 {firstDate? 
                 <>
                 {firstLoading ?  
@@ -40,11 +70,11 @@ function Comparar({active, type, id}){
                         <Odontograma type={`${type} Comparar`} active={'active'} teeth={firstOdontogram}/> 
                         }
                 </>
-                :<DateTimePicker value={firstDate} onChange={(d) =>handleChange(d,setFirstDate, setFirstOdontogram, setFirstLoading)}/> }
+                :<DateTimePicker value={firstDate} onChange={(d) => handleFirstOdontogram(d)}/> }
             </div>
             <hr />
             <div className='after'>
-                <h2>Odontograma a la fecha {secondDate}</h2>
+                <h2>Odontograma a la fecha {secondDate?.toLocaleDateString()}</h2>
                 {secondDate? 
                 <>
                 {secondLoading ?  
@@ -53,7 +83,7 @@ function Comparar({active, type, id}){
                         <Odontograma type={`${type} Comparar`} active={'active'} teeth={secondOdontogram}/> 
                         }
                 </>
-                :<DateTimePicker value={secondDate} onChange={(d) => handleChange(d,setSecondDate, setSecondOdontogram, setSecondLoading)}/> }
+                :<DateTimePicker value={secondDate} onChange={(d) => handleSecondontogram(d)}/> }
             </div>
                         
         </div>
