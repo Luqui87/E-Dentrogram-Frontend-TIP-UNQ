@@ -66,10 +66,12 @@ function Historial({ active, id, rerender, setComparacion, goToCompareTab }) {
   const toggleSelection = (record) => {
     setSelectedRecords((prev) => {
       const exists = prev.find((r) => r.date === record.date);
+
       if (exists) {
         return prev.filter((r) => r.date !== record.date);
       } else if (prev.length < 2) {
-        return [...prev, record];
+        const updated = [...prev, record];
+        return updated.sort((a, b) => new Date(a.date) - new Date(b.date));
       } else {
         return prev;
       }
@@ -78,7 +80,6 @@ function Historial({ active, id, rerender, setComparacion, goToCompareTab }) {
 
   const handleCompare = () => {
     if (selectedRecords.length === 2) {
-      console.log("se intenta comparar : ", selectedRecords);
       setComparacion(selectedRecords);
       goToCompareTab();
     }
