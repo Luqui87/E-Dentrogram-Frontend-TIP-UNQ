@@ -4,6 +4,7 @@ import './Odontograma.css'
 
 function Odontograma( {type,teeth, active, setRecord, hasModal} ){
 
+
     function dientes(n, seccion){
 
         const initial = seccion < 5 ? (seccion - 1 ) * 8 : 32 + (seccion - 5 ) * 5  ;
@@ -17,6 +18,7 @@ function Odontograma( {type,teeth, active, setRecord, hasModal} ){
                 hasModal={hasModal}/>
             </div>
         )
+    
     }
 
     return (

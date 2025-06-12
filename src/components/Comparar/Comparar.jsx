@@ -22,8 +22,8 @@ function Comparar({active, type, id, comparacion, setComparacion}){
       const second = new Date(comparacion[1].date);
       
       handleCompare(first,second);
-        }
-      }, [comparacion]);
+    }
+    }, [comparacion]);
     
 
 
@@ -111,6 +111,11 @@ function Comparar({active, type, id, comparacion, setComparacion}){
         date.setMinutes(59);
         date.setSeconds(59);
 
+        if (!firstDate){
+            toast.warning("Seleccionar primer fecha");
+            return
+        }
+
         if (date < firstDate){
             toast.warning("La segunda fecha seleccionada debe ser posterior a la primera");
             return;
@@ -121,6 +126,7 @@ function Comparar({active, type, id, comparacion, setComparacion}){
         API.getTeethAtDate(id, toLocalDateTimeString(date))
         .then((res) => {
             const changes = checkForChanges(res.data, firstOdontogram);
+            console.log(changes)
             setSecondOdontogram(changes);
             setSecondLoading(false);
         })
@@ -131,13 +137,10 @@ function Comparar({active, type, id, comparacion, setComparacion}){
 
     const resetCompare = () => {
         setComparacion([]);
-        console.log(comparacion);
         setFirstDate(null);
         setFirstLoading(true);
-        setFirstOdontogram([]);
         setSecondDate(null);
         setSecondLoading(null);
-        setSecondOdontogram([]);
     } 
 
     return(

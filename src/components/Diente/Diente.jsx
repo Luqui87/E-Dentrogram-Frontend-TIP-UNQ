@@ -48,7 +48,7 @@ function Diente(props){
             setEstados(states);
             const { number, ...rest } = states;
                 
-            setUpperState(getUpperState(rest) )
+            setUpperState(getUpperState(rest) );
         }
     },[]) 
 
