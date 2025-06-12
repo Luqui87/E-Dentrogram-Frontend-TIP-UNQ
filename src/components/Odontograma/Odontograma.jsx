@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import Diente from '../Diente/Diente'
 import './Odontograma.css'
 
-function Odontograma( {type,teeth, active, setRecord} ){
+function Odontograma( {type,teeth, active, setRecord, hasModal} ){
 
     function dientes(n, seccion){
 
@@ -13,7 +13,8 @@ function Odontograma( {type,teeth, active, setRecord} ){
                 <span>{i + 1}</span> 
                 <Diente seccion={seccion} num={i + 1}
                 state={ teeth.find((tooth) => tooth.number ==  initial +  (i + 1 )  )}
-                setRecord={setRecord}/>
+                setRecord={setRecord}
+                hasModal={hasModal}/>
             </div>
         )
     }

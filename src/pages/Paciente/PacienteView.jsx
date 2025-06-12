@@ -79,6 +79,7 @@ function PacienteView() {
         teeth={patient.teeth}
         active={activeTab === "odontograma" ? "active" : "inactive"}
         setRecord={() => setRender(!render)}
+        hasModal={true}
       />
       <Historial
         rerender={render}
@@ -86,6 +87,8 @@ function PacienteView() {
         active={activeTab === "historial" ? "active" : "inactive"}
         setComparacion={setComparacion}
         goToCompareTab={() => setActiveTab("comparar")}
+        comparacion={comparacion}
+        
       />
 
       <Comparar
@@ -93,6 +96,7 @@ function PacienteView() {
         type={type}
         id={id}
         comparacion={comparacion}
+        setComparacion={setComparacion}
       />
     </main>
   );

@@ -86,7 +86,7 @@ function Diente(props){
         </div>
         
 
-        {props.seccion && 
+        {props.hasModal && 
         <DienteModal showModal= {showModal} 
         onClose={() => toggleModal(false)} 
         num={props.num} 

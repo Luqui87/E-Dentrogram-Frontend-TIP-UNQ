@@ -3,13 +3,21 @@ import Diente from "../Diente/Diente";
 import "./Historial.css";
 import API from "../../service/API";
 
-function Historial({ active, id, rerender, setComparacion, goToCompareTab }) {
+function Historial({ active, id, rerender, setComparacion, goToCompareTab, comparacion }) {
   const [changes, setChanges] = useState([]);
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
 
   const [selectedRecords, setSelectedRecords] = useState([]);
+
+    useEffect(() => {
+    if (id) {
+      fetchPage(0);
+      setSelectedRecords([]);
+    }
+    }, [rerender, comparacion]);
+
 
   const formatDate = (date) => {
     const fecha = new Date(date.replace(/(\.\d{3})\d*/, "$1"));
@@ -84,12 +92,6 @@ function Historial({ active, id, rerender, setComparacion, goToCompareTab }) {
       goToCompareTab();
     }
   };
-
-  useEffect(() => {
-    if (id) {
-      fetchPage(0);
-    }
-  }, [rerender]);
 
   const handlePageClick = (num) => {
     if (num !== page && num >= 0 && num < totalPages) {

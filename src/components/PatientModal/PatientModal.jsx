@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./PatientModal.css";
 import API from "../../service/API";
-import handleApiError from "../../service/API.jsx";
+import {handleApiError} from "../../service/API.jsx";
 import { toast } from "react-toastify";
 import { useEffect } from "react";
 import Modal from "../Modal";
@@ -79,6 +79,8 @@ const PatientModal = ({ showModal, onClose, dentistId, setPatients }) => {
           </div>
         ) : (
           <div className="form">
+            <span style={{width:'100%', flex:"1 auto", fontSize:"2em"}}>Ingresar datos de paciente</span>
+            <hr style={{width:'100%', flex:"1 auto"}}/>
             <div className="field">
               <label>Historia Clínica</label>
               <input
