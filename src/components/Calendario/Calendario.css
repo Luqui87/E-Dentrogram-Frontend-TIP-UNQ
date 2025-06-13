@@ -162,3 +162,7 @@ option {
   pointer-events: none;
   white-space: nowrap;
 }
+
+.calendario  .fc-button{
+  background-color: #95b6bd;
+}

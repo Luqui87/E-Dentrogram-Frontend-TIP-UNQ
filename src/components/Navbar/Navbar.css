@@ -12,7 +12,7 @@ header {
   z-index: 100;
 }
 
-header div {
+header>div {
   height: 100%;
   display: flex;
   align-items: center;
@@ -42,4 +42,41 @@ header div img {
   width: 4%;
 }
 
+header .modalContent{
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  align-items: center;
+}
 
+header .modalContent .modal-header{
+  font-size: 2em;
+}
+
+header .modalContent .modal-subheader{
+  color: grey;
+}
+
+header .modalContent .buttons{
+  margin-top: 20px;
+}
+
+
+header .modalContent .btn-confirmar{
+  background-color: #95b6bd;
+  color: white;
+  border: 1px solid #95b6bd;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 8px;
+}
+
+header .modalContent .btn-cancelar {
+  background-color: white;
+  color: #95b6bd;
+  border: 1px solid #95b6bd;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+}

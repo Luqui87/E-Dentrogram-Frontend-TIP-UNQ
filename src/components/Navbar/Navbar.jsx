@@ -1,18 +1,19 @@
 import "./Navbar.css";
 import logo from "../../assets/Logo.png";
 import { useNavigate } from "react-router-dom";
+import Modal from '../Modal'
 import { useState } from "react";
-import { useGoogleApi } from "react-gapi";
-import { gapi } from "gapi-script";
 
 function Navbar() {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const tokenGoogle = localStorage.getItem("GoogleToken");
+  const [showModal, setShowModal] = useState(false);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("GoogleToken");
+    setShowModal(false)
     navigate("/");
   };
 
@@ -63,9 +64,26 @@ function Navbar() {
               </a>
             )}
           </div>
-          <button className="logout-button" onClick={handleLogout}>
+          <button className="logout-button" onClick={() => setShowModal(true)}>
             {logoutIccon}
           </button>
+
+          <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
+            <div className="modalContent">
+              <span className="modal-header">Confirmar cierre de sesión</span>
+              <span className="modal-subheader">¿Está seguro que desea salir del sistema? </span>
+              <div className="buttons">
+                <button className="btn-confirmar" onClick={handleLogout}>
+                  Confirmar
+                </button>
+                <button className="btn-cancelar" onClick={() => setShowModal(false)}>
+                  Cancelar
+                </button>
+              </div>
+              
+            </div>
+            
+          </Modal>
         </header>
       )}
     </>

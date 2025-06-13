@@ -14,7 +14,8 @@ function Diente(props){
         down:"HEALTHY",
         special: "NOTHING"
     })
-    const [upperState, setUpperState] = useState("")
+    const [upperState, setUpperState] = useState("");
+    const [hasChanged, setHasChanged] = useState("");
     
 
     const handleConfirm = (change) =>{
@@ -40,16 +41,20 @@ function Diente(props){
 
     useEffect(() => {
         if (props.state){
-            setEstados(props.state)
-            const { number, ...rest } = props.state;
+            const {change, ...states} = props.state;
+
+            setHasChanged(change);
+
+            setEstados(states);
+            const { number, ...rest } = states;
                 
-            setUpperState(getUpperState(rest) )
+            setUpperState(getUpperState(rest) );
         }
     },[]) 
 
     return(
     <>
-        <div className="diente normal" onClick={() => toggleModal(!showModal)}>
+        <div className={`${hasChanged} diente normal`} onClick={() => toggleModal(!showModal)}>
             <div id="vestibular">
               <div className={estados.up}>
 
@@ -81,7 +86,7 @@ function Diente(props){
         </div>
         
 
-        {props.seccion && 
+        {props.hasModal && 
         <DienteModal showModal= {showModal} 
         onClose={() => toggleModal(false)} 
         num={props.num} 
