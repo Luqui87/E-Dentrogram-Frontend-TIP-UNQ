@@ -45,9 +45,7 @@ function QR() {
   if (isBusy) {
     return (
       <div style={{ textAlign: "center", padding: "20px" }}>
-        <p className="bold-text">
-          El sistema ya se encuentra vinculado vinculado.
-        </p>
+        <p className="bold-text">El sistema ya se encuentra vinculado.</p>
       </div>
     );
   }
