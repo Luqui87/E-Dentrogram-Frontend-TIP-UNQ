@@ -1,0 +1,40 @@
+.Comparar.inactive{
+    display: none;
+}
+
+.Comparar > .before, .Comparar > .after{
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 95vw;
+}
+
+.Comparar .odontograma span{
+    display: none;
+}
+
+.Comparar{
+    text-align: center;
+}
+
+.Comparar .reset-icon{
+    height: auto;
+    width: 8vw;
+}
+
+.Comparar .reset-icon:hover{
+    cursor: pointer;
+}
+
+.Comparar .middle{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.Comparar .middle hr{
+    width: 100%;
+    height: 0;
+}
