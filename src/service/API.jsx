@@ -71,7 +71,10 @@ const API = {
   getPatientRecord: (id, page) =>
     request("get", `/patient/records/${id}/${page}`),
   getWhatsappQr: () => request("get", `/qr`),
-  getTeethAtDate : (id, date) => request('get',`/tooth/${id}/version?date=${date}`),
+  getTeethAtDate: (id, date) =>
+    request("get", `/tooth/${id}/version?date=${date}`),
+  getDentistPatinet: (pageNumber) =>
+    request("get", `/dentist/patient/${pageNumber}`),
 };
 
 export default API;

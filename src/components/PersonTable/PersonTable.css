@@ -1,11 +1,10 @@
 .table-container {
-  margin:10px auto 0 auto;
-  overflow:auto;
-  border-radius:10px;
+  margin: 10px auto 0 auto;
+  overflow: auto;
+  border-radius: 10px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   width: 100%;
 }
-
 
 .person-table {
   width: 100%;
@@ -48,11 +47,10 @@
 
 .delete-button {
   background-color: transparent;
-  border:none;
+  border: none;
   cursor: pointer;
   width: 100%;
 }
-
 
 .modal-overlay {
   position: fixed;
@@ -100,7 +98,7 @@
   cursor: pointer;
 }
 
-.delete-icon{
+.delete-icon {
   width: 100%;
 }
 
@@ -116,4 +114,36 @@
 .home-container .person-table td:last-child {
   width: 5%; /* Ajusta este valor según lo pequeño que quieras la columna */
   padding: 3px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+  background-color: #95b6bd;
+  height: 56px;
+  margin-top: 16px;
+}
+
+.page-btn,
+.nav-btn {
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  background-color: white;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.page-btn.active {
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+}
+
+.page-btn:disabled,
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import PersonTable from "../../components/PersonTable/PersonTable.jsx";
 import "./Home.css";
 import API from "../../service/API.jsx";
-import {handleApiError} from "../../service/API.jsx";
+import { handleApiError } from "../../service/API.jsx";
 import "../../components/loader.css";
 import { toast } from "react-toastify";
 import PatientModal from "../../components/PatientModal/PatientModal.jsx";
@@ -31,7 +31,6 @@ const Home = () => {
 
     API.getDentist(localStorage.getItem("username"))
       .then((res) => {
-        setPatients(res.data.patients);
         setDentistId(res.data.dentistID);
         setLoading(false);
       })
