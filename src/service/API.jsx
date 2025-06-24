@@ -7,12 +7,14 @@ const getToken = () => {
 
 axios.defaults.baseURL = "http://localhost:8080";
 axios.defaults.timeout = 10000;
-axios.defaults.headers.post["Content-Type"] = "application/json";
+//axios.defaults.headers.post["Content-Type"] = "application/json";
 
 const request = (type, path, body) => {
   if (!localStorage.getItem("previousLocation")) {
     localStorage.setItem("previousLocation", window.location.pathname);
   }
+
+  const isFormData = body instanceof FormData;
 
   return axios
     .request({
@@ -20,7 +22,7 @@ const request = (type, path, body) => {
       method: type,
       data: body,
       headers: {
-        "Content-Type": "application/json", // "Authorization": getToken(), // si usás token más adelante
+        ...(isFormData ? {} : { "Content-Type": "application/json" }),
         Authorization: getToken(),
       },
       withCredentials: true,
@@ -68,10 +70,12 @@ const API = {
   addPatient: (dentistId, body) =>
     request("post", `/dentist/add/${dentistId}`, body),
   sendWhatsapp: (body) => request("post", "/send", body),
+  sendMsgWithFiles: (body) => request("post", "/send-multiple-files", body),
   getPatientRecord: (id, page) =>
     request("get", `/patient/records/${id}/${page}`),
   getWhatsappQr: () => request("get", `/qr`),
-  getTeethAtDate : (id, date) => request('get',`/tooth/${id}/version?date=${date}`),
+  getTeethAtDate: (id, date) =>
+    request("get", `/tooth/${id}/version?date=${date}`),
 };
 
 export default API;
