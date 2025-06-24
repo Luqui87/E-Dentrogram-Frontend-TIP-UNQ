@@ -165,4 +165,11 @@ option {
 
 .calendario  .fc-button{
   background-color: #95b6bd;
+  border-color: white
+}
+
+
+.calendario  .fc-button:active{
+  background-color: white;
+  color: #95b6bd;
 }

@@ -1,0 +1,98 @@
+
+.patient-logs{
+    width: 70%;
+}
+
+.patient-logs.inactive{
+    display: none;
+}
+
+
+.patient-log-date{
+    position: absolute;
+    top: 0;
+    left: -80px;
+}
+
+.patient-log-icon {
+    height: 15px !important;
+    width: 15px !important;
+    margin-left: 12px;
+    margin-top: 10px;
+    box-shadow: 0 0 0 3px #fff,inset 0 2px 0 rgba(0,0,0,.08),
+    0px 0px 3px 15px rgba(149,182,189,0.75) !important;
+}
+
+.patient-log-add:hover{
+    cursor: pointer;
+}
+
+.patient-log .tags{
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+}
+
+.tag{
+    background-color: rgba(50, 216, 251, 0.53);
+    color: rgb(0, 150, 183);
+    padding: 5px;
+    border-radius: 10px;
+
+}
+
+textarea{
+    resize: none;
+    font-size: 1.5em;
+}
+
+.patient-logs .modal-inner{
+    display: flex;
+    flex-direction: column;
+    overflow-y: initial;
+    gap: 10px;
+    width: 50vw;
+}
+
+.patient-logs .modal-inner hr{
+    width: 100%;
+}
+
+.patient-logs .modal-inner .tags{
+    display: flex;
+    gap: 15px;
+    background-color: rgba(128, 128, 128, 0.12)
+}
+
+.selected-tags{
+    display: flex;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+    gap: 10px;
+
+
+}
+
+.patient-logs .modal-inner .buttons{
+    align-self: flex-end;
+}
+
+.selected-tags .tag{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px;
+}
+
+.tag-icon:hover{
+    cursor: pointer;
+}
+
+.modal-inner>.tags>.tag:hover{
+    cursor: pointer;
+}
+
+.tag-icon{
+    width: 25px;
+}

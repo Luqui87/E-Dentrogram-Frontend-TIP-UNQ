@@ -20,7 +20,7 @@ const CLIENT_ID =
   "1042049294933-6706691g5vb2fgonludemk973v9mlgeb.apps.googleusercontent.com";
 const DISCOVERY_DOC =
   "https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest";
-const SCOPES = "https://www.googleapis.com/auth/calendar.events";
+const SCOPES = "https://www.googleapis.com/auth/calendar";
 
 function CalendarApp() {
   const [isLoading, setIsLoading] = useState(true)
@@ -40,7 +40,10 @@ function CalendarApp() {
   const [popoverContent, setPopoverContent] = useState('');
   const [popoverStyle, setPopoverStyle] = useState({ display: 'none' });
 
-  const [showQR, setShowQR] = useState(false)
+  const [showQR, setShowQR] = useState(false);
+  const [reschedule, setReschedule] = useState(null);
+
+
 
   
   const listUpcomingEvents = () => {
@@ -59,7 +62,8 @@ function CalendarApp() {
           title: d.summary,
           start: d.start.dateTime,
           end: d.end.dateTime,
-          description: d.description
+          description: d.description,
+          googleId: d.id
         }));
         setEvents(getEvents);
       });
@@ -110,21 +114,20 @@ function CalendarApp() {
       timeZone: "America/Argentina/Buenos_Aires",
     });
 
-    console.log(`---- tel : ${patientTel} `);
     API.sendWhatsapp({
       number: patientTel,
       message: `Se agendó una reunión con el dentista a las ${argentinaTime} el día ${argentinaDate}.`,
     });
   }
 
-  async function createCalendarEvent() {
+  async function createCalendarEvent(actualEvents) {
     if (!selectedPatient) {
-      toast.error("Debes seleccionar un paciente.");
+      toast.warning("Debes seleccionar un paciente.");
       return;
     }
 
     if (start >= end) {
-      toast.error("La fecha de inicio debe ser anterior a la fecha de fin.");
+      toast.warning("La fecha de inicio debe ser anterior a la fecha de fin.");
       return;
     }
     const patientTel = String(selectedPatient.telephone);
@@ -157,18 +160,22 @@ function CalendarApp() {
         body: JSON.stringify(event),
       }
     )
-      .then((data) => data.json())
-      .then(() => {
+      .then((res) => res.json()) 
+      .then((response) => {
         toast.success("Evento agendado");
         sendMessage(patientTel);
         
-
-        setEvents(events.concat([{
+        setEvents(actualEvents.concat([{
           title: eventName,
           start: start.toISOString(),
-          end:end.toISOString()}]));
+          end:end.toISOString(),
+          description: `Turno con ${selectedPatient.name}. Historia clinica ${selectedPatient.medicalRecord}. E-Dentograma`,
+          googleId: response.id
+        }]));
 
         setIsModalOpen(false);
+        setSelectedPatient(null);
+        setReschedule(null);
         setEventName("");
         setStart(new Date());
         setEnd(new Date());
@@ -181,6 +188,7 @@ function CalendarApp() {
   }
 
   /////////////////////////////////////////
+
   const handleMouseEnter = (info) => {
     const { clientX, clientY } = info.jsEvent;
 
@@ -207,6 +215,65 @@ function CalendarApp() {
   const handleMouseLeave = () => {
     setPopoverStyle({ display: 'none' });
   };
+  /////////////////////////////////////////
+
+
+  const handleEventClick = (info) => {
+    const description =  info.event.extendedProps.description;
+    const start = description.indexOf("Historia clinica");
+    const end = description.indexOf(". E-Dentograma");
+
+    const id = description.substring(start + 17, end);
+    
+    setReschedule(info.event);
+
+    setSelectedPatient(patients.find((p) => p.medicalRecord === parseInt(id)));
+
+    setIsModalOpen(true);
+  }
+
+
+  const handleRescheduleEvent = async () => {
+
+    if (!selectedPatient) {
+      toast.warning("Debes seleccionar un paciente.");
+      return;
+    }
+
+    if (start >= end) {
+      toast.warning("La fecha de inicio debe ser anterior a la fecha de fin.");
+      return;
+    }
+
+    console.log(reschedule)
+
+    const tokenGoogle = gapi.auth2
+    .getAuthInstance()
+    .currentUser.get()
+    .getAuthResponse().access_token;
+
+    await fetch(
+      `https://www.googleapis.com/calendar/v3/calendars/primary/events/${reschedule.extendedProps.googleId}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: "Bearer " + tokenGoogle,
+        },
+      }
+    )
+    .then((response) => {
+      if (response.status === 204) {
+        const updateEvents = events.filter(e => e.googleId !== reschedule.extendedProps.googleId);
+        createCalendarEvent(updateEvents);
+
+      } 
+    })
+    .catch((error) => {
+      console.log(error);
+      toast.error("No se logro reagendar el evento");
+    });
+
+  }
   /////////////////////////////////////////
 
 
@@ -241,6 +308,8 @@ function CalendarApp() {
           eventMouseEnter={handleMouseEnter}
           eventMouseLeave={handleMouseLeave}
 
+          eventClick={handleEventClick}
+
           customButtons={{
             addEventButton: {
               text: "Agendar Cita",
@@ -255,9 +324,9 @@ function CalendarApp() {
         />
       </div>
       
-      <Modal isOpen={isModalOpen} onClose={()=> setIsModalOpen(false)}>
+      <Modal isOpen={isModalOpen} onClose={()=> {setIsModalOpen(false); setSelectedPatient(null); setReschedule(null)}}>
           <div className="modal-content">
-            <h2>Agendar Cita</h2>
+            <h2>{reschedule? "Reagendar Cita" : "Agendar Cita"}</h2>
               <div className="field">
                 <label className="bold-text">Seleccionar Paciente</label>
                 <select
@@ -269,6 +338,7 @@ function CalendarApp() {
                       )
                     )
                   }
+                  disabled={reschedule !== null}
                 >
                   <option value="">Seleccionar paciente</option>
                   {patients.map((patient) => (
@@ -302,13 +372,13 @@ function CalendarApp() {
             <div className="modal-buttons">
               <button
                 className="cancelEventButton"
-                onClick={() => setIsModalOpen(false)}
+                onClick={() =>  setIsModalOpen(false)}
               >
                 Cerrar
               </button>
               <button
                 className="createEventButton"
-                onClick={createCalendarEvent}
+                onClick={() => {if (reschedule) { handleRescheduleEvent()} else {createCalendarEvent(events)} }}
               >
                 Crear evento
               </button>
@@ -320,6 +390,8 @@ function CalendarApp() {
       <Modal isOpen={showQR} onClose={() => setShowQR(false)}>
           <QR/>
       </Modal>
+
+      
 
       <div ref={popoverRef} className="custom-popover" style={popoverStyle}>
         {popoverContent}

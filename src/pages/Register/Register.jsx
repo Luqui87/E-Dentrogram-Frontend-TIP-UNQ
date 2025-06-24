@@ -13,7 +13,7 @@ function Register() {
   const gapi = useGoogleApi({
     scopes: [
       "profile",
-      "https://www.googleapis.com/auth/calendar.events.readonly",
+      "https://www.googleapis.com/auth/calendar"
     ],
   });
 

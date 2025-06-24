@@ -62,7 +62,7 @@ header .modalContent .buttons{
 }
 
 
-header .modalContent .btn-confirmar{
+ .btn-confirmar{
   background-color: #95b6bd;
   color: white;
   border: 1px solid #95b6bd;
@@ -72,7 +72,7 @@ header .modalContent .btn-confirmar{
   margin-right: 8px;
 }
 
-header .modalContent .btn-cancelar {
+ .btn-cancelar {
   background-color: white;
   color: #95b6bd;
   border: 1px solid #95b6bd;
