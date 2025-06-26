@@ -11,6 +11,7 @@ import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Calendario from "./components/Calendario/Calendario";
 import { GoogleApiProvider } from 'react-gapi'
+import Settings from "./pages/Settings/Settings";
 
 const App = () => {
   return (
@@ -29,6 +30,7 @@ const App = () => {
             <Route path="/home" element={<Home />} />
             <Route path="/paciente/:id" element={<PacienteView />} />
             <Route path="/Calendario" element={<Calendario />} />
+            <Route path="/Configuracion" element={<Settings/>} />
             <Route path="*" element={<PageNotFound />} />
           </Routes>
 

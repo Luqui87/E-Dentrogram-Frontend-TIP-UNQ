@@ -8,6 +8,7 @@ import { handleApiError } from "../../service/API";
 import { toast } from "react-toastify";
 import Historial from "../../components/Historial/Historial";
 import Comparar from "../../components/Comparar/Comparar";
+import PatientLogs from "../../components/PatientsLogs/PatientLogs";
 
 function PacienteView() {
   const [patient, setPatient] = useState({});
@@ -57,6 +58,14 @@ function PacienteView() {
             Odontograma
           </button>
           <button
+            className={activeTab === "log" ? "active" : ""}
+            onClick={() => {
+              setActiveTab("log");
+            }}
+          >
+            Bitacora
+          </button>
+          <button
             className={activeTab === "historial" ? "active" : ""}
             onClick={() => setActiveTab("historial")}
           >
@@ -91,6 +100,12 @@ function PacienteView() {
         
       />
 
+      <PatientLogs 
+      active={activeTab === "log" ? "active" : "inactive"}
+      id={id}
+      />
+
+      
       <Comparar
         active={activeTab === "comparar" ? "active" : "inactive"}
         type={type}
