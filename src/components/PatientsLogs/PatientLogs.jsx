@@ -6,16 +6,6 @@ import { useEffect, useState } from 'react';
 import API, { handleApiError } from '../../service/API';
 
 
-const tagMap = {
-  GENERAL_REVIEW: "Vista general",
-  SURGERY: "Cirugía",
-  CLEANING: "Limpieza",
-  WHITENING: "Blanqueamiento",
-  ORTHODONTICS: "Ortodoncia",
-  FLUORIDE: "Flúor",
-  PEDIATRIC: "Pediatría",
-  CHECKUP: "Chequeo"
-};
 
 function PatientLogs({active, id}){
 
@@ -69,7 +59,7 @@ function PatientLogs({active, id}){
                {log.log}
             </p>
             <div className="tags">
-                {log.tags.map((tag, index) => <span key={index} className="tag">{tagMap[tag]}</span>)}
+                {log.tags.map((tag, index) => <span key={index} className="tag">{tag}</span>)}
             </div>
         </VerticalTimelineElement>
         )
@@ -118,7 +108,7 @@ function PatientLogs({active, id}){
                     shadowSize="medium"
                     iconClassName="patient-log-add"
                     icon={<AddIcon/>}
-                    
+                    iconOnClick={handleGetMoreEntries}
                 ></VerticalTimelineElement>
 
             </VerticalTimeline>

@@ -33,7 +33,8 @@ const Home = () => {
       .then((res) => {
         setPatients(res.data.patients);
         setDentistId(res.data.dentistID);
-        setLoading(false);
+        setLoading(false); 
+        localStorage.setItem('userTags', JSON.stringify(res.data.tags));
       })
       .catch((error) => {
         toast.error(handleApiError(error));

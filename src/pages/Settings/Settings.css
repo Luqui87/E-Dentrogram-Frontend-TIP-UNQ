@@ -41,6 +41,7 @@
 
 .setting-content{
     flex: 4 1 0%;
+    padding: 20px;
 }
 
 .settings-tags{
@@ -69,7 +70,7 @@
 
 
 .settings-tags input{
-    height: 7vh;
+    height: 5vh;
     font-size: 1.2em;
     padding: 10px 30px;
 }

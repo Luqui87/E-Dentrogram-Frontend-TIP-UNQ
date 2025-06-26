@@ -1,24 +1,44 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Tag from '../../components/PatientsLogs/Tag'
 import './Settings.css'
+import API, { handleApiError } from '../../service/API';
+import { toast } from 'react-toastify';
 
 function Settings(){
 
     const [inputValue, setInputValue] = useState('');
     const [tags, setTags] = useState([])
 
+    
+    useEffect(() => {
+        getTagsFromStorage();
+
+    }, []);
+
+    const getTagsFromStorage = () => {
+        const userTags = JSON.parse(localStorage.getItem('userTags'));
+        setTags( userTags );
+    }
+
     const handleKeyDown = (event) => {
         if (event.key === 'Enter') {
-          // Perform action when Enter is pressed
-          console.log('Enter key pressed! Input value:', inputValue);
-          // Example: Submit form, trigger a search, etc.
           setTags([...tags, inputValue]);
           setInputValue('')
         }
       };
       
+    const handleNewTags = () => {
+        API.patchDentistTags(tags)
+        .then((res) => {
+            localStorage.setItem('userTags',JSON.stringify(res.data.tags));
+            toast.success("Etiquetas modificadas");
+        })
+        .catch((error) =>{
+            handleApiError(error);
+        } )
+    }
 
-    const mapTags = tags.map()
+    const mapTags = tags.map((tag,index) => <Tag key={index} setTag={()=>{}}>{tag}</Tag>);
 
     return(
         <main>
@@ -44,22 +64,18 @@ function Settings(){
                         <span>Etiquetas actuales</span>
                         <div className="use-tags">
                             <div className="tags">
-                                <Tag> Renovacion</Tag>
-                                <Tag> tag 2</Tag>
-                                <Tag> tag 3</Tag>
-                                <Tag> tag 4</Tag>
-                                <Tag> tag 5</Tag>
-                                <Tag> tag 6</Tag>
-                                <Tag> tag 3</Tag>
-                                <Tag> tag 4</Tag>
-                                <Tag> tag 5</Tag>
-                                <Tag> tag 6</Tag>
-                                <Tag> tag 3</Tag>
-                                <Tag> tag 4</Tag>
-                                <Tag> tag 5</Tag>
-                                <Tag> tag 6</Tag>
+                                {mapTags}
                             </div>
                             
+                        </div>
+
+                        <div className="buttons">
+                            <button className="btn-confirmar" onClick={() => handleNewTags()}>
+                            Confirmar
+                            </button>
+                            <button className="btn-cancelar" onClick={() => getTagsFromStorage()}>
+                            Cancelar
+                            </button>
                         </div>
                     </div>
                     <div className="settings-preturn"></div>

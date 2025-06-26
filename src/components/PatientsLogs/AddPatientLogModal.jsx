@@ -20,20 +20,9 @@ function toLocalDateTimeString(fecha) {
 }
 
 
-
-
 function AddPatientLogModal({isOpen, onClose, handleAddLog, id}){
 
-    const [tags, setTags] = useState([
-    { tag: "GENERAL_REVIEW", caption: "Vista general" },
-    { tag: "SURGERY", caption: "Cirugía" },
-    { tag: "CLEANING", caption: "Limpieza" },
-    { tag: "WHITENING", caption: "Blanqueamiento" },
-    { tag: "ORTHODONTICS", caption: "Ortodoncia" },
-    { tag: "FLUORIDE", caption: "Flúor" },
-    { tag: "PEDIATRIC", caption: "Pediatría" },
-    { tag: "CHECKUP", caption: "Chequeo" }
-]);
+    const [tags, setTags] = useState([]);
     const [selectedTags, setSelectedTags] = useState([]);
 
     const [description, setDescription] = useState("")
@@ -41,15 +30,18 @@ function AddPatientLogModal({isOpen, onClose, handleAddLog, id}){
     useEffect(() => {
         setDescription("");
         setSelectedTags([]);
+
+        const userTags = JSON.parse(localStorage.getItem('userTags'));
+        setTags(userTags)
+        
+        console.log(selectedTags)
     }, [isOpen]);
 
 
     const handleTags = (tag) => {
         const index = selectedTags.indexOf(tag);
 
-        console.log(index);
-
-        if (index === -1 ) {
+        if (index !== -1 ) {
             setSelectedTags([...selectedTags, tag])
         }
         else{
@@ -57,7 +49,7 @@ function AddPatientLogModal({isOpen, onClose, handleAddLog, id}){
         }
     }
 
-    const Tags = tags.map((tag, index) => <Tag key={index} setTag={() => handleTags(tag)}>{tag.caption}</Tag> );
+    const Tags = tags.map((tag, index) => <Tag key={index} setTag={() => handleTags(tag)}>{tag}</Tag> );
 
     const handleConfirm = () => {
 

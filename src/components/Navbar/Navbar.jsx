@@ -51,7 +51,7 @@ function Navbar() {
 
   return (
     <>
-      {true && (
+      {token && (
         <header>
           <div className="logo-section">
             <img

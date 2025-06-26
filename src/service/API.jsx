@@ -74,7 +74,7 @@ const API = {
   getTeethAtDate : (id, date) => request('get',`/tooth/${id}/version?date=${date}`),
   getPatientJournal : (id, pageNumber) => request('get',`/patient/journal/${id}/${pageNumber}`),
   postPatientJournal : (id, body) => request('post',`/patient/journal/add/${id}`, body),
-  
+  patchDentistTags : (body) => request('patch', '/dentist/update/tags', body ),
 };
 
 export default API;
