@@ -74,16 +74,23 @@
     padding: 10px 30px;
 }
 
-.settings-tags span{
+.settings-tags>span{
     margin-top: 30px;
     font-size: 1.5em;
 }
 
 .settings-tags .use-tags{
-    flex-grow: 1;
     background-color: rgb(213 205 196 / 35%);
     width: 90%;
     margin: 20px;
+    padding: 10px;
     border-radius: 15px;
+    flex-grow: 1;
+}
+
+.settings-tags .use-tags .tags{
     display: flex;
+    flex-wrap: wrap;
+    gap: 5px 10px;
+    
 }
