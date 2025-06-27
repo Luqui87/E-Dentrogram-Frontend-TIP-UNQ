@@ -18,17 +18,32 @@ const Home = () => {
 
   const [showModal, setShowModal] = useState(false);
 
+  const [patient, setPatient] = useState(null);
+
   const handleAddClick = () => {
     setShowModal(true);
   };
 
   const handleCloseModal = () => {
     setShowModal(false);
+    setPatient(null)
   };
+
+  const editPatient = (patient) => {
+    setPatient(patient);
+    setShowModal(true);
+  }
+
+  const handleEditedPatient = (patient) => {
+    
+    const updatedPatients = patients.filter(p => p.medicalRecord !== patient.medicalRecord)
+      .concat(patient);
+    
+    setPatients(updatedPatients);
+  }
 
   useEffect(() => {
 
-    
     API.getDentist(localStorage.getItem("username"))
       .then((res) => {
         setPatients(res.data.patients);
@@ -70,15 +85,8 @@ const Home = () => {
         onClose={handleCloseModal}
         dentistId={dentistId}
         setPatients={setPatients}
-        patient={{
-          medicalRecord: "12345",
-          dni: "42594982",
-          name: "Lucas Alvarez",
-          address: "Bragado 1947",
-          birthdate: "2000-10-12",
-          telephone: "1153276406",
-          email: "alvarezlucas2787@gmail.com",
-        }}
+        patient={patient}
+        handleEditedPatient={handleEditedPatient}
       />
 
       <PersonTable
@@ -86,6 +94,7 @@ const Home = () => {
         searchTerm={searchTerm}
         setPatients={setPatients}
         dentistId={dentistId}
+        editPatient ={editPatient}        
       />
     </div>
   );

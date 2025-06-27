@@ -46,11 +46,19 @@
   table-layout: fixed;
 }
 
-.delete-button {
+.table-button {
   background-color: transparent;
   border:none;
   cursor: pointer;
   width: 100%;
+}
+
+.person-table .buttons{
+  display: flex;
+  height: auto;
+  width: 7vw;
+  margin-left: auto;
+  padding: 3px;
 }
 
 
@@ -112,8 +120,3 @@
   z-index: 2;
 }
 
-.home-container .person-table th:last-child,
-.home-container .person-table td:last-child {
-  width: 5%; /* Ajusta este valor según lo pequeño que quieras la columna */
-  padding: 3px;
-}

@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { useEffect } from "react";
 import Modal from "../Modal";
 
-const PatientModal = ({ showModal, onClose, dentistId, setPatients, patient }) => {
+const PatientModal = ({ showModal, onClose, dentistId, setPatients, patient, handleEditedPatient }) => {
   const [activeTab, setActiveTab] = useState("agregar");
   const [form, setForm] = useState({
     medicalRecord: "",
@@ -22,9 +22,19 @@ const PatientModal = ({ showModal, onClose, dentistId, setPatients, patient }) =
     if (patient){
       setActiveTab("registrar");
       setForm(patient);
-      console.log(patient);
     }
-  }, [showModal])
+    else{
+      setForm({
+      medicalRecord: "",
+      dni: "",
+      name: "",
+      address: "",
+      birthdate: "",
+      telephone: "",
+      email: "",
+    })
+    }
+  }, [showModal, patient])
 
   const handleSubmit = () => {
     if (!form.medicalRecord) {
@@ -49,6 +59,20 @@ const PatientModal = ({ showModal, onClose, dentistId, setPatients, patient }) =
       toast.error(handleApiError(error));
     }
   };
+
+  const handleEditPatient = () => {
+    API.updatePatient(form)
+    .then((res) => {
+      toast.success("Paciente editado exitosamente");
+      console.log(res.data);
+      handleEditedPatient(res.data)
+      onClose();
+    })
+    .catch((error) => {
+      toast.error(handleApiError(error));
+      console.log(error)
+    })
+  }
 
   return (
     <Modal isOpen={showModal} onClose={onClose}>
@@ -103,6 +127,7 @@ const PatientModal = ({ showModal, onClose, dentistId, setPatients, patient }) =
                       medicalRecord: e.target.value,
                     }))
                   }
+                  disabled={patient}
                 />
               </div>
               
@@ -175,7 +200,7 @@ const PatientModal = ({ showModal, onClose, dentistId, setPatients, patient }) =
                         telephone: e.target.value,
                       }))
                     }
-                    style={{width:"11.7vw"}}
+                    style={{width:"64%"}}
                   />
               </div>
               
@@ -201,7 +226,7 @@ const PatientModal = ({ showModal, onClose, dentistId, setPatients, patient }) =
       </div>
 
       <div className="modal-footer">
-        <button onClick={handleSubmit} className="confirm-button">
+        <button onClick={patient? handleEditPatient: handleSubmit} className="confirm-button">
           Confirmar
         </button>
         <button onClick={onClose } className="cancel-button">

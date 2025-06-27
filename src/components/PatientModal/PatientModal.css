@@ -58,11 +58,12 @@
 .form-fields{
   display: flex;
   flex-wrap: wrap;
-  align-items: self-start;
+  align-items: flex-start;
+  gap: 0px 10%
 }
 
 .form-fields .field{
-  flex: 1 1 0%;
+  flex: 1 1 40%;
   align-items: flex-start;
 }
 
