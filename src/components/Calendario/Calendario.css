@@ -76,7 +76,7 @@ option {
   margin-bottom: 0.5rem;
 }
 
-.field input[type="text"] {
+.field input[type="text"] , .field input[type="date"], .field input[type="email"] {
   padding: 0.5rem;
   font-size: 1rem;
   border: 1px solid #ccc;

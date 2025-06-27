@@ -27,8 +27,8 @@ const Home = () => {
   };
 
   useEffect(() => {
-    setLoading(true);
 
+    
     API.getDentist(localStorage.getItem("username"))
       .then((res) => {
         setPatients(res.data.patients);
@@ -38,7 +38,11 @@ const Home = () => {
       })
       .catch((error) => {
         toast.error(handleApiError(error));
+      })
+      .finally(() =>{
+        setLoading(false)
       });
+    
   }, []);
 
   return loading ? (
@@ -66,6 +70,15 @@ const Home = () => {
         onClose={handleCloseModal}
         dentistId={dentistId}
         setPatients={setPatients}
+        patient={{
+          medicalRecord: "12345",
+          dni: "42594982",
+          name: "Lucas Alvarez",
+          address: "Bragado 1947",
+          birthdate: "2000-10-12",
+          telephone: "1153276406",
+          email: "alvarezlucas2787@gmail.com",
+        }}
       />
 
       <PersonTable

@@ -18,6 +18,8 @@
   justify-content: space-between;
   margin-bottom: 20px;
   background: rgba(0, 0, 0, 0.5);
+  position: sticky;
+  top: 0px;
 }
 
 .tabs button {
@@ -45,7 +47,7 @@
   /*flex-direction: column; */
   flex-wrap: wrap;
   gap: 1vh 0vw;
-  width: 40vw;
+  width: 37vw;
   
 }
 
@@ -53,11 +55,15 @@
   flex: 1 1 40%;
 }
 
-.form>.field{
+.form-fields{
   display: flex;
-  flex-direction: column;
-  align-items: start;
-  gap: 5px;
+  flex-wrap: wrap;
+  align-items: self-start;
+}
+
+.form-fields .field{
+  flex: 1 1 0%;
+  align-items: flex-start;
 }
 
 .form label {
@@ -66,24 +72,15 @@
   color: #333;
 }
 
-.form input {
-  padding: 8px 10px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  outline-color: #2196f3;
-  width: 15vw;
-}
 
 .modal-body{
-  padding: 20px;
+  padding: 10px 30px;;
 }
 
 .modal-footer {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
-  margin-top: 20px;
   padding: 10px;
 }
 
