@@ -9,6 +9,7 @@ function Navbar() {
   const token = localStorage.getItem("token");
   const tokenGoogle = localStorage.getItem("GoogleToken");
   const [showModal, setShowModal] = useState(false);
+  
 
   const handleLogout = () => {
     localStorage.removeItem("token");

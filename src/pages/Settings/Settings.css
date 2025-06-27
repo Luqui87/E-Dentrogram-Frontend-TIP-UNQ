@@ -31,8 +31,12 @@
     align-items: center;
     padding: 10px 10px;
     border: 1px solid gray;
-    border-left: 5px solid #95b6bd;
+    
     color: gray;
+}
+
+.bar-items>span.active{
+    border-left: 5px solid #95b6bd;
 }
 
 .bar-items> span:hover{
