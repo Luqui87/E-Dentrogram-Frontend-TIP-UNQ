@@ -7,7 +7,7 @@
   background-color: white;
 }
 
-.fc-toolbar-chunk:nth-child(2){
+.fc-toolbar-chunk:nth-child(2) {
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -91,7 +91,7 @@ option {
 }
 
 .createEventButton {
-  background-color: #95b6bd;;
+  background-color: #95b6bd;
   color: white;
   padding: 0.6rem 1.2rem;
   font-size: 1rem;
@@ -105,7 +105,7 @@ option {
 }
 
 .createEventButton:hover {
-  background-color: #3fa3b9;;
+  background-color: #3fa3b9;
   transform: scale(1.03);
 }
 
@@ -141,15 +141,17 @@ option {
   font-weight: bold;
 }
 
-.dates-pickers{
+.dates-pickers {
   display: flex;
 }
 
-.dates-pickers .field:nth-child(2){
+.dates-pickers .field:nth-child(2) {
   margin-left: auto;
 }
 
-.react-datetime-picker__clock { display: none; }
+.react-datetime-picker__clock {
+  display: none;
+}
 
 .custom-popover {
   background-color: white;
@@ -163,8 +165,9 @@ option {
   white-space: nowrap;
 }
 
-.calendario  .fc-button{
+.calendario .fc-button {
   background-color: #95b6bd;
+<<<<<<< HEAD
   border-color: white
 }
 
@@ -173,3 +176,10 @@ option {
   background-color: white;
   color: #95b6bd;
 }
+=======
+}
+
+.file-upload-field {
+  margin-top: 1.5rem;
+}
+>>>>>>> 338da480eb2e5676bc74414e7ef70944c4312634
