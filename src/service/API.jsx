@@ -75,7 +75,10 @@ const API = {
   getPatientJournal : (id, pageNumber) => request('get',`/patient/journal/${id}/${pageNumber}`),
   postPatientJournal : (id, body) => request('post',`/patient/journal/add/${id}`, body),
   patchDentistTags : (body) => request('patch', '/dentist/update/tags', body ),
-  updatePatient : (body) => request('put', "/patient/update", body)
+  updatePatient : (body) => request('put', "/patient/update", body),
+  getDentistPatinet: (pageNumber) =>
+    request("get", `/dentist/patient/${pageNumber}`),
+
 };
 
 export default API;

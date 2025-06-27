@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { useEffect } from "react";
 import Modal from "../Modal";
 
-const PatientModal = ({ showModal, onClose, dentistId, setPatients, patient, handleEditedPatient }) => {
+const PatientModal = ({ showModal, onClose, dentistId, patient, handleEditedPatient }) => {
   const [activeTab, setActiveTab] = useState("agregar");
   const [form, setForm] = useState({
     medicalRecord: "",
@@ -52,7 +52,6 @@ const PatientModal = ({ showModal, onClose, dentistId, setPatients, patient, han
       }
       API.addPatient(dentistId, updatedForm).then((res) => {
         toast.success("Paciente agregado exitosamente.");
-        setPatients(res.data.patients);
         onClose();
       });
     } catch (error) {
@@ -64,13 +63,11 @@ const PatientModal = ({ showModal, onClose, dentistId, setPatients, patient, han
     API.updatePatient(form)
     .then((res) => {
       toast.success("Paciente editado exitosamente");
-      console.log(res.data);
       handleEditedPatient(res.data)
       onClose();
     })
     .catch((error) => {
       toast.error(handleApiError(error));
-      console.log(error)
     })
   }
 
@@ -200,7 +197,7 @@ const PatientModal = ({ showModal, onClose, dentistId, setPatients, patient, han
                         telephone: e.target.value,
                       }))
                     }
-                    style={{width:"64%"}}
+                    style={{width:"11.7vw"}}
                   />
               </div>
               
