@@ -31,6 +31,8 @@ const PatientModal = ({ showModal, onClose, dentistId, setPatients, patient }) =
       toast.error("Hay campos vacios");
       return;
     }
+
+    
     try {
       const updatedForm = { ...form };
 
@@ -202,7 +204,7 @@ const PatientModal = ({ showModal, onClose, dentistId, setPatients, patient }) =
         <button onClick={handleSubmit} className="confirm-button">
           Confirmar
         </button>
-        <button onClick={/* onClose */ () => {console.log(form)}} className="cancel-button">
+        <button onClick={onClose } className="cancel-button">
           Cancelar
         </button>
       </div>
