@@ -79,7 +79,7 @@ textarea{
     align-self: flex-end;
 }
 
-.selected-tags .tag{
+.tag{
     display: flex;
     align-items: center;
     gap: 5px;
