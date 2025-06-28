@@ -2,6 +2,9 @@ import './PacienteCard.css'
 
 function PacienteCard({patient}){
 
+    const [anio, mes, dia] = patient.birthdate.split("-");
+    const fechaFormateada = `${dia}/${mes}/${anio}`;
+
     return(
         <div className="pacienteCard">
             <div>
@@ -23,7 +26,7 @@ function PacienteCard({patient}){
                 </div>
                 <div className='line'>
                     <span className="label">Fecha de Nacimiento:</span>
-                    <span className="field">{patient.birthdate}</span>
+                    <span className="field">{fechaFormateada}</span>
                 </div>
             </div>
             <div>

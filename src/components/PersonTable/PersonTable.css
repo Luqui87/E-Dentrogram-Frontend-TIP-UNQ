@@ -1,11 +1,10 @@
 .table-container {
-  margin:10px auto 0 auto;
-  overflow:auto;
-  border-radius:10px;
+  margin: 10px auto 0 auto;
+  overflow: auto;
+  border-radius: 10px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   width: 100%;
 }
-
 
 .person-table {
   width: 100%;
@@ -46,11 +45,19 @@
   table-layout: fixed;
 }
 
-.delete-button {
+.table-button {
   background-color: transparent;
-  border:none;
+  border: none;
   cursor: pointer;
   width: 100%;
+}
+
+.person-table .buttons{
+  display: flex;
+  height: auto;
+  width: 7vw;
+  margin-left: auto;
+  padding: 3px;
 }
 
 
@@ -100,7 +107,7 @@
   cursor: pointer;
 }
 
-.delete-icon{
+.delete-icon {
   width: 100%;
 }
 
@@ -112,8 +119,3 @@
   z-index: 2;
 }
 
-.home-container .person-table th:last-child,
-.home-container .person-table td:last-child {
-  width: 5%; /* Ajusta este valor según lo pequeño que quieras la columna */
-  padding: 3px;
-}
