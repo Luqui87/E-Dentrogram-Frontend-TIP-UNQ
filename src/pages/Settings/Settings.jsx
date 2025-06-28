@@ -36,9 +36,19 @@ function Settings() {
       });
   };
 
+  const handleTags = (tag) => {
+
+      setTags( tags.filter( t => t !== tag ) );
+      
+    }
+
   const mapTags = tags.map((tag, index) => (
-    <Tag key={index} setTag={() => {}}>
-      {tag}
+    <Tag
+            key={index}
+            setTag={() => handleTags(tag)}
+            isSelected={tags.includes(tag)}
+        >
+            {tag}
     </Tag>
   ));
 
@@ -53,6 +63,10 @@ function Settings() {
               onClick={() => setSelected("Tags")}
             >
               Etiquetas
+              <svg className="tag-icon" viewBox="-2.4 -2.4 28.80 28.80" fill="none" stroke="#ffffff">
+      <path d="M10.0303 8.96965..." fill="#ffffff" />
+      <path d="M12 1.25C..." fill="#ffffff" />
+    </svg>
             </span>
             {
               //<span className={selected == "PreTurn"? "active" : ""} onClick={()=>setSelected("PreTurn")}>Mensaje pre-turno</span>
