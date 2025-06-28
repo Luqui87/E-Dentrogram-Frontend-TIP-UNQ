@@ -76,12 +76,15 @@ option {
   margin-bottom: 0.5rem;
 }
 
-.field input[type="text"] , .field input[type="date"], .field input[type="email"] {
+.field input[type="text"],
+.field input[type="date"],
+.field input[type="email"] {
   padding: 0.5rem;
   font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 8px;
   transition: border 0.3s ease;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .field input[type="text"]:focus {
@@ -167,19 +170,14 @@ option {
 
 .calendario .fc-button {
   background-color: #95b6bd;
-<<<<<<< HEAD
-  border-color: white
+  border-color: white;
 }
 
-
-.calendario  .fc-button:active{
+.calendario .fc-button:active {
   background-color: white;
   color: #95b6bd;
-}
-=======
 }
 
 .file-upload-field {
   margin-top: 1.5rem;
 }
->>>>>>> 338da480eb2e5676bc74414e7ef70944c4312634
