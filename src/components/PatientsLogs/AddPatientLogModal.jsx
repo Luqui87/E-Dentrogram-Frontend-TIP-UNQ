@@ -29,27 +29,36 @@ function AddPatientLogModal({isOpen, onClose, handleAddLog, id}){
 
     useEffect(() => {
         setDescription("");
-        setSelectedTags([]);
+        setSelectedTags([]); 
 
         const userTags = JSON.parse(localStorage.getItem('userTags'));
         setTags(userTags)
         
-        console.log(selectedTags)
     }, [isOpen]);
 
 
     const handleTags = (tag) => {
-        const index = selectedTags.indexOf(tag);
 
-        if (index !== -1 ) {
-            setSelectedTags([...selectedTags, tag])
+        if (selectedTags.includes(tag)) {
+            setSelectedTags( selectedTags.filter( t => t !== tag ) );
+
         }
         else{
-            setSelectedTags( selectedTags.filter( t => t !== tag ) );
+            const update = [...selectedTags, tag]
+            console.log(update);
+            setSelectedTags(update)
         }
     }
 
-    const Tags = tags.map((tag, index) => <Tag key={index} setTag={() => handleTags(tag)}>{tag}</Tag> );
+    const Tags = tags.map((tag, index) => (
+        <Tag
+            key={index}
+            setTag={() => handleTags(tag)}
+            isSelected={selectedTags.includes(tag)}
+        >
+            {tag}
+        </Tag>
+));
 
     const handleConfirm = () => {
 

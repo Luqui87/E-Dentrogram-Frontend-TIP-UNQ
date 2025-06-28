@@ -66,6 +66,7 @@ function PatientLogs({active, id}){
     })
 
     const handleAddLog = (log) => {
+        console.log(log)
         setPatientLogs([log, ...patientLogs]);
     }
 
@@ -73,10 +74,11 @@ function PatientLogs({active, id}){
         API.getPatientJournal(id, (page + 1))
             .then((res) => {
                 setPage(page + 1 );
-                setPatientLogs([res.data.journal , ...patientLogs]);
+                setPatientLogs(patientLogs.concat(res.data.journal));
             })
             .catch((error) => {
-                handleApiError(error)
+                handleApiError(error);
+                console.log(error);
             })
     }
 
