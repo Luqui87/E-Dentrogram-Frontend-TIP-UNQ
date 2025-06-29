@@ -45,8 +45,6 @@ function CalendarApp() {
   const [showQR, setShowQR] = useState(false);
   const [reschedule, setReschedule] = useState(null);
 
-
-
   const listUpcomingEvents = () => {
     gapi.client.calendar.events
       .list({
@@ -64,7 +62,7 @@ function CalendarApp() {
           start: d.start.dateTime,
           end: d.end.dateTime,
           description: d.description,
-          googleId: d.id
+          googleId: d.id,
         }));
         setEvents(getEvents);
       });
@@ -142,6 +140,19 @@ function CalendarApp() {
       toast.warning("La fecha de inicio debe ser anterior a la fecha de fin.");
       return;
     }
+
+    await API.addTurn({
+      date: start.toISOString(),
+      patientId: selectedPatient.medicalRecord,
+    })
+      .then(() => {
+        toast.success("Turno registrado");
+      })
+      .catch((error) => {
+        toast.error("Error al guardar el turno: " + handleApiError(error));
+        return;
+      });
+
     const patientTel = String(selectedPatient.telephone);
 
     const event = {
@@ -172,18 +183,22 @@ function CalendarApp() {
         body: JSON.stringify(event),
       }
     )
-      .then((res) => res.json()) 
+      .then((res) => res.json())
       .then((response) => {
         toast.success("Evento agendado");
         sendMessage(patientTel);
-        
-        setEvents(actualEvents.concat([{
-          title: eventName,
-          start: start.toISOString(),
-          end:end.toISOString(),
-          description: `Turno con ${selectedPatient.name}. Historia clinica ${selectedPatient.medicalRecord}. E-Dentograma`,
-          googleId: response.id
-        }]));
+
+        setEvents(
+          actualEvents.concat([
+            {
+              title: eventName,
+              start: start.toISOString(),
+              end: end.toISOString(),
+              description: `Turno con ${selectedPatient.name}. Historia clinica ${selectedPatient.medicalRecord}. E-Dentograma`,
+              googleId: response.id,
+            },
+          ])
+        );
 
         setIsModalOpen(false);
         setSelectedPatient(null);
@@ -228,24 +243,21 @@ function CalendarApp() {
   };
   /////////////////////////////////////////
 
-
   const handleEventClick = (info) => {
-    const description =  info.event.extendedProps.description;
+    const description = info.event.extendedProps.description;
     const start = description.indexOf("Historia clinica");
     const end = description.indexOf(". E-Dentograma");
 
     const id = description.substring(start + 17, end);
-    
+
     setReschedule(info.event);
 
     setSelectedPatient(patients.find((p) => p.medicalRecord === parseInt(id)));
 
     setIsModalOpen(true);
-  }
-
+  };
 
   const handleRescheduleEvent = async () => {
-
     if (!selectedPatient) {
       toast.warning("Debes seleccionar un paciente.");
       return;
@@ -256,12 +268,12 @@ function CalendarApp() {
       return;
     }
 
-    console.log(reschedule)
+    console.log(reschedule);
 
     const tokenGoogle = gapi.auth2
-    .getAuthInstance()
-    .currentUser.get()
-    .getAuthResponse().access_token;
+      .getAuthInstance()
+      .currentUser.get()
+      .getAuthResponse().access_token;
 
     await fetch(
       `https://www.googleapis.com/calendar/v3/calendars/primary/events/${reschedule.extendedProps.googleId}`,
@@ -272,21 +284,87 @@ function CalendarApp() {
         },
       }
     )
-    .then((response) => {
-      if (response.status === 204) {
-        const updateEvents = events.filter(e => e.googleId !== reschedule.extendedProps.googleId);
-        createCalendarEvent(updateEvents);
+      .then((response) => {
+        if (response.status === 204) {
+          const updateEvents = events.filter(
+            (e) => e.googleId !== reschedule.extendedProps.googleId
+          );
 
-      } 
+          // Actualizar estado del calendario (sin evento viejo)
+          setEvents(updateEvents);
+
+          // Luego crear evento nuevo en Google Calendar solamente
+          const newEvent = {
+            summary: eventName,
+            description: `Turno con ${selectedPatient.name}. Historia clinica ${selectedPatient.medicalRecord}. E-Dentograma`,
+            start: {
+              dateTime: start.toISOString(),
+              timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+            },
+            end: {
+              dateTime: end.toISOString(),
+              timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+            },
+          };
+
+          fetch(
+            "https://www.googleapis.com/calendar/v3/calendars/primary/events",
+            {
+              method: "POST",
+              headers: {
+                Authorization: "Bearer " + tokenGoogle,
+              },
+              body: JSON.stringify(newEvent),
+            }
+          )
+            .then((res) => res.json())
+            .then((response) => {
+              toast.success("Evento reagendado");
+
+              // Agregá el nuevo evento al estado del calendario
+              setEvents([
+                ...updateEvents,
+                {
+                  title: eventName,
+                  start: start.toISOString(),
+                  end: end.toISOString(),
+                  description: newEvent.description,
+                  googleId: response.id,
+                },
+              ]);
+
+              // Opcional: enviar mensaje
+              sendMessage(String(selectedPatient.telephone));
+            });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error("No se logro reagendar el evento");
+      });
+
+    const formatDate = (date) => {
+      const d = new Date(date);
+      return d.toISOString().slice(0, 19);
+    };
+
+    console.log("🔁 Reschedule payload : " + formatDate(start));
+    console.log("🔁 date body : " + reschedule.start);
+    console.log("rescheduleTurn");
+    await API.rescheduleTurn(formatDate(start), {
+      date: reschedule.start,
+      patientId: selectedPatient.medicalRecord,
     })
-    .catch((error) => {
-      console.log(error);
-      toast.error("No se logro reagendar el evento");
-    });
-
-  }
+      .then(() => {
+        console.log("rescheduleTurn rama then");
+        toast.success("Turno reprogramado");
+      })
+      .catch((error) => {
+        toast.error("No se pudo reagendar el turno: " + handleApiError(error));
+        return;
+      });
+  };
   /////////////////////////////////////////
-
 
   return isLoading ? (
     <main style={{ alignItems: "center", justifyContent: "center" }}>
@@ -315,9 +393,7 @@ function CalendarApp() {
           nowIndicator={true}
           eventMouseEnter={handleMouseEnter}
           eventMouseLeave={handleMouseLeave}
-
           eventClick={handleEventClick}
-
           customButtons={{
             addEventButton: {
               text: "Agendar Cita",
@@ -332,12 +408,15 @@ function CalendarApp() {
           }}
         />
       </div>
-      
-      <Modal isOpen={isModalOpen} onClose={() => { 
-        setIsModalOpen(false); 
-        setSelectedPatient(null); 
-        setReschedule(null); 
-      }}>
+
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => {
+          setIsModalOpen(false);
+          setSelectedPatient(null);
+          setReschedule(null);
+        }}
+      >
         <div className="modal-content">
           <h2>{reschedule ? "Reagendar Cita" : "Agendar Cita"}</h2>
 
@@ -347,14 +426,19 @@ function CalendarApp() {
               value={selectedPatient?.medicalRecord || ""}
               onChange={(e) =>
                 setSelectedPatient(
-                  patients.find((p) => p.medicalRecord === parseInt(e.target.value))
+                  patients.find(
+                    (p) => p.medicalRecord === parseInt(e.target.value)
+                  )
                 )
               }
               disabled={reschedule !== null}
             >
               <option value="">Seleccionar paciente</option>
               {patients.map((patient) => (
-                <option key={patient.medicalRecord} value={patient.medicalRecord}>
+                <option
+                  key={patient.medicalRecord}
+                  value={patient.medicalRecord}
+                >
                   {patient.name}
                 </option>
               ))}
@@ -416,8 +500,6 @@ function CalendarApp() {
       <Modal isOpen={showQR} onClose={() => setShowQR(false)}>
         <QR />
       </Modal>
-
-      
 
       <div ref={popoverRef} className="custom-popover" style={popoverStyle}>
         {popoverContent}
