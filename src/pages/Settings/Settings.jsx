@@ -37,18 +37,16 @@ function Settings() {
   };
 
   const handleTags = (tag) => {
-
-      setTags( tags.filter( t => t !== tag ) );
-      
-    }
+    setTags(tags.filter((t) => t !== tag));
+  };
 
   const mapTags = tags.map((tag, index) => (
     <Tag
-            key={index}
-            setTag={() => handleTags(tag)}
-            isSelected={tags.includes(tag)}
-        >
-            {tag}
+      key={index}
+      setTag={() => handleTags(tag)}
+      isSelected={tags.includes(tag)}
+    >
+      {tag}
     </Tag>
   ));
 
@@ -64,9 +62,6 @@ function Settings() {
             >
               Etiquetas
             </span>
-            {
-              //<span className={selected == "PreTurn"? "active" : ""} onClick={()=>setSelected("PreTurn")}>Mensaje pre-turno</span>
-            }
           </div>
         </div>
         <div className="setting-content">
