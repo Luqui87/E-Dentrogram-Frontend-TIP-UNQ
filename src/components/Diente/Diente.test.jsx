@@ -234,7 +234,7 @@ describe('Diente', () => {
 
     })
 
-    it('should not open the tooth modal if has no section', async () =>{
+    it('should not open the tooth modal if has no modal', async () =>{
 
         const dom = render(<Diente />);
 
@@ -251,9 +251,9 @@ describe('Diente', () => {
     })
 
 
-    it(' the tooth modal should open when has section', async () =>{
+    it(' the tooth modal should open when has a modal', async () =>{
 
-        const dom = render(<Diente seccion={1} />);
+        const dom = render(<Diente hasModal={true} />);
 
         const diente = dom.container.querySelector('.diente.normal');
 
@@ -306,7 +306,7 @@ describe('Diente', () => {
             };
             });
 
-        const dom = render(<Diente seccion={1} num={1} />);
+        const dom = render(<Diente seccion={1} num={1} hasModal={true}/>);
 
         const diente = dom.container.querySelector('.diente.normal');
 
@@ -375,7 +375,7 @@ describe('Diente', () => {
             };
             });
 
-        const dom = render(<Diente seccion={1} num={1} />);
+        const dom = render(<Diente seccion={1} num={1} hasModal={true}/>);
 
         const diente = dom.container.querySelector('.diente.normal');
 
@@ -450,7 +450,7 @@ describe('Diente', () => {
             };
             });
 
-        const dom = render(<Diente seccion={1} num={1} />);
+        const dom = render(<Diente seccion={1} num={1} hasModal={true}/>);
 
         const diente = dom.container.querySelector('.diente.normal');
 

@@ -7,7 +7,7 @@
   background-color: white;
 }
 
-.fc-toolbar-chunk:nth-child(2){
+.fc-toolbar-chunk:nth-child(2) {
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -76,12 +76,15 @@ option {
   margin-bottom: 0.5rem;
 }
 
-.field input[type="text"] {
+.field input[type="text"],
+.field input[type="date"],
+.field input[type="email"] {
   padding: 0.5rem;
   font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 8px;
   transition: border 0.3s ease;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .field input[type="text"]:focus {
@@ -91,7 +94,7 @@ option {
 }
 
 .createEventButton {
-  background-color: #95b6bd;;
+  background-color: #95b6bd;
   color: white;
   padding: 0.6rem 1.2rem;
   font-size: 1rem;
@@ -105,7 +108,7 @@ option {
 }
 
 .createEventButton:hover {
-  background-color: #3fa3b9;;
+  background-color: #3fa3b9;
   transform: scale(1.03);
 }
 
@@ -141,15 +144,17 @@ option {
   font-weight: bold;
 }
 
-.dates-pickers{
+.dates-pickers {
   display: flex;
 }
 
-.dates-pickers .field:nth-child(2){
+.dates-pickers .field:nth-child(2) {
   margin-left: auto;
 }
 
-.react-datetime-picker__clock { display: none; }
+.react-datetime-picker__clock {
+  display: none;
+}
 
 .custom-popover {
   background-color: white;
@@ -161,4 +166,18 @@ option {
   z-index: 1000;
   pointer-events: none;
   white-space: nowrap;
+}
+
+.calendario .fc-button {
+  background-color: #95b6bd;
+  border-color: white;
+}
+
+.calendario .fc-button:active {
+  background-color: white;
+  color: #95b6bd;
+}
+
+.file-upload-field {
+  margin-top: 1.5rem;
 }

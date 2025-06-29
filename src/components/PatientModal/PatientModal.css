@@ -9,10 +9,17 @@
   }
 }
 
+.home-container .modal-inner{
+  padding: 0;
+}
+
 .tabs {
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
+  background: rgba(0, 0, 0, 0.5);
+  position: sticky;
+  top: 0px;
 }
 
 .tabs button {
@@ -26,7 +33,7 @@
 }
 
 .tabs button.active {
-  background-color: #2196f3;
+  background-color: #95b6bd;
   color: white;
   font-weight: bold;
 }
@@ -39,8 +46,8 @@
   display: flex;
   /*flex-direction: column; */
   flex-wrap: wrap;
-  gap: 3vh 0vw;
-  width: 40vw;
+  gap: 1vh 0vw;
+  width: 37vw;
   
 }
 
@@ -48,11 +55,16 @@
   flex: 1 1 40%;
 }
 
-.form>.field{
+.form-fields{
   display: flex;
-  flex-direction: column;
-  align-items: start;
-  gap: 5px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 0px 10%
+}
+
+.form-fields .field{
+  flex: 1 1 40%;
+  align-items: flex-start;
 }
 
 .form label {
@@ -61,37 +73,34 @@
   color: #333;
 }
 
-.form input {
-  padding: 8px 10px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  outline-color: #2196f3;
-  width: 15vw;
+
+.modal-body{
+  padding: 10px 30px;;
 }
 
 .modal-footer {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
-  margin-top: 20px;
+  padding: 10px;
 }
 
 .confirm-button {
-  background-color: #0B95C5;
+  background-color: #95b6bd;
   color: white;
-  border: none;
-  padding: 8px 14px;
-  border-radius: 6px;
+  border: 1px solid #95b6bd;
+  padding: 10px 20px;
+  border-radius: 4px;
   cursor: pointer;
+  margin-right: 8px;
 }
 
 .cancel-button {
-  background-color: #f44336;
-  color: white;
-  border: none;
-  padding: 8px 14px;
-  border-radius: 6px;
+  background-color: white;
+  color: #95b6bd;
+  border: 1px solid #95b6bd;
+  padding: 10px 20px;
+  border-radius: 4px;
   cursor: pointer;
 }
 

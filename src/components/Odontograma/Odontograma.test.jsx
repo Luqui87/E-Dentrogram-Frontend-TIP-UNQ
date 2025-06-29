@@ -31,7 +31,7 @@ describe('Odontograma', () => {
     ]
 
     it('should not render the odontogram', () =>{
-        render(<Odontograma active={"inactive"} type={"Mixto"} teeth={mockedTeeth} />);
+        render(<Odontograma active={"inactive"} type={"Mixto"} teeth={mockedTeeth} hasModal={true} />);
 
         const dientes = screen.queryAllByTestId('diente');
 
@@ -43,7 +43,7 @@ describe('Odontograma', () => {
     })
 
     it('should render all the teeth type', () =>{
-        render(<Odontograma active={"active"} type={"Mixto"} teeth={mockedTeeth} />);
+        render(<Odontograma active={"active"} type={"Mixto"} teeth={mockedTeeth} hasModal={true} />);
 
         const dientes = screen.queryAllByTestId('diente');
 
@@ -55,7 +55,7 @@ describe('Odontograma', () => {
     })
 
     it('the child tooths should be hiddend', () =>{
-        render(<Odontograma active={"active"} type={"Adulto"} teeth={mockedTeeth} />);
+        render(<Odontograma active={"active"} type={"Adulto"} teeth={mockedTeeth} hasModal={true} />);
 
         const dientes = screen.queryAllByTestId('diente');
 
@@ -76,7 +76,7 @@ describe('Odontograma', () => {
     })
 
     it('the adult tooths should be hiddend', () =>{
-        render(<Odontograma active={"active"} type={"Infante"} teeth={mockedTeeth} />);
+        render(<Odontograma active={"active"} type={"Infante"} teeth={mockedTeeth} hasModal={true}/>);
 
         const dientes = screen.queryAllByTestId('diente');
 
@@ -97,7 +97,7 @@ describe('Odontograma', () => {
     })
 
     it('should render the teeth at its given position', () =>{
-        render(<Odontograma active={"active"} type={"Adulto"} teeth={mockedTeeth} />);
+        render(<Odontograma active={"active"} type={"Adulto"} teeth={mockedTeeth} hasModal={true} />);
 
         const dientes = screen.queryAllByTestId('diente');
 

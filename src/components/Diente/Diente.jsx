@@ -48,7 +48,7 @@ function Diente(props){
             setEstados(states);
             const { number, ...rest } = states;
                 
-            setUpperState(getUpperState(rest) )
+            setUpperState(getUpperState(rest) );
         }
     },[]) 
 
@@ -86,7 +86,7 @@ function Diente(props){
         </div>
         
 
-        {props.seccion && 
+        {props.hasModal && 
         <DienteModal showModal= {showModal} 
         onClose={() => toggleModal(false)} 
         num={props.num} 
