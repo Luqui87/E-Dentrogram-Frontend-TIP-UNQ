@@ -181,3 +181,13 @@ option {
 .file-upload-field {
   margin-top: 1.5rem;
 }
+
+
+.calendar-main .duration-checks{
+  display: flex;
+  justify-content: space-between;
+}
+
+.calendar-main .react-datetime-picker__wrapper{
+  flex: none;
+}

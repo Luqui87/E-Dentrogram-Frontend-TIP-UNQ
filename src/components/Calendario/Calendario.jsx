@@ -4,6 +4,7 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import esLocale from "@fullcalendar/core/locales/es";
+import interactionPlugin from '@fullcalendar/interaction';
 
 import DateTimePicker from "react-datetime-picker";
 import { toast } from "react-toastify";
@@ -11,6 +12,7 @@ import "react-datetime-picker/dist/DateTimePicker.css";
 import "react-calendar/dist/Calendar.css";
 import "react-clock/dist/Clock.css";
 import "./Calendario.css";
+
 
 import API, { handleApiError } from "../../service/API";
 import Modal from "../Modal";
@@ -28,6 +30,7 @@ function CalendarApp() {
 
   const [start, setStart] = useState(new Date());
   const [end, setEnd] = useState(new Date());
+  const [duration, setDuration] = useState(null)
   const [eventName, setEventName] = useState("");
 
   const [attachedFiles, setAttachedFiles] = useState([]);
@@ -44,14 +47,14 @@ function CalendarApp() {
 
   const [showQR, setShowQR] = useState(false);
   const [reschedule, setReschedule] = useState(null);
-
+  
 
 
   const listUpcomingEvents = () => {
     gapi.client.calendar.events
       .list({
         calendarId: "primary",
-        timeMin: new Date().toISOString(),
+        timeMin: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
         showDeleted: false,
         singleEvents: true,
         maxResults: 100,
@@ -124,7 +127,6 @@ function CalendarApp() {
       formData.append("files", file);
     });
 
-    console.log(`---- tel : ${patientTel} `);
     API.sendMsgWithFiles(formData)
       .then((res) => {
         toast.success("Mensaje enviado");
@@ -157,22 +159,10 @@ function CalendarApp() {
       },
     };
 
-    const tokenGoogle = gapi.auth2
-      .getAuthInstance()
-      .currentUser.get()
-      .getAuthResponse().access_token;
-
-    await fetch(
-      "https://www.googleapis.com/calendar/v3/calendars/primary/events",
-      {
-        method: "POST",
-        headers: {
-          Authorization: "Bearer " + tokenGoogle,
-        },
-        body: JSON.stringify(event),
-      }
-    )
-      .then((res) => res.json()) 
+      gapi.client.calendar.events.insert({
+        calendarId: "primary",
+        resource: event,
+      })
       .then((response) => {
         toast.success("Evento agendado");
         sendMessage(patientTel);
@@ -194,7 +184,6 @@ function CalendarApp() {
         setSelectedPatient(null);
       })
       .catch((error) => {
-        console.error("Error al crear evento:", error); // cambiar por api handler error
         toast.error("Error al crear el evento");
       });
   }
@@ -256,22 +245,10 @@ function CalendarApp() {
       return;
     }
 
-    console.log(reschedule)
-
-    const tokenGoogle = gapi.auth2
-    .getAuthInstance()
-    .currentUser.get()
-    .getAuthResponse().access_token;
-
-    await fetch(
-      `https://www.googleapis.com/calendar/v3/calendars/primary/events/${reschedule.extendedProps.googleId}`,
-      {
-        method: "DELETE",
-        headers: {
-          Authorization: "Bearer " + tokenGoogle,
-        },
-      }
-    )
+    gapi.client.calendar.events.delete({
+    calendarId: "primary",
+    eventId: reschedule.extendedProps.googleId,
+     })
     .then((response) => {
       if (response.status === 204) {
         const updateEvents = events.filter(e => e.googleId !== reschedule.extendedProps.googleId);
@@ -280,12 +257,53 @@ function CalendarApp() {
       } 
     })
     .catch((error) => {
-      console.log(error);
       toast.error("No se logro reagendar el evento");
     });
 
   }
   /////////////////////////////////////////
+
+  const handleEventChange = (info) => {
+    const event = info.event;
+
+    const updatedEvent = {
+      summary: event.title,
+      description: event.extendedProps.description,
+      start: {
+        dateTime: event.start.toISOString(),
+        timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      },
+      end: {
+        dateTime: event.end.toISOString(),
+        timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      },
+    };
+
+    gapi.client.calendar.events.update({
+      calendarId: "primary",
+      eventId: event.extendedProps.googleId,
+      resource: updatedEvent,
+    })
+    .then((res) => {
+      toast.success("Evento reagendado exitosamente");
+    })
+    .catch((error) => {
+      toast.error(error);
+    })
+    
+  }
+
+///////////////////////////////////////////////////////
+
+const handleDuration = (dur) => {
+  if (dur !== duration){
+    setDuration(dur);
+    const newDate = new Date(start);
+    newDate.setMinutes(newDate.getMinutes() + dur);
+    setEnd(newDate);
+  }
+    
+}
 
 
   return isLoading ? (
@@ -293,10 +311,10 @@ function CalendarApp() {
       <span className="loader"></span>
     </main>
   ) : (
-    <main>
+    <main className="calendar-main">
       <div className="calendario">
         <FullCalendar
-          plugins={[dayGridPlugin, timeGridPlugin]}
+          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
           initialView="timeGridWeek"
           locale={esLocale}
           height={"100%"}
@@ -315,6 +333,11 @@ function CalendarApp() {
           nowIndicator={true}
           eventMouseEnter={handleMouseEnter}
           eventMouseLeave={handleMouseLeave}
+          
+          eventDrop={handleEventChange}
+          eventResize={handleEventChange}
+
+          editable={true}
 
           eventClick={handleEventClick}
 
@@ -337,6 +360,9 @@ function CalendarApp() {
         setIsModalOpen(false); 
         setSelectedPatient(null); 
         setReschedule(null); 
+        setStart(new Date());
+        setEnd(null);
+        setDuration(null);
       }}>
         <div className="modal-content">
           <h2>{reschedule ? "Reagendar Cita" : "Agendar Cita"}</h2>
@@ -370,16 +396,46 @@ function CalendarApp() {
             />
           </div>
 
-          <div className="dates-pickers">
             <div className="field">
-              <p className="bold-text">Inicio de la cita</p>
-              <DateTimePicker onChange={setStart} value={start} />
+              <p className="bold-text">Fecha y inicio</p>
+              <DateTimePicker locale="es-ES"  format="dd/MM/y HH:mm" onChange={(date) => {setStart(date); setEnd(date)}} value={start} />
             </div>
-            <div className="field">
-              <p className="bold-text">Fin de la cita</p>
-              <DateTimePicker onChange={setEnd} value={end} />
+            <div className="field" style={{gap:"10px"}}>
+              <label className="bold-text">Duración</label>
+              
+              <div className="duration-checks">
+                <div>
+                  <input type="checkbox" id="duration" name="30 Minutos"
+                  onChange={() => { handleDuration(30)}}
+                  checked={duration == 30}/>
+                  <label for="30 Minutos">30 Minutos</label>
+                </div>
+
+                <div>
+                  <input type="checkbox" id="duration" name="1 Hora"
+                  onChange={() => { handleDuration(60)}}
+                  checked={duration == 60}
+                  />
+                  <label for="1 Hora"> 1 Hora</label>
+                </div>
+
+                <div>
+                  <input type="checkbox" id="duration" name="2 Horas"
+                  onChange={() => {handleDuration(180)}}
+                  checked={duration == 180}/>
+                  <label for="2 Horas"> 2 Hora</label>
+                </div>
+
+                <div>
+                  <input type="checkbox" id="duration" name="Manual"
+                  onChange={() => setDuration(0)}
+                  checked={duration == 0}/>
+                  <label for="Manual">Manualmente</label>
+                </div>
+              </div>
+              
+              {duration == 0 && <DateTimePicker locale="es-ES"  format="dd/MM/y HH:mm" onChange={setEnd} value={end} />}
             </div>
-          </div>
 
           <div className="field file-upload-field">
             <label className="bold-text">Adjuntar archivos</label>

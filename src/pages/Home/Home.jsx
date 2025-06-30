@@ -28,7 +28,6 @@ const Home = () => {
   };
 
   useEffect(() => {
-
     API.getDentist(localStorage.getItem("username"))
       .then((res) => {
         setDentistId(res.data.dentistID);
