@@ -181,7 +181,7 @@ const PersonTable = ({ searchTerm, dentistId }) => {
                   <td>{person.name}</td>
                   <td>{person.medicalRecord}</td>
                   <td>{person.dni}</td>
-                  <td>{person.telephone}</td>
+                  <td>{parseInt(person.telephone.toString().slice(2))}</td>
                   <td className="buttons">
                     <button
                       className="table-button"

@@ -21,7 +21,9 @@ const PatientModal = ({ showModal, onClose, dentistId, patient, handleEditedPati
   useEffect(() => {
     if (patient){
       setActiveTab("registrar");
-      setForm(patient);
+      let phone = patient.telephone.toString();
+      phone = phone.slice(2);
+      setForm({ ...patient, telephone: parseInt(phone)  } );
     }
     else{
       setForm({
@@ -60,7 +62,7 @@ const PatientModal = ({ showModal, onClose, dentistId, patient, handleEditedPati
   };
 
   const handleEditPatient = () => {
-    API.updatePatient(form)
+    API.updatePatient({...form, telephone: 54 + form.telephone})
     .then((res) => {
       toast.success("Paciente editado exitosamente");
       handleEditedPatient(res.data)
@@ -197,7 +199,7 @@ const PatientModal = ({ showModal, onClose, dentistId, patient, handleEditedPati
                         telephone: e.target.value,
                       }))
                     }
-                    style={{width:"11.7vw"}}
+                    style={{width:"180px"}}
                   />
               </div>
               
