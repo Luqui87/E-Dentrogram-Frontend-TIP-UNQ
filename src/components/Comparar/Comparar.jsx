@@ -9,12 +9,13 @@ import { toast } from 'react-toastify'
 function Comparar({active, type, id, comparacion, setComparacion}){
     const [firstDate, setFirstDate] = useState();
     const [secondDate, setSecondDate] = useState();
-    const [firstLoading, setFirstLoading] = useState(true)
-    const [secondLoading, setSecondLoading] = useState(true)
+    const [firstLoading, setFirstLoading] = useState(true);
+    const [secondLoading, setSecondLoading] = useState(true);
 
-    const [firstOdontogram, setFirstOdontogram] = useState([])
-    const [secondOdontogram, setSecondOdontogram] = useState([])
+    const [firstOdontogram, setFirstOdontogram] = useState([]);
+    const [secondOdontogram, setSecondOdontogram] = useState([]);
 
+    const [hovering, setHovering] = useState("#ffffff");
     
     useEffect(() => {
     if (comparacion?.length === 2) {
@@ -155,13 +156,19 @@ function Comparar({active, type, id, comparacion, setComparacion}){
                         <Odontograma type={`${type} Comparar`} active={'active'} teeth={firstOdontogram}/> 
                         }
                 </>
-                :<DateTimePicker value={firstDate} onChange={(d) => handleFirstOdontogram(d)}/> }
+                : <DateTimePicker locale="es-ES" format="dd/MM/y HH:mm" value={firstDate} onChange={(d) => handleFirstOdontogram(d)}/> }
             </div>
 
 
             <div className='middle'>
                 <hr />
-                    <svg onClick={() => resetCompare()} viewBox="-2.4 -2.4 28.80 28.80" className='reset-icon' fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#95b6bd" transform="rotate(0)matrix(1, 0, 0, 1, 0, 0)"><g id="SVGRepo_bgCarrier" stroke-width="0" transform="translate(0,0), scale(1)"><rect x="-2.4" y="-2.4" width="28.80" height="28.80" rx="14.4" fill="#95b6bd" strokewidth="0"></rect></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g clip-path="url(#clip0_1276_7761)"> <path d="M19.7285 10.9288C20.4413 13.5978 19.7507 16.5635 17.6569 18.6573C15.1798 21.1344 11.4826 21.6475 8.5 20.1966M18.364 8.05071L17.6569 7.3436C14.5327 4.21941 9.46736 4.21941 6.34316 7.3436C3.42964 10.2571 3.23318 14.8588 5.75376 18M18.364 8.05071H14.1213M18.364 8.05071V3.80807" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path> </g> <defs> <clipPath id="clip0_1276_7761"> <rect width="24" height="24" fill="white"></rect> </clipPath> </defs> </g></svg>
+                    <svg 
+                    onClick={() => resetCompare()} 
+                    onMouseEnter={()=> setHovering("grey")}
+                    onMouseLeave={() => setHovering("#ffffff")}
+                    onMouseDown={() => setHovering("black")}
+                    onMouseUp={() => setHovering("grey")}
+                    viewBox="-2.4 -2.4 28.80 28.80" className='reset-icon' fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#95b6bd" transform="rotate(0)matrix(1, 0, 0, 1, 0, 0)"><g id="SVGRepo_bgCarrier" stroke-width="0" transform="translate(0,0), scale(1)"><rect x="-2.4" y="-2.4" width="28.80" height="28.80" rx="14.4" fill="#95b6bd" strokewidth="0"></rect></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g clip-path="url(#clip0_1276_7761)"> <path d="M19.7285 10.9288C20.4413 13.5978 19.7507 16.5635 17.6569 18.6573C15.1798 21.1344 11.4826 21.6475 8.5 20.1966M18.364 8.05071L17.6569 7.3436C14.5327 4.21941 9.46736 4.21941 6.34316 7.3436C3.42964 10.2571 3.23318 14.8588 5.75376 18M18.364 8.05071H14.1213M18.364 8.05071V3.80807" stroke={hovering} stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path> </g> <defs> <clipPath id="clip0_1276_7761"> <rect width="24" height="24" fill="white"></rect> </clipPath> </defs> </g></svg>
                 <hr />
             </div>
 
@@ -175,7 +182,7 @@ function Comparar({active, type, id, comparacion, setComparacion}){
                         <Odontograma type={`${type} Comparar`} active={'active'} teeth={secondOdontogram}/> 
                         }
                 </>
-                :<DateTimePicker value={secondDate} onChange={(d) => handleSecondontogram(d)}/> }
+                :<DateTimePicker locale="es-ES" format="dd/MM/y HH:mm" value={secondDate} onChange={(d) => handleSecondontogram(d)}/> }
             </div>
                         
         </div>
