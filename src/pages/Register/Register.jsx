@@ -50,25 +50,25 @@ function Register() {
   };
 
   const validatePassword = (password) => {
-    if (newPassword.match(/\d+/g)) {
+    if (password.match(/\d+/g)) {
       setValidate((o) => ({ ...o, hasNumber: true }));
     } else {
       setValidate((o) => ({ ...o, hasNumber: false }));
     }
 
-    if (newPassword.match(/[A-Z]+/g)) {
+    if (password.match(/[A-Z]+/g)) {
       setValidate((o) => ({ ...o, hasCap: true }));
     } else {
       setValidate((o) => ({ ...o, hasCap: false }));
     }
 
-    if (newPassword.match(/[a-z]+/g)) {
+    if (password.match(/[a-z]+/g)) {
       setValidate((o) => ({ ...o, hasLow: true }));
     } else {
       setValidate((o) => ({ ...o, hasLow: false }));
     }
 
-    if (newPassword.length > 7) {
+    if (password.length > 7) {
       setValidate((o) => ({ ...o, has8digit: true }));
     } else {
       setValidate((o) => ({ ...o, has8digit: false }));
@@ -184,46 +184,50 @@ function Register() {
           <span className="header">Registrarse</span>
         </div>
         <div>
-          <span>Username</span>
-          <input
-            required=""
-            type="text"
-            className="input"
-            value={newUsername}
-            onChange={(e) => setUsername(e.target.value)}
-          />
+          <label>Username
+            <input
+              required=""
+              type="text"
+              className="input"
+              value={newUsername}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </label>
         </div>
         <div>
-          <span>Nombre</span>
-          <input
-            required=""
-            type="text"
-            className="input"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
+          <label>Nombre
+            <input
+              required=""
+              type="text"
+              className="input"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </label>
         </div>
         <div>
-          <span>Email</span>
-          <input
-            required=""
-            type="text"
-            className="input"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+          <label>Email
+            <input
+              required=""
+              type="text"
+              className="input"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </label>
         </div>
         <div>
-          <span>Contraseña</span>
-          {seePassword1
-            ? showIcon(() => setSeePassword1(!seePassword1))
-            : hideIcon(() => setSeePassword1(!seePassword1))}
-          <input
-            type={seePassword1 ? "text" : "password"}
-            className="input-password"
-            value={newPassword}
-            onChange={(e) => handleChangePassword(e)}
-          />
+          <label>Contraseña
+            {seePassword1
+              ? showIcon(() => setSeePassword1(!seePassword1))
+              : hideIcon(() => setSeePassword1(!seePassword1))}
+            <input
+              type={seePassword1 ? "text" : "password"}
+              className="input-password"
+              value={newPassword}
+              onChange={(e) => handleChangePassword(e)}
+            />
+          </label>
         </div>
 
         <div>
@@ -244,18 +248,19 @@ function Register() {
         </div>
 
         <div style={{ marginTop: "5px" }}>
-          <span>Confirmar Contraseña</span>
-          {seePassword2
-            ? showIcon(() => setSeePassword2(!seePassword2))
-            : hideIcon(() => setSeePassword2(!seePassword2))}
-          <input
-            required=""
-            type={seePassword2 ? "text" : "password"}
-            className="input"
-            value={confirmPasword}
-            onChange={(e) => checkPassword(e)}
-            onKeyDown={handleEnter}
-          />
+          <label>Confirmar Contraseña
+            {seePassword2
+              ? showIcon(() => setSeePassword2(!seePassword2))
+              : hideIcon(() => setSeePassword2(!seePassword2))}
+            <input
+              required=""
+              type={seePassword2 ? "text" : "password"}
+              className="input"
+              value={confirmPasword}
+              onChange={(e) => checkPassword(e)}
+              onKeyDown={handleEnter}
+            />
+          </label>
         </div>
         <div>
           {!samePassword ? (
