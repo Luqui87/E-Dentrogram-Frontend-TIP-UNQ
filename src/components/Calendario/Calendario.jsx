@@ -84,7 +84,10 @@ function CalendarApp() {
         .then(() => {
           const authInstance = gapi.auth2.getAuthInstance();
           if (!authInstance.isSignedIn.get()) {
-            authInstance.signIn();
+            authInstance.signIn().then(() => {
+              listUpcomingEvents();
+              setIsLoading(false);
+            });
           } else {
             listUpcomingEvents();
             setIsLoading(false);
