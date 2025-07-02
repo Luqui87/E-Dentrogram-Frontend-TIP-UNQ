@@ -1,4 +1,5 @@
 ![CI](https://github.com/Luqui87/E-Dentrogram-Frontend-TIP-UNQ/actions/workflows/tests.yml/badge.svg?branch=dev)
+[![codecov](https://codecov.io/gh/Luqui87/E-Dentrogram-Frontend-TIP-UNQ/graph/badge.svg?token=VQHB5NT38U)](https://codecov.io/gh/Luqui87/E-Dentrogram-Frontend-TIP-UNQ)
 # E-Dentrogram-Frontend-TIP-UNQ
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
