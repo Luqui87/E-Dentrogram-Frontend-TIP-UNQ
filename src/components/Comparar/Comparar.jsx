@@ -156,13 +156,13 @@ function Comparar({active, type, id, comparacion, setComparacion}){
                         <Odontograma type={`${type} Comparar`} active={'active'} teeth={firstOdontogram}/> 
                         }
                 </>
-                : <DateTimePicker locale="es-ES" format="dd/MM/y HH:mm" value={firstDate} onChange={(d) => handleFirstOdontogram(d)}/> }
+                : <DateTimePicker data-testid='date-picker-before' locale="es-ES" format="dd/MM/y HH:mm" value={firstDate} onChange={(d) => handleFirstOdontogram(d)}/> }
             </div>
 
 
             <div className='middle'>
                 <hr />
-                    <svg 
+                    <svg data-testid="reset-button"
                     onClick={() => resetCompare()} 
                     onMouseEnter={()=> setHovering("grey")}
                     onMouseLeave={() => setHovering("#ffffff")}
@@ -182,7 +182,7 @@ function Comparar({active, type, id, comparacion, setComparacion}){
                         <Odontograma type={`${type} Comparar`} active={'active'} teeth={secondOdontogram}/> 
                         }
                 </>
-                :<DateTimePicker locale="es-ES" format="dd/MM/y HH:mm" value={secondDate} onChange={(d) => handleSecondontogram(d)}/> }
+                :<DateTimePicker data-testid='date-picker-after' locale="es-ES" format="dd/MM/y HH:mm" value={secondDate} onChange={(d) => handleSecondontogram(d)}/> }
             </div>
                         
         </div>
