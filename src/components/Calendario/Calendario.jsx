@@ -47,8 +47,6 @@ function CalendarApp() {
 
   const [showQR, setShowQR] = useState(false);
   const [reschedule, setReschedule] = useState(null);
-  
-
 
   const listUpcomingEvents = () => {
     gapi.client.calendar.events
@@ -67,7 +65,7 @@ function CalendarApp() {
           start: d.start.dateTime,
           end: d.end.dateTime,
           description: d.description,
-          googleId: d.id
+          googleId: d.id,
         }));
         setEvents(getEvents);
       });
@@ -147,6 +145,19 @@ function CalendarApp() {
       toast.warning("La fecha de inicio debe ser anterior a la fecha de fin.");
       return;
     }
+
+    await API.addTurn({
+      date: start.toISOString(),
+      patientId: selectedPatient.medicalRecord,
+    })
+      .then(() => {
+        toast.success("Turno registrado");
+      })
+      .catch((error) => {
+        toast.error("Error al guardar el turno: " + handleApiError(error));
+        return;
+      });
+
     const patientTel = String(selectedPatient.telephone);
 
     const event = {
@@ -169,14 +180,18 @@ function CalendarApp() {
       .then((response) => {
         toast.success("Evento agendado");
         sendMessage(patientTel);
-        
-        setEvents(actualEvents.concat([{
-          title: eventName,
-          start: start.toISOString(),
-          end:end.toISOString(),
-          description: `Turno con ${selectedPatient.name}. Historia clinica ${selectedPatient.medicalRecord}. E-Dentograma`,
-          googleId: response.id
-        }]));
+
+        setEvents(
+          actualEvents.concat([
+            {
+              title: eventName,
+              start: start.toISOString(),
+              end: end.toISOString(),
+              description: `Turno con ${selectedPatient.name}. Historia clinica ${selectedPatient.medicalRecord}. E-Dentograma`,
+              googleId: response.id,
+            },
+          ])
+        );
 
         setIsModalOpen(false);
         setSelectedPatient(null);
@@ -220,24 +235,21 @@ function CalendarApp() {
   };
   /////////////////////////////////////////
 
-
   const handleEventClick = (info) => {
-    const description =  info.event.extendedProps.description;
+    const description = info.event.extendedProps.description;
     const start = description.indexOf("Historia clinica");
     const end = description.indexOf(". E-Dentograma");
 
     const id = description.substring(start + 17, end);
-    
+
     setReschedule(info.event);
 
     setSelectedPatient(patients.find((p) => p.medicalRecord === parseInt(id)));
 
     setIsModalOpen(true);
-  }
-
+  };
 
   const handleRescheduleEvent = async () => {
-
     if (!selectedPatient) {
       toast.warning("Debes seleccionar un paciente.");
       return;
@@ -263,7 +275,19 @@ function CalendarApp() {
       toast.error("No se logro reagendar el evento");
     });
 
-  }
+    await API.rescheduleTurn(formatDate(start), {
+      date: reschedule.start,
+      patientId: selectedPatient.medicalRecord,
+    })
+      .then(() => {
+        
+        toast.success("Turno reprogramado");
+      })
+      .catch((error) => {
+        toast.error("No se pudo reagendar el turno: " + handleApiError(error));
+        return;
+      });
+  };
   /////////////////////////////////////////
 
   const handleEventChange = (info) => {
@@ -343,7 +367,6 @@ const handleDuration = (dur) => {
           editable={true}
 
           eventClick={handleEventClick}
-
           customButtons={{
             addEventButton: {
               text: "Agendar Cita",
@@ -376,14 +399,19 @@ const handleDuration = (dur) => {
               value={selectedPatient?.medicalRecord || ""}
               onChange={(e) =>
                 setSelectedPatient(
-                  patients.find((p) => p.medicalRecord === parseInt(e.target.value))
+                  patients.find(
+                    (p) => p.medicalRecord === parseInt(e.target.value)
+                  )
                 )
               }
               disabled={reschedule !== null}
             >
               <option value="">Seleccionar paciente</option>
               {patients.map((patient) => (
-                <option key={patient.medicalRecord} value={patient.medicalRecord}>
+                <option
+                  key={patient.medicalRecord}
+                  value={patient.medicalRecord}
+                >
                   {patient.name}
                 </option>
               ))}
@@ -475,8 +503,6 @@ const handleDuration = (dur) => {
       <Modal isOpen={showQR} onClose={() => setShowQR(false)}>
         <QR />
       </Modal>
-
-      
 
       <div ref={popoverRef} className="custom-popover" style={popoverStyle}>
         {popoverContent}

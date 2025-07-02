@@ -86,6 +86,9 @@ const API = {
     request("get", `/dentist/patient/${pageNumber}`),
   getDentistPatientByQuery: (query, pageNumber) =>
     request("get", `/dentist/patient/${query}/${pageNumber}`),
+  addTurn: (body) => request("post", "/turn/add", body),
+  rescheduleTurn: (date, body) =>
+    request("post", `/turn/reschedule/${date}`, body),
 };
 
 export default API;

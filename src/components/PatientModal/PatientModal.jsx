@@ -97,17 +97,18 @@ const PatientModal = ({ showModal, onClose, dentistId, patient, handleEditedPati
               className="field"
               style={{ display: "flex", alignItems: "center" }}
             >
-              <label>Historia Clínica</label>
-              <input
-                type="text"
-                value={form.medicalRecord}
-                onChange={(e) =>
-                  setForm((prev) => ({
-                    ...prev,
-                    medicalRecord: e.target.value,
-                  }))
-                }
-              />
+              <label>Historia Clínica
+                <input
+                  type="text"
+                  value={form.medicalRecord}
+                  onChange={(e) =>
+                    setForm((prev) => ({
+                      ...prev,
+                      medicalRecord: e.target.value,
+                    }))
+                  }
+                />
+              </label>
             </div>
           </div>
         ) : (
@@ -116,7 +117,7 @@ const PatientModal = ({ showModal, onClose, dentistId, patient, handleEditedPati
             <hr style={{width:'100%', flex:"1 auto"}}/>
               <div className="form-fields">
                 <div className="field">
-                <label>Historia Clínica</label>
+                <label>Historia Clínica
                 <input
                   type="text"
                   value={form.medicalRecord}
@@ -128,10 +129,11 @@ const PatientModal = ({ showModal, onClose, dentistId, patient, handleEditedPati
                   }
                   disabled={patient}
                 />
+                </label>
               </div>
               
               <div className="field">
-              <label>DNI</label>
+              <label>DNI
               <input
                 type="text"
                 value={form.dni}
@@ -142,10 +144,11 @@ const PatientModal = ({ showModal, onClose, dentistId, patient, handleEditedPati
                   }))
                   }
                 />
+                </label>
               </div>
 
               <div className="field">
-                <label>Nombre</label>
+                <label>Nombre
                 <input
                   type="text"
                   value={form.name}
@@ -156,10 +159,11 @@ const PatientModal = ({ showModal, onClose, dentistId, patient, handleEditedPati
                     }))
                   }
                 />
+                </label>
               </div>
 
               <div className="field">
-                <label>Dirección</label>
+                <label>Dirección
                 <input
                   type="text"
                   value={form.address}
@@ -170,10 +174,11 @@ const PatientModal = ({ showModal, onClose, dentistId, patient, handleEditedPati
                     }))
                   }
                 />
+                </label>
               </div>
 
               <div className="field">
-                <label>Fecha de nacimiento</label>
+                <label>Fecha de nacimiento
                 <input
                   type="date"
                   value={form.birthdate}
@@ -184,10 +189,11 @@ const PatientModal = ({ showModal, onClose, dentistId, patient, handleEditedPati
                     }))
                   }
                 />
+                </label>
               </div>
 
               <div className="field" style={{gap:""}}>
-                <label>Teléfono</label>
+                <label>Teléfono
                 <div style={{display: "flex", alignItems: "center", gap: "5px"}}  >
                   <span>+54</span>
                   <input
@@ -202,11 +208,12 @@ const PatientModal = ({ showModal, onClose, dentistId, patient, handleEditedPati
                     style={{width:"180px"}}
                   />
               </div>
-              
+              </label>
+
               </div>
 
               <div className="field" style={{alignItems:"center"}}>
-                <label style={{marginRight:"23vw"}}>Email</label>
+                <label style={{marginRight:"23vw"}}>Email
                 <input
                   type="email"
                   value={form.email}
@@ -218,6 +225,7 @@ const PatientModal = ({ showModal, onClose, dentistId, patient, handleEditedPati
                   }
                   style={{width: "25vw"}}
                 />
+                </label>
               </div>              
             </div>
           </div>
