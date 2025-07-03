@@ -16,7 +16,7 @@ import "./Calendario.css";
 
 import API, { handleApiError } from "../../service/API";
 import Modal from "../Modal";
-import QR from "../QR";
+import QR from "../QR/QR";
 
 const CLIENT_ID =
   "1042049294933-6706691g5vb2fgonludemk973v9mlgeb.apps.googleusercontent.com";

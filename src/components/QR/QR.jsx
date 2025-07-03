@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import API from "../service/API";
+import API from "../../service/API";
 import ReactQRCode from "react-qr-code";
 
 function QR() {

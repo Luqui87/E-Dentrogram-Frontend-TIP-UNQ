@@ -1,6 +1,6 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import PatientLogs from "./PatientLogs";
-import API from "../../service/API";
+import API, { handleApiError } from "../../service/API";
 import { vi } from "vitest";
 
 // Mock de AddPatientLogModal
@@ -31,16 +31,19 @@ vi.mock("react-vertical-timeline-component", () => ({
 }));
 
 // Mock de la API
+
 vi.mock("../../service/API", async () => {
   const actual = await vi.importActual("../../service/API");
   return {
     ...actual,
     default: {
+      ...actual.default,
       getPatientJournal: vi.fn(),
     },
-    handleApiError: vi.fn(() => "Error mockeado"),
+    handleApiError: vi.fn(), // mock explícito
   };
 });
+
 
 describe("PatientLogs", () => {
   const logsPage1 = [
@@ -54,7 +57,20 @@ describe("PatientLogs", () => {
     log: "Segunda entrada",
     tags: ["tag3"],
   },
-];
+  ];
+
+  const logsPage2 = [
+    {
+    date: "2023-06-20T03:00:00Z", // UTC+0 → 2023-07-10 23:00 ARG
+    log: "Tercera entrada",
+    tags: ["tag1", "tag2", "tag4"],
+  },
+  {
+    date: "2023-07-05T03:00:00Z",
+    log: "Cuarta entrada",
+    tags: ["tag3"],
+  }     
+  ]
 
   beforeEach(() => {
     vi.clearAllMocks();
@@ -66,8 +82,8 @@ describe("PatientLogs", () => {
     render(<PatientLogs id="1" active="active" />);
 
     await waitFor(() => {
-    expect(screen.getByTestId("2023-07-11T03:00:00Z")).toBeInTheDocument();
-    expect(screen.getByTestId("2023-07-16T03:00:00Z")).toBeInTheDocument();
+    expect(screen.getByTestId("11 de jul")).toBeInTheDocument();
+    expect(screen.getByTestId("16 de jul")).toBeInTheDocument();
     });
 
     expect(screen.getByText("Primera entrada")).toBeInTheDocument();
@@ -77,7 +93,7 @@ describe("PatientLogs", () => {
     expect(screen.getByText("tag3")).toBeInTheDocument();
   });
 
-  /* it("abre el modal al hacer click en el primer botón", async () => {
+  it("abre el modal al hacer click en el primer botón", async () => {
     API.getPatientJournal.mockResolvedValueOnce({ data: { journal: [] } });
 
     render(<PatientLogs id="1" active="active" />);
@@ -96,18 +112,18 @@ describe("PatientLogs", () => {
     render(<PatientLogs id="1" active="active" />);
 
     await waitFor(() =>
-      expect(screen.getByTestId("log-10 de jul")).toBeInTheDocument()
+      expect(screen.getByTestId("11 de jul")).toBeInTheDocument()
     );
 
     const buttons = await screen.findAllByTestId("icon-button");
     fireEvent.click(buttons[1]); // botón de "más entradas"
 
     await waitFor(() =>
-      expect(screen.getByTestId("log-20 de jul")).toBeInTheDocument()
+      expect(screen.getByTestId("20 de jun")).toBeInTheDocument()
     );
 
     expect(screen.getByText("Tercera entrada")).toBeInTheDocument();
-    expect(screen.getByText("tag4")).toBeInTheDocument();
+    expect(screen.getByText("tag4")).toBeInTheDocument(); 
   });
 
   it("maneja errores con handleApiError", async () => {
@@ -117,7 +133,7 @@ describe("PatientLogs", () => {
     render(<PatientLogs id="1" active="active" />);
 
     await waitFor(() => {
-      expect(API.handleApiError).toHaveBeenCalledWith(errorMock);
+      expect(handleApiError).toHaveBeenCalledWith(errorMock);
     });
-  }); */
+  });
 });
