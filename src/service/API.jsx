@@ -89,6 +89,7 @@ const API = {
   addTurn: (body) => request("post", "/turn/add", body),
   rescheduleTurn: (date, body) =>
     request("post", `/turn/reschedule/${date}`, body),
+  updateDocuments: (body) => request("patch", "dentist/update/documents", body)
 };
 
 export default API;

@@ -11,7 +11,7 @@
     flex: 1 1 0%;
     display: flex;
     flex-direction: column;
-    
+    padding: 20px 0;
 }
 
 .bar-items{
@@ -19,13 +19,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    border-right: 1px solid #604f4f;
+    border-right: 1px solid #604f4f91;
 
 }
 
 .bar-items> span {
     width: 100%;
-    font-size: 1.5vw;
+    font-size: 1.2vw;
     box-sizing: border-box;
     display: flex;
     align-items: center;
@@ -98,4 +98,86 @@
     flex-wrap: wrap;
     gap: 5px 10px;
     
+}
+
+.settings-preturn {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 0.1fr 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    height: 100%;
+}
+
+.settings-preturn h2 { 
+    grid-area: 1 / 1 / 2 / 3;
+    text-align: center;
+ }
+
+.drop-files { 
+    grid-area: 2 / 1 / 3 / 2;
+    padding: 20px;
+ }
+.files { 
+    grid-area: 2 / 2 / 3 / 3;
+ }
+
+.dropzone{
+    height: 100%;
+    background: #8080800d;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    border: dashed #95b6bd;
+    gap: 5px;
+}
+
+.drop-files span{
+    color: #95b6bd;
+    font-size: 1.7em;
+}
+
+.files{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 5px;
+    max-height: 100%;
+    overflow: scroll;
+
+}
+
+.files span{
+    font-size: 1.3em;
+}
+
+.files ul{
+    padding: 0;
+    list-style-type: none;
+    overflow: scroll;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 100%;
+}
+
+.files li{
+    display: flex;
+    height: 15%;
+    align-items: center;
+    gap: 10px;
+    padding: 5px;
+    border: 1px solid #8080805c;
+}
+
+.files li input{
+    height: 55%;
+    font-size: 1.2em;
+    width: 75%;
+}
+
+li input[type="checkbox"] {
+  width: 2em;
+  height: 2rem;
 }
