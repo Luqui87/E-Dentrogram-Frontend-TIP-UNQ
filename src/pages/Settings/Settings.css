@@ -143,9 +143,7 @@
     flex-direction: column;
     padding: 20px;
     gap: 5px;
-    max-height: 100%;
-    overflow: scroll;
-
+    max-height: 50vh;
 }
 
 .files span{
@@ -155,11 +153,10 @@
 .files ul{
     padding: 0;
     list-style-type: none;
-    overflow: scroll;
+    overflow-y: scroll;
     display: flex;
     flex-direction: column;
     gap: 10px;
-    height: 100%;
 }
 
 .files li{
@@ -177,5 +174,6 @@
     box-sizing: border-box;
     border: none;
     border-bottom: 2px solid rgba(0, 0, 0, 0.199);
+    width: 80%
 }
 
