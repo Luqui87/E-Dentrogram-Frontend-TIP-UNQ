@@ -113,13 +113,22 @@ function CalendarApp() {
       });
   }, []);
 
+  const handleDocumentChange = (document) => {
+    if (selectedDocuments.includes(document)){
+      setSelectedDocuments(prevDocuments => prevDocuments.filter(sd => sd !== document))
+    }
+    else{
+      setSelectedDocuments([...selectedDocuments, document])
+    }
+  }
+
   const renderDocuments = 
     userDocuments.map((document,index) =>(
       <li>
         <label htmlFor={document} style={{"font-size": "1.1em"}}>{document}</label>
         <input type="checkbox" 
         checked={selectedDocuments.includes(document)}
-        onChange={() => {setSelectedDocuments([...selectedDocuments, document])}} 
+        onChange={() => {handleDocumentChange(document)}} 
         id={index} name={document} />
       </li>
     ));
