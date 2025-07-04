@@ -51,6 +51,8 @@ function CalendarApp() {
   const [userDocuments, setUserDocuments] = useState([]);
   const [selectedDocuments, setSelectedDocuments] = useState([])
 
+    const FileIcon = () => <svg style={{height:"100%"}} fill="#95b6bd" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M17.5 0h-11c-1.104 0-2 0.895-2 2v28c0 1.105 0.896 2 2 2h19c1.105 0 2-0.895 2-2v-20zM25.5 10.829v0.171h-9v-9h0.172zM6.5 30v-28h8v11h11v17h-19z"></path> </g></svg>
+
   const listUpcomingEvents = () => {
     gapi.client.calendar.events
       .list({
@@ -125,7 +127,8 @@ function CalendarApp() {
   const renderDocuments = 
     userDocuments.map((document,index) =>(
       <li>
-        <label htmlFor={document} style={{"font-size": "1.1em"}}>{document}</label>
+        <FileIcon/>
+        <label htmlFor={document} style={{"font-size": "1.1em", marginRight:"auto"}}>{document}</label>
         <input type="checkbox" 
         checked={selectedDocuments.includes(document)}
         onChange={() => {handleDocumentChange(document)}} 
@@ -158,7 +161,10 @@ function CalendarApp() {
       formData.append("files", file);
     });
 
-    API.sendMsgWithFiles(formData)
+    const params = new URLSearchParams();
+    selectedDocuments.forEach(doc => params.append("doc", doc));
+
+    API.sendMsgWithFiles(formData, params)
       .then((res) => {
         toast.success("Mensaje enviado");
       })

@@ -70,7 +70,7 @@ const API = {
   addPatient: (dentistId, body) =>
     request("post", `/dentist/add/${dentistId}`, body),
   sendWhatsapp: (body) => request("post", "/send", body),
-  sendMsgWithFiles: (body) => request("post", "/send-multiple-files", body),
+  sendMsgWithFiles: (body, params) => request("post", `/send-multiple-files?${params.toString()}`, body),
   getPatientRecord: (id, page) =>
     request("get", `/patient/records/${id}/${page}`),
   getWhatsappQr: () => request("get", `/qr`),
@@ -89,7 +89,8 @@ const API = {
   addTurn: (body) => request("post", "/turn/add", body),
   rescheduleTurn: (date, body) =>
     request("post", `/turn/reschedule/${date}`, body),
-  updateDocuments: (body) => request("patch", "dentist/update/documents", body)
+  updateDocuments: (body) => request("patch", "dentist/update/documents", body),
+  deleteDocument: (doc) => request("delete", `dentist/delete/documents?doc=${doc}`)
 };
 
 export default API;

@@ -11,11 +11,13 @@ function Settings() {
   const [selected, setSelected] = useState("Tags");
 
   const [fileNames, setFileNames] = useState({});
+  const [currentFiles, setCurrentFiles] = useState([]);
 
   const {acceptedFiles, getRootProps, getInputProps} = useDropzone({ accept: 'application/pdf' });
 
   useEffect(() => {
     getTagsFromStorage();
+    getDocsFromStorage();
     const initialNames = {};
     acceptedFiles.forEach(file => {
     initialNames[file.path] = file.name;
@@ -27,11 +29,36 @@ function Settings() {
 
   const FileIcon = () => <svg style={{height:"100%"}} fill="#95b6bd" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M17.5 0h-11c-1.104 0-2 0.895-2 2v28c0 1.105 0.896 2 2 2h19c1.105 0 2-0.895 2-2v-20zM25.5 10.829v0.171h-9v-9h0.172zM6.5 30v-28h8v11h11v17h-19z"></path> </g></svg>
 
+   const DeleteIcon = ({ onClick })  =>
+    <svg onClick={onClick} viewBox="0 0 24 24" className="file-delete-icon" fill="none">
+      <path d="M10 12V17" stroke="#ff0909" strokeWidth="2" />
+      <path d="M14 12V17" stroke="#ff0909" strokeWidth="2" />
+      <path d="M4 7H20" stroke="#ff0909" strokeWidth="2" />
+      <path
+        d="M6 10V18C6 19.6569 7.34315 21 9 21H15C16.6569 21 18 19.6569 18 18V10"
+        stroke="#ff0909"
+        strokeWidth="2"
+      />
+      <path
+        d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z"
+        stroke="#ff0909"
+        strokeWidth="2"
+      />
+    </svg>
+  
 
   const getTagsFromStorage = () => {
     const userTags = JSON.parse(localStorage.getItem("userTags"));
     if (userTags){
       setTags(userTags);
+    }
+    
+  };
+
+  const getDocsFromStorage = () => {
+    const userDocs = JSON.parse(localStorage.getItem("userDocuments"));
+    if (userDocs){
+      setCurrentFiles(userDocs);
     }
     
   };
@@ -54,6 +81,18 @@ function Settings() {
       });
   };
 
+  const handleDeleteCurrentFile = (file) => {
+    API.deleteDocument(file)
+    .then((res) => {
+        toast.success("Documentos actualizados");
+        localStorage.setItem("userDocuments", JSON.stringify(res.data.documents));
+        setCurrentFiles(res.data.documents);
+      })
+    .catch((err) => {
+      handleApiError(err);
+    });
+  }
+
   const handleTags = (tag) => {
 
       setTags( tags.filter( t => t !== tag ) );
@@ -69,7 +108,7 @@ function Settings() {
             {tag}
     </Tag>
   ));
-
+  
   const files = acceptedFiles.map(file => (
     <li key={file.path} className="file-item">
       <FileIcon />
@@ -86,6 +125,15 @@ function Settings() {
       />
     </li>
   ));
+
+  const renderCurrentFiles = currentFiles.map((file,index) => (
+    <li key={index} className="file-item">
+      <FileIcon />
+      <span>{file}</span>
+      <DeleteIcon onClick={() => handleDeleteCurrentFile(file)}/>
+    </li>
+      
+  ))
 
   const handleDocuments = () => {
     const formData = new FormData();
@@ -108,6 +156,8 @@ function Settings() {
         handleApiError(err);
       });
   };
+
+  
   
   return (
     <main>
@@ -121,7 +171,7 @@ function Settings() {
             >
               Etiquetas
             </span>
-            <span className={selected == "PreTurn"? "active" : ""} onClick={()=>{setSelected("PreTurn"), console.log(acceptedFiles)}}>Mensaje pre-turno</span>
+            <span className={selected == "PreTurn"? "active" : ""} onClick={()=> setSelected("PreTurn")}>Mensaje pre-turno</span>
           </div>
         </div>
         <div className="setting-content">
@@ -163,7 +213,7 @@ function Settings() {
             className="settings-preturn"
             style={{ display: selected == "PreTurn" ? "" : "none" }}
           >
-            <h2>Configurar Documentos</h2>
+            <h2>Añadir Documentos</h2>
               <div className="drop-files">
                 <div {...getRootProps({className: 'dropzone'})}>
                   <DropIcon/>
@@ -176,9 +226,9 @@ function Settings() {
               </div>
               </div>
               <div className="files">
-                <span>Nombrar Archivos Cargados</span>
-                <ul>{files}</ul>
-                <button className="btn-confirmar" onClick={() => handleDocuments()}>
+                <span>Archivos Cargados</span>
+                <ul>{acceptedFiles.length > 0  ? files : renderCurrentFiles}</ul>
+                <button className="btn-confirmar" style={{marginTop:"auto"}} onClick={() => handleDocuments()}>
                   Confirmar
                 </button>
               </div>

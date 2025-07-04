@@ -213,6 +213,8 @@ option {
   box-sizing: border-box;
   padding: 7px 0px;
   align-items: center;
+  height: 5vh;
+  gap: 15px;
 }
 
 li input[type="checkbox"] {

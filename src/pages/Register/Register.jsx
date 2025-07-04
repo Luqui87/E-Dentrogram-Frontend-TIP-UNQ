@@ -284,7 +284,7 @@ function Register() {
             onKeyDown={handleEnter}
           >
             {" "}
-            Register
+            Registrarse
           </button>
           
         </div>
