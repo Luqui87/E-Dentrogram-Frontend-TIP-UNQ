@@ -30,7 +30,10 @@ function Settings() {
 
   const getTagsFromStorage = () => {
     const userTags = JSON.parse(localStorage.getItem("userTags"));
-    setTags(userTags);
+    if (userTags){
+      setTags(userTags);
+    }
+    
   };
 
   const handleKeyDown = (event) => {

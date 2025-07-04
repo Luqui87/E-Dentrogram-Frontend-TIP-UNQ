@@ -25,13 +25,13 @@ const App = () => {
           <Navbar />
 
           <Routes>
-            <Route path="/" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+            <Route path="/" element={<Settings />} />
+            {/* <Route path="/register" element={<Register />} />
             <Route path="/home" element={<Home />} />
             <Route path="/paciente/:id" element={<PacienteView />} />
             <Route path="/Calendario" element={<Calendario />} />
             <Route path="/Configuracion" element={<Settings/>} />
-            <Route path="*" element={<PageNotFound />} />
+            <Route path="*" element={<PageNotFound />} /> */}
           </Routes>
 
           <ToastContainer
