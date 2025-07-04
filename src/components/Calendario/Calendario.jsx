@@ -99,7 +99,10 @@ function CalendarApp() {
     gapi.load("client:auth2", initClient);
 
     const userDocuments = JSON.parse(localStorage.getItem('userDocuments'));
-    setUserDocuments(userDocuments)
+    if (userDocuments) {
+      setUserDocuments(userDocuments)
+    }
+    
 
     API.getDentist(localStorage.getItem("username"))
       .then((res) => {
@@ -486,10 +489,11 @@ const handleDuration = (dur) => {
               {duration == 0 && <DateTimePicker locale="es-ES"  format="dd/MM/y HH:mm" onChange={setEnd} value={end} />}
             </div>
           
-          <div className="field select-documents">
+          { userDocuments.length > 0 && <div className="field select-documents">
               <label>Seleccionar documentos</label>
               <ul>{renderDocuments}</ul>
           </div>
+          } 
           <div className="field file-upload-field">
             <label className="bold-text">Adjuntar archivos</label>
             <input
