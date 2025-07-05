@@ -48,18 +48,17 @@
 
 .person-table .buttons {
   display: flex;
-  gap: 10px;
   justify-content: flex-end;
   align-items: center;
+  padding: 5px;
 }
 
 .table-button {
   background-color: transparent;
   border: none;
   cursor: pointer;
-  padding: 5px;
-  width: auto;
-  height: 32px;
+  width: 60px;
+  height: auto;
   display: flex;
   align-items: center;
   justify-content: center;

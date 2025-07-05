@@ -69,7 +69,6 @@ const Home = () => {
         dentistId={dentistId}
         handleEditedPatient={(patient) => {
           setNewPatient(!newPatient); 
-          console.log("hola")
         }}
         
       />
