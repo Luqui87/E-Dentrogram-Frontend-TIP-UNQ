@@ -140,17 +140,18 @@ function Login() {
 
         <form onSubmit={handleLogin}>
           <div>
-            <span>Username</span>
+            <label>Username
             <input
               type="text"
               className="input"
               value={insUsername}
               onChange={(e) => setInsUsername(e.target.value)}
             />
+            </label>
           </div>
 
           <div style={{ marginTop: "5px" }}>
-            <span>Contraseña</span>
+            <label>Contraseña
             {showPassword ? showIcon() : hideIcon()}
             <input
               type={showPassword ? "text" : "password"}
@@ -158,6 +159,7 @@ function Login() {
               value={insPassword}
               onChange={(e) => setInsPassword(e.target.value)}
             />
+            </label>
           </div>
 
           {showWarning && (
