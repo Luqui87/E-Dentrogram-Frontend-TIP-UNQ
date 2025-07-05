@@ -33,7 +33,6 @@ describe("Register component", () => {
   it("renderiza todos los inputs", () => {
     renderWithRouter(<Register />);
 
-
     expect(screen.getByText(/username/i)).toBeInTheDocument();
     expect(screen.getByText(/nombre/i)).toBeInTheDocument();
     expect(screen.getByText(/email/i)).toBeInTheDocument();
