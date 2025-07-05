@@ -16,7 +16,8 @@ const Home = () => {
 
   const [showModal, setShowModal] = useState(false);
 
-  const [patient, setPatient] = useState(null);
+  const [newPatient, setNewPatient] = useState(false);
+  
 
   const handleAddClick = () => {
     setShowModal(true);
@@ -24,11 +25,9 @@ const Home = () => {
 
   const handleCloseModal = () => {
     setShowModal(false);
-    setPatient(null)
   };
 
   useEffect(() => {
-
     API.getDentist(localStorage.getItem("username"))
       .then((res) => {
         setDentistId(res.data.dentistID);
@@ -68,12 +67,16 @@ const Home = () => {
         showModal={showModal}
         onClose={handleCloseModal}
         dentistId={dentistId}
-        handleEditedPatient={() => {}}
+        handleEditedPatient={(patient) => {
+          setNewPatient(!newPatient); 
+        }}
+        
       />
 
       <PersonTable
         searchTerm={searchTerm}
         dentistId={dentistId}
+        newPatient={newPatient}
       />
     </div>
   );

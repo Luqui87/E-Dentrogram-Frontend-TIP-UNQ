@@ -21,7 +21,7 @@
 .person-table td {
   padding: 15px;
   text-align: left;
-  border-bottom: 1px solid #ddd;
+  
 }
 
 .person-table tr:hover {
@@ -43,22 +43,32 @@
 .person-table tbody tr {
   width: 100%;
   table-layout: fixed;
+  border-bottom: 1px solid #ddd;
+}
+
+.person-table .buttons {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 5px;
 }
 
 .table-button {
   background-color: transparent;
   border: none;
   cursor: pointer;
-  width: 100%;
+  width: 60px;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.person-table .buttons{
-  display: flex;
-  height: auto;
-  width: 7vw;
-  margin-left: auto;
-  padding: 3px;
+.table-button svg {
+  width: auto;
+  height: 35px;
 }
+
 
 
 .modal-overlay {

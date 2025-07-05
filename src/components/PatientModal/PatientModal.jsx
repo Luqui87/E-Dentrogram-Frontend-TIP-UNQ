@@ -21,7 +21,9 @@ const PatientModal = ({ showModal, onClose, dentistId, patient, handleEditedPati
   useEffect(() => {
     if (patient){
       setActiveTab("registrar");
-      setForm(patient);
+      let phone = patient.telephone.toString();
+      phone = phone.slice(2);
+      setForm({ ...patient, telephone: parseInt(phone)  } );
     }
     else{
       setForm({
@@ -41,30 +43,33 @@ const PatientModal = ({ showModal, onClose, dentistId, patient, handleEditedPati
       toast.error("Hay campos vacios");
       return;
     }
+    const updatedForm = { ...form, telephone : 54 + form.telephone};
 
-    
-    try {
-      const updatedForm = { ...form };
-
-      if (!updatedForm.birthdate) {
-        const today = new Date().toISOString().split("T")[0];
-        updatedForm.birthdate = today;
-      }
-      API.addPatient(dentistId, updatedForm).then((res) => {
-        toast.success("Paciente agregado exitosamente.");
-        onClose();
-      });
-    } catch (error) {
-      toast.error(handleApiError(error));
+    if (!updatedForm.birthdate) {
+      const today = new Date().toISOString().split("T")[0];
+      updatedForm.birthdate = today;
+      
     }
+    API.addPatient(dentistId, updatedForm)
+    .then((res) => {
+      console.log("Hola")
+      toast.success("Paciente agregado exitosamente.");
+      onClose();
+      handleEditedPatient(res.data); 
+      
+    })
+    .catch((error) => {
+      toast.error(handleApiError(error))
+    });
   };
 
   const handleEditPatient = () => {
-    API.updatePatient(form)
+    API.updatePatient({...form, telephone: 54 + form.telephone})
     .then((res) => {
       toast.success("Paciente editado exitosamente");
       handleEditedPatient(res.data)
       onClose();
+      
     })
     .catch((error) => {
       toast.error(handleApiError(error));
@@ -95,17 +100,19 @@ const PatientModal = ({ showModal, onClose, dentistId, patient, handleEditedPati
               className="field"
               style={{ display: "flex", alignItems: "center" }}
             >
-              <label>Historia Clínica</label>
-              <input
-                type="text"
-                value={form.medicalRecord}
-                onChange={(e) =>
-                  setForm((prev) => ({
-                    ...prev,
-                    medicalRecord: e.target.value,
-                  }))
-                }
-              />
+              <label htmlFor="id">Historia Clínica</label>
+                <input
+                  type="text"
+                  id="id"
+                  value={form.medicalRecord}
+                  onChange={(e) =>
+                    setForm((prev) => ({
+                      ...prev,
+                      medicalRecord: e.target.value,
+                    }))
+                  }
+                />
+              
             </div>
           </div>
         ) : (
@@ -114,9 +121,10 @@ const PatientModal = ({ showModal, onClose, dentistId, patient, handleEditedPati
             <hr style={{width:'100%', flex:"1 auto"}}/>
               <div className="form-fields">
                 <div className="field">
-                <label>Historia Clínica</label>
+                <label htmlFor="id">Historia Clínica</label>
                 <input
                   type="text"
+                  id="id"
                   value={form.medicalRecord}
                   onChange={(e) =>
                     setForm((prev) => ({
@@ -126,12 +134,14 @@ const PatientModal = ({ showModal, onClose, dentistId, patient, handleEditedPati
                   }
                   disabled={patient}
                 />
+                
               </div>
               
               <div className="field">
-              <label>DNI</label>
+              <label htmlFor="dni">DNI</label>
               <input
                 type="text"
+                id="dni"
                 value={form.dni}
                 onChange={(e) =>
                   setForm((prev) => ({
@@ -140,12 +150,14 @@ const PatientModal = ({ showModal, onClose, dentistId, patient, handleEditedPati
                   }))
                   }
                 />
+                
               </div>
 
               <div className="field">
-                <label>Nombre</label>
+                <label htmlFor="name">Nombre</label>
                 <input
                   type="text"
+                  id="name"
                   value={form.name}
                   onChange={(e) =>
                     setForm((prev) => ({
@@ -154,12 +166,14 @@ const PatientModal = ({ showModal, onClose, dentistId, patient, handleEditedPati
                     }))
                   }
                 />
+                
               </div>
 
               <div className="field">
-                <label>Dirección</label>
+                <label htmlFor="address">Dirección</label>
                 <input
                   type="text"
+                  id="address"
                   value={form.address}
                   onChange={(e) =>
                     setForm((prev) => ({
@@ -168,11 +182,13 @@ const PatientModal = ({ showModal, onClose, dentistId, patient, handleEditedPati
                     }))
                   }
                 />
+                
               </div>
 
               <div className="field">
-                <label>Fecha de nacimiento</label>
+                <label htmlFor="">Fecha de nacimiento</label>
                 <input
+                  id="birthdate"
                   type="date"
                   value={form.birthdate}
                   onChange={(e) =>
@@ -182,13 +198,15 @@ const PatientModal = ({ showModal, onClose, dentistId, patient, handleEditedPati
                     }))
                   }
                 />
+                
               </div>
 
               <div className="field" style={{gap:""}}>
-                <label>Teléfono</label>
+                <label htmlFor="phone">Teléfono</label>
                 <div style={{display: "flex", alignItems: "center", gap: "5px"}}  >
                   <span>+54</span>
                   <input
+                    id="phone"
                     type="text"
                     value={form.telephone}
                     onChange={(e) =>
@@ -197,16 +215,18 @@ const PatientModal = ({ showModal, onClose, dentistId, patient, handleEditedPati
                         telephone: e.target.value,
                       }))
                     }
-                    style={{width:"11.7vw"}}
+                    style={{width:"180px"}}
                   />
               </div>
               
+
               </div>
 
               <div className="field" style={{alignItems:"center"}}>
-                <label style={{marginRight:"23vw"}}>Email</label>
+                <label htmlFor="email" style={{marginRight:"23vw"}}>Email</label>
                 <input
                   type="email"
+                  id="email"
                   value={form.email}
                   onChange={(e) =>
                     setForm((prev) => ({
@@ -216,6 +236,7 @@ const PatientModal = ({ showModal, onClose, dentistId, patient, handleEditedPati
                   }
                   style={{width: "25vw"}}
                 />
+                
               </div>              
             </div>
           </div>

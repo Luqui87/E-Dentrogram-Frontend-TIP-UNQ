@@ -20,8 +20,7 @@
 }
 
 .Comparar .reset-icon{
-    height: auto;
-    width: 8vw;
+    width: 5vw;
 }
 
 .Comparar .reset-icon:hover{
@@ -35,6 +34,6 @@
 }
 
 .Comparar .middle hr{
-    width: 100%;
     height: 0;
+    flex: 1 1 0%;
 }

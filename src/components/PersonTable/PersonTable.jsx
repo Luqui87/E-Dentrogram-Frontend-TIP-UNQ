@@ -5,7 +5,7 @@ import API, { handleApiError } from "../../service/API";
 import { toast } from "react-toastify";
 import PatientModal from "../PatientModal/PatientModal";
 
-const PersonTable = ({ searchTerm, dentistId }) => {
+const PersonTable = ({ searchTerm, dentistId, newPatient }) => {
   const navigate = useNavigate();
 
   const [patients, setPatients] = useState([]);
@@ -20,11 +20,17 @@ const PersonTable = ({ searchTerm, dentistId }) => {
   const [editPatient, setEditPatient] = useState(null);
 
   useEffect(() => {
+    
     if (!dentistId) return;
 
     setLoading(true);
 
-    API.getDentistPatinet(currentPage)
+    const fetchPatients =
+      searchTerm.trim() === ""
+        ? API.getDentistPatinet(currentPage)
+        : API.getDentistPatientByQuery(searchTerm, currentPage);
+
+    fetchPatients
       .then((res) => {
         setPatients(res.data.patients);
         setPageSize(res.data.pageSize);
@@ -32,9 +38,10 @@ const PersonTable = ({ searchTerm, dentistId }) => {
       })
       .catch((error) => {
         toast.error(handleApiError(error));
+        
       })
       .finally(() => setLoading(false));
-  }, [currentPage, dentistId]);
+  }, [currentPage, dentistId, newPatient]);
 
   const filteredPersons = patients.filter((person) =>
     person.name.toLowerCase().includes(searchTerm.toLowerCase())

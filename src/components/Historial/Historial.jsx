@@ -134,6 +134,68 @@ function Historial({ active, id, rerender, setComparacion, goToCompareTab, compa
     );
   };
 
+  const renderChanges = () => {
+  return changes.length > 0 ? (
+    changes.map((cambio) => {
+      const key = cambio.date;
+      const isSelected = selectedRecords.some((r) => r.date === cambio.date);
+
+      return (
+        <tr
+          key={key}
+          data-testid={key}
+          className={isSelected ? "selected" : ""}
+          onClick={() => toggleSelection(cambio)}
+          style={{ cursor: "pointer" }}
+        >
+          <td>
+            <input
+              type="checkbox"
+              checked={isSelected}
+              onChange={() => toggleSelection(cambio)}
+              onClick={(e) => e.stopPropagation()}
+            />
+          </td>
+          <td>{formatDate(cambio.date)}</td>
+          <td>{formatNumero(cambio.tooth_number)}</td>
+          <td>
+            <Diente
+              state={{
+                up: cambio.before[0],
+                right: cambio.before[1],
+                down: cambio.before[2],
+                left: cambio.before[3],
+                center: cambio.before[4],
+                special: cambio.before[5],
+              }}
+            />
+          </td>
+          <td>
+            <Diente
+              state={{
+                up: cambio.after[0],
+                right: cambio.after[1],
+                down: cambio.after[2],
+                left: cambio.after[3],
+                center: cambio.after[4],
+                special: cambio.after[5],
+              }}
+            />
+          </td>
+          <td>{cambio.dentistName}</td>
+        </tr>
+      );
+    })
+  ) : (
+    <tr>
+      <td colSpan="6" style={{ textAlign: "center" }}>
+        {loading ? "Cargando..." : "No hay registros disponibles."}
+      </td>
+    </tr>
+  );
+};
+
+
   return (
     <div className={`historial ${active}`}>
       <div className="table-container">
@@ -149,65 +211,7 @@ function Historial({ active, id, rerender, setComparacion, goToCompareTab, compa
             </tr>
           </thead>
           <tbody>
-            {Array.isArray(changes) && changes.length > 0 ? (
-              changes.map((cambio) => {
-                const key = cambio.date;
-                const isSelected = selectedRecords.some(
-                  (r) => r.date === cambio.date
-                );
-
-                return (
-                  <tr
-                    key={key}
-                    className={isSelected ? "selected" : ""}
-                    onClick={() => toggleSelection(cambio)}
-                    style={{ cursor: "pointer" }}
-                  >
-                    <td>
-                      <input
-                        type="checkbox"
-                        checked={isSelected}
-                        onChange={() => toggleSelection(key)}
-                        onClick={(e) => e.stopPropagation()}
-                      />
-                    </td>
-                    <td>{formatDate(cambio.date)}</td>
-                    <td>{formatNumero(cambio.tooth_number)}</td>
-                    <td>
-                      <Diente
-                        state={{
-                          up: cambio.before[0],
-                          right: cambio.before[1],
-                          down: cambio.before[2],
-                          left: cambio.before[3],
-                          center: cambio.before[4],
-                          special: cambio.before[5],
-                        }}
-                      />
-                    </td>
-                    <td>
-                      <Diente
-                        state={{
-                          up: cambio.after[0],
-                          right: cambio.after[1],
-                          down: cambio.after[2],
-                          left: cambio.after[3],
-                          center: cambio.after[4],
-                          special: cambio.after[5],
-                        }}
-                      />
-                    </td>
-                    <td>{cambio.dentistName}</td>
-                  </tr>
-                );
-              })
-            ) : (
-              <tr>
-                <td colSpan="6" style={{ textAlign: "center" }}>
-                  {loading ? "Cargando..." : "No hay registros disponibles."}
-                </td>
-              </tr>
-            )}
+            {renderChanges()}
           </tbody>
         </table>
         {selectedRecords.length === 2 && (
