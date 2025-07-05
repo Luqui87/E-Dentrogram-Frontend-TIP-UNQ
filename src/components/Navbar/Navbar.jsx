@@ -1,7 +1,7 @@
 import "./Navbar.css";
 import logo from "../../assets/Logo.png";
 import { useNavigate } from "react-router-dom";
-import Modal from '../Modal'
+import Modal from "../Modal";
 import { useState } from "react";
 
 function Navbar() {
@@ -9,12 +9,11 @@ function Navbar() {
   const token = localStorage.getItem("token");
   const tokenGoogle = localStorage.getItem("GoogleToken");
   const [showModal, setShowModal] = useState(false);
-  
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("GoogleToken");
-    setShowModal(false)
+    setShowModal(false);
     navigate("/");
   };
 
@@ -70,7 +69,11 @@ function Navbar() {
               </a>
             )}
           </div>
-          <button className="nav-button" style={{marginLeft: "auto"}} onClick={() => navigate("/Configuracion")}>
+          <button
+            className="nav-button"
+            style={{ marginLeft: "auto" }}
+            onClick={() => navigate("/Configuracion")}
+          >
             {configIcon}
           </button>
           <button className="nav-button" onClick={() => setShowModal(true)}>
@@ -80,18 +83,21 @@ function Navbar() {
           <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
             <div className="modalContent">
               <span className="modal-header">Confirmar cierre de sesión</span>
-              <span className="modal-subheader">¿Está seguro que desea salir del sistema? </span>
+              <span className="modal-subheader">
+                ¿Está seguro que desea salir del sistema?{" "}
+              </span>
               <div className="buttons">
                 <button className="btn-confirmar" onClick={handleLogout}>
                   Confirmar
                 </button>
-                <button className="btn-cancelar" onClick={() => setShowModal(false)}>
+                <button
+                  className="btn-cancelar"
+                  onClick={() => setShowModal(false)}
+                >
                   Cancelar
                 </button>
               </div>
-              
             </div>
-            
           </Modal>
         </header>
       )}
