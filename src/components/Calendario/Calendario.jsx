@@ -86,8 +86,15 @@ function CalendarApp() {
         })
         .then(() => {
           const authInstance = gapi.auth2.getAuthInstance();
+
+          if (!authInstance) {
+            toast.error("No se pudo inicializar la autenticación de Google.");
+            setIsLoading(false);
+            return;
+          }
+
           if (!authInstance.isSignedIn.get()) {
-            authInstance.signIn().then(() => {
+            return authInstance.signIn().then(() => {
               listUpcomingEvents();
               setIsLoading(false);
             });
@@ -95,17 +102,36 @@ function CalendarApp() {
             listUpcomingEvents();
             setIsLoading(false);
           }
+        })
+        .catch((err) => {
+          toast.error("Error al inicializar Google Calendar");
+          console.error("GAPI init error", err);
+          setIsLoading(false);
         });
     };
 
-    gapi.load("client:auth2", initClient);
+    // Cargar client + auth2
+    gapi.load("client:auth2", () => {
+      try {
+        if (gapi.auth2) {
+          initClient();
+        } else {
+          toast.error("Google API no disponible");
+          setIsLoading(false);
+        }
+      } catch (e) {
+        console.error("gapi.load error", e);
+        setIsLoading(false);
+      }
+    });
 
-    const userDocuments = JSON.parse(localStorage.getItem('userDocuments'));
-    if (userDocuments) {
-      setUserDocuments(userDocuments)
+    // Cargar documentos de usuario desde localStorage
+    const docs = JSON.parse(localStorage.getItem("userDocuments"));
+    if (docs) {
+      setUserDocuments(docs);
     }
-    
 
+    // Obtener pacientes del dentista logueado
     API.getDentist(localStorage.getItem("username"))
       .then((res) => {
         setPatients(res.data.patients);
@@ -113,6 +139,7 @@ function CalendarApp() {
       .catch((error) => {
         toast.error(handleApiError(error));
       });
+
   }, []);
 
   const handleDocumentChange = (document) => {

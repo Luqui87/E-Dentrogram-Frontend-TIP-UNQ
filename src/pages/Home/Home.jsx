@@ -17,6 +17,7 @@ const Home = () => {
   const [showModal, setShowModal] = useState(false);
 
   const [patient, setPatient] = useState(null);
+  
 
   const handleAddClick = () => {
     setShowModal(true);

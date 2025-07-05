@@ -228,9 +228,11 @@ function Settings() {
               <div className="files">
                 <span>Archivos Cargados</span>
                 <ul>{acceptedFiles.length > 0  ? files : renderCurrentFiles}</ul>
+                {acceptedFiles.length > 0 &&
                 <button className="btn-confirmar" style={{marginTop:"auto"}} onClick={() => handleDocuments()}>
                   Confirmar
                 </button>
+                }
               </div>
 
           </div>

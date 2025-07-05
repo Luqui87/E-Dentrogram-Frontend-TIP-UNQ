@@ -46,7 +46,7 @@ const PatientModal = ({ showModal, onClose, dentistId, patient, handleEditedPati
 
     
     try {
-      const updatedForm = { ...form };
+      const updatedForm = { ...form, telephone : 54 + form.telephone};
 
       if (!updatedForm.birthdate) {
         const today = new Date().toISOString().split("T")[0];
