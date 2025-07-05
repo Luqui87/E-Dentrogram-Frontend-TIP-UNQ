@@ -43,22 +43,23 @@ const PatientModal = ({ showModal, onClose, dentistId, patient, handleEditedPati
       toast.error("Hay campos vacios");
       return;
     }
+    const updatedForm = { ...form, telephone : 54 + form.telephone};
 
-    
-    try {
-      const updatedForm = { ...form, telephone : 54 + form.telephone};
-
-      if (!updatedForm.birthdate) {
-        const today = new Date().toISOString().split("T")[0];
-        updatedForm.birthdate = today;
-      }
-      API.addPatient(dentistId, updatedForm).then((res) => {
-        toast.success("Paciente agregado exitosamente.");
-        onClose();
-      });
-    } catch (error) {
-      toast.error(handleApiError(error));
+    if (!updatedForm.birthdate) {
+      const today = new Date().toISOString().split("T")[0];
+      updatedForm.birthdate = today;
+      
     }
+    API.addPatient(dentistId, updatedForm)
+    .then((res) => {
+      toast.success("Paciente agregado exitosamente.");
+      onClose();
+      handleEditedPatient(res.data); 
+      console.log("Hola")
+    })
+    .catch((error) => {
+      toast.error(handleApiError(error))
+    });
   };
 
   const handleEditPatient = () => {
@@ -67,6 +68,7 @@ const PatientModal = ({ showModal, onClose, dentistId, patient, handleEditedPati
       toast.success("Paciente editado exitosamente");
       handleEditedPatient(res.data)
       onClose();
+      
     })
     .catch((error) => {
       toast.error(handleApiError(error));

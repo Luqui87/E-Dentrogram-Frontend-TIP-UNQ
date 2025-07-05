@@ -16,7 +16,7 @@ const Home = () => {
 
   const [showModal, setShowModal] = useState(false);
 
-  const [patient, setPatient] = useState(null);
+  const [newPatient, setNewPatient] = useState(false);
   
 
   const handleAddClick = () => {
@@ -25,7 +25,6 @@ const Home = () => {
 
   const handleCloseModal = () => {
     setShowModal(false);
-    setPatient(null)
   };
 
   useEffect(() => {
@@ -68,12 +67,17 @@ const Home = () => {
         showModal={showModal}
         onClose={handleCloseModal}
         dentistId={dentistId}
-        handleEditedPatient={() => {}}
+        handleEditedPatient={(patient) => {
+          setNewPatient(!newPatient); 
+          console.log("hola")
+        }}
+        
       />
 
       <PersonTable
         searchTerm={searchTerm}
         dentistId={dentistId}
+        newPatient={newPatient}
       />
     </div>
   );

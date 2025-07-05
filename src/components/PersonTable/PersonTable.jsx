@@ -5,7 +5,7 @@ import API, { handleApiError } from "../../service/API";
 import { toast } from "react-toastify";
 import PatientModal from "../PatientModal/PatientModal";
 
-const PersonTable = ({ searchTerm, dentistId }) => {
+const PersonTable = ({ searchTerm, dentistId, newPatient }) => {
   const navigate = useNavigate();
 
   const [patients, setPatients] = useState([]);
@@ -20,6 +20,7 @@ const PersonTable = ({ searchTerm, dentistId }) => {
   const [editPatient, setEditPatient] = useState(null);
 
   useEffect(() => {
+    
     if (!dentistId) return;
 
     setLoading(true);
@@ -37,9 +38,10 @@ const PersonTable = ({ searchTerm, dentistId }) => {
       })
       .catch((error) => {
         toast.error(handleApiError(error));
+        
       })
       .finally(() => setLoading(false));
-  }, [currentPage, dentistId, searchTerm]);
+  }, [currentPage, dentistId, searchTerm, newPatient]);
 
   const handleRowClick = (id) => navigate(`/paciente/${id}`);
 
