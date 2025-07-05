@@ -52,10 +52,11 @@ const PatientModal = ({ showModal, onClose, dentistId, patient, handleEditedPati
     }
     API.addPatient(dentistId, updatedForm)
     .then((res) => {
+      console.log("Hola")
       toast.success("Paciente agregado exitosamente.");
       onClose();
       handleEditedPatient(res.data); 
-      console.log("Hola")
+      
     })
     .catch((error) => {
       toast.error(handleApiError(error))

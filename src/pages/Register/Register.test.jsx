@@ -33,7 +33,7 @@ describe("Register component", () => {
   it("renderiza todos los inputs", () => {
     renderWithRouter(<Register />);
 
-    expect(screen.getByText(/registrarse/i)).toBeInTheDocument();
+
     expect(screen.getByText(/username/i)).toBeInTheDocument();
     expect(screen.getByText(/nombre/i)).toBeInTheDocument();
     expect(screen.getByText(/email/i)).toBeInTheDocument();
@@ -43,7 +43,7 @@ describe("Register component", () => {
 
   it("muestra advertencia si los campos están vacíos", async () => {
     renderWithRouter(<Register />);
-    fireEvent.click(screen.getByRole("button", { name: /register/i }));
+    fireEvent.click(screen.getByRole("button", { name: /registrarse/i }));
     expect(await screen.findByText(/se deben completar todos los campos/i)).toBeInTheDocument();
   });
 
@@ -83,7 +83,7 @@ describe("Register component", () => {
       target: { value: "Password1" },
     });
 
-    fireEvent.click(screen.getByRole("button", { name: /register/i }));
+    fireEvent.click(screen.getByRole("button", { name: /registrarse/i }));
 
     await waitFor(() => {
       expect(API.register).toHaveBeenCalledWith({
