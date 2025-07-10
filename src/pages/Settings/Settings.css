@@ -180,6 +180,7 @@
 .files li .file-delete-icon{
     height: 100%;
     margin-left: auto;
+    width: 3vw;
 }
 
 .files li .file-delete-icon:hover{
