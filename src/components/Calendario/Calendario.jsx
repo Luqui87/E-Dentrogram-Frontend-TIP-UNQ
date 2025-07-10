@@ -251,7 +251,7 @@ function CalendarApp() {
               start: start.toISOString(),
               end: end.toISOString(),
               description: `Turno con ${selectedPatient.name}. Historia clinica ${selectedPatient.medicalRecord}. E-Dentograma`,
-              googleId: response.id,
+              googleId: response.result.id,
             },
           ])
         );
@@ -331,11 +331,10 @@ function CalendarApp() {
       if (response.status === 204) {
         const updateEvents = events.filter(e => e.googleId !== reschedule.extendedProps.googleId);
         createCalendarEvent(updateEvents);
-
       } 
     })
     .catch((error) => {
-      toast.error("No se logro reagendar el evento");
+      toast.error("No se logro reagendar el turno");
     });
 
     await API.rescheduleTurn(formatDate(start), {
@@ -375,7 +374,7 @@ function CalendarApp() {
       resource: updatedEvent,
     })
     .then((res) => {
-      toast.success("Evento reagendado exitosamente");
+      toast.success("Turno reagendado exitosamente");
     })
     .catch((error) => {
       toast.error(error);
@@ -383,6 +382,25 @@ function CalendarApp() {
     
   }
 
+  const deleteEvent = () => {
+
+    gapi.client.calendar.events.delete({
+    calendarId: "primary",
+    eventId: reschedule.extendedProps.googleId,
+     })
+    .then((response) => {
+      if (response.status === 204) {
+        const updateEvents = events.filter(e => e.googleId !== reschedule.extendedProps.googleId);
+        toast.success("Turno Cancelado")
+        setEvents(updateEvents);
+        setIsModalOpen(false);
+      } 
+    })
+    .catch((error) => {
+      toast.error("No se logro cancelar el turno");
+    });
+  }
+ 
 ///////////////////////////////////////////////////////
 
 const handleDuration = (dur) => {
@@ -548,9 +566,15 @@ const handleDuration = (dur) => {
           <div className="modal-buttons">
             <button
               className="cancelEventButton"
-              onClick={() => setIsModalOpen(false)}
+              onClick={() => {
+                if (reschedule) {
+                  deleteEvent();
+                } else {
+                  setIsModalOpen(false);
+                }
+              }}
             >
-              Cerrar
+              {reschedule ? "Cancelar Turno" :"Cerrar"}
             </button>
             <button
               className="createEventButton"
@@ -562,7 +586,7 @@ const handleDuration = (dur) => {
                 }
               }}
             >
-              {reschedule ? "Reagendar evento" : "Crear evento"}
+              {reschedule ? "Reagendar Turno" : "Crear Turno"}
             </button>
           </div>
         </div>

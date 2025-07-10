@@ -31,7 +31,7 @@ function QR() {
     };
 
     fetchQr();
-    interval = setInterval(fetchQr, 35000);
+    interval = setInterval(fetchQr, 5000);
 
     return () => {
       if (interval) clearInterval(interval);
